@@ -22,6 +22,10 @@ for (const locale of ['en', 'th'] as const) it(`${locale}: 图表、读数和管
     organizeOutcome({ status: 'complete', moved: 3, failed: 1 }).text,
     statusLine({ ...IDLE_REPAIR, status: 'complete', repaired: 2, failed: 1 }),
     translate('目录模板里有空的一层'),
+    translate('20 项需要处理，可重试未完成的部分。'),
+    translate('20 项都卡在来源限流上，等一会儿再跑一次。'),
+    translate('20 项需要处理，其中 3 项是来源限流，等一会儿再跑；其余可重试未完成的部分。'),
+    translate('标题'),
   ];
   for (const text of texts) expect(text).not.toMatch(/\p{Script=Han}/u);
   expect(playedFor(5400)).toContain('1.5');

@@ -2087,7 +2087,14 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	低画质: ["Low quality", "คุณภาพต่ำ"],
 	系统盘: ["System drive", "ดิสก์ระบบ"],
 	资源盘: ["Media drive", "ดิสก์สื่อ"],
-	"同步文件与影片资料，按设置生成本地视频预览。下拉菜单可选择只扫描文件、同步已入库影片、生成预览或补全资料。": ["Sync files and video metadata and generate local previews according to your settings. Use the menu to scan files only, sync existing videos, generate previews or complete metadata.", "ซิงค์ไฟล์และข้อมูลวิดีโอ พร้อมสร้างตัวอย่างวิดีโอในเครื่องตามการตั้งค่า เมนูย่อยให้เลือกสแกนเฉพาะไฟล์ ซิงค์วิดีโอในคลัง สร้างตัวอย่าง หรือเติมข้อมูลให้ครบ"]
+	"同步文件与影片资料，按设置生成本地视频预览。下拉菜单可选择只扫描文件、同步已入库影片、生成预览或补全资料。": ["Sync files and video metadata and generate local previews according to your settings. Use the menu to scan files only, sync existing videos, generate previews or complete metadata.", "ซิงค์ไฟล์และข้อมูลวิดีโอ พร้อมสร้างตัวอย่างวิดีโอในเครื่องตามการตั้งค่า เมนูย่อยให้เลือกสแกนเฉพาะไฟล์ ซิงค์วิดีโอในคลัง สร้างตัวอย่าง หรือเติมข้อมูลให้ครบ"],
+	标题: ["Title", "ชื่อผลงาน"],
+	"{0} 项需要处理，可重试未完成的部分。": ["{0} items need attention. You can retry the unfinished items.", "มี {0} รายการที่ต้องจัดการ สามารถลองรายการที่ยังไม่เสร็จอีกครั้งได้"],
+	"{0} 项都卡在来源限流上，等一会儿再跑一次。": ["All {0} items are waiting for source rate limits to clear. Try again later.", "ทั้ง {0} รายการติดข้อจำกัดอัตราการเรียกใช้ของแหล่งข้อมูล กรุณารอสักครู่แล้วลองอีกครั้ง"],
+	"{0} 项需要处理，其中 {1} 项是来源限流，等一会儿再跑；其余可重试未完成的部分。": ["{0} items need attention. {1} are rate-limited by the source; retry those later. You can retry the other unfinished items.", "มี {0} รายการที่ต้องจัดการ โดย {1} รายการติดข้อจำกัดอัตราการเรียกใช้ของแหล่งข้อมูล ให้รอก่อนลองใหม่ ส่วนรายการที่ยังไม่เสร็จอื่น ๆ สามารถลองอีกครั้งได้"],
+	"处理被中断。核对媒体目录后重试。": ["Processing was interrupted. Check the media folders and try again.", "การประมวลผลถูกขัดจังหวะ ตรวจสอบโฟลเดอร์สื่อแล้วลองอีกครั้ง"],
+	"完整记录：": ["Full log:", "บันทึกฉบับเต็ม:"],
+	媒体文件不可访问: ["The media file is inaccessible", "เข้าถึงไฟล์สื่อไม่ได้"]
 }, u = [
 	"zh-CN",
 	"en",
