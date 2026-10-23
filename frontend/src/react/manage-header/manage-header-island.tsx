@@ -12,6 +12,7 @@
  * `manage-header.css`，不用工具类。 */
 import { useLayoutEffect, useRef, useSyncExternalStore, type MouseEvent } from 'react';
 import { flushSync } from 'react-dom';
+import { translate } from '../../i18n';
 
 import { swapText } from '@peach/legacy/ui';
 
@@ -59,7 +60,7 @@ function ManageHeader({ host: at, props: current }: { host: ManageHeaderHost; pr
     <>
       <ManageBar host={at} pressed={view.pressed} menu={current.menu} />
       {view.crumb ? <Crumb host={at} label={view.crumb} /> : null}
-      <h2 data-manage-title="" data-compact={view.compact ? '' : undefined}>{view.title}</h2>
+      <h2 data-manage-title="" data-compact={view.compact ? '' : undefined}>{translate(view.title)}</h2>
       {view.lede.kind === 'none' ? null : <TrashLede host={at} lede={view.lede} />}
     </>
   );
@@ -86,7 +87,7 @@ function ManageBar({ host: at, pressed: key, menu }: Pick<ManageHeaderProps, 'me
           return (
             <button key={entry} type="button" data-manage={entry} aria-pressed={on} aria-current={on ? 'page' : undefined}
               onClick={() => at.openManage(entry)}>
-              <Icon name={glyph} /><span>{label}</span>
+              <Icon name={glyph} /><span>{translate(label)}</span>
             </button>
           );
         })}

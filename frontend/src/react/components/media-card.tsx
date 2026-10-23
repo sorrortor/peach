@@ -25,6 +25,7 @@ import {
 } from '@peach/card-art';
 import { esc, fmtDur, fmtSize } from '@peach/legacy/core';
 import { spinnerHtml } from '@peach/legacy/ui';
+import { translate } from '../../i18n';
 
 import type { MediaCardActions, MediaCardHelpers, MediaCardLayout, MediaItem } from '../catalog-grid/types';
 import { ArtSlot } from './art-slot';
@@ -131,7 +132,7 @@ function identityParts(item: MediaItem): { avatar: ReactNode; who: ReactNode } {
     : kind
       ? <button type="button" data-media-who="" data-entity-kind={kind} data-entity-name={name}><Icon name="user-round" /><span>{name}</span></button>
       /* 没有署名人的那批是馆藏里的一类，点得开，和女优名、厂牌名一样。 */
-      : <button type="button" data-media-who="" data-open-unowned=""><Icon name="user-round" /><span>{name}</span></button>;
+      : <button type="button" data-media-who="" data-open-unowned=""><Icon name="user-round" /><span>{translate('未归属')}</span></button>;
   return { avatar, who };
 }
 
@@ -196,8 +197,8 @@ function VideoCard({ item, variant, layout, selected, selectMode, seekSeconds, h
   const artwork = cardArtwork(item, size, false, layout.javImage);
   const identity = size === 'small' ? artwork.html : cardArtwork(item, 'small', false, layout.javImage).html;
   const rawName = parts?.title || item.name || '';
-  const shownName = helpers.displayName(item, rawName).trim() || UNNAMED;
-  const titleHtml = helpers.titleHtml(item, rawName).trim() || esc(UNNAMED);
+  const shownName = helpers.displayName(item, rawName).trim() || translate(UNNAMED);
+  const titleHtml = helpers.titleHtml(item, rawName).trim() || esc(translate(UNNAMED));
   const shownSize = parts?.total_size ?? item.size;
   const shownDuration = parts?.total_duration ?? item.duration;
   const watched = !parts && Number(item.play_seconds) > 0 && Number(item.duration) > 0

@@ -3,6 +3,7 @@
  * 写入与侧栏那一列的拖动共用 `sidebar/sidebar-order.ts`：先落本地那份（侧栏按 store 的通知当场
  * 重排），再写 `/api/settings`。 */
 import { useRef, useState, type DragEvent, type KeyboardEvent } from 'react';
+import { translate } from '../../i18n';
 
 import { dismissMenu, presentMenu } from '@peach/legacy/ui';
 
@@ -94,7 +95,7 @@ export function SidebarOrder({ host }: { host: SettingsPanelHost }) {
           data-dragging={dragging === key ? '' : undefined}
           data-drop={drop?.key === key ? (drop.after ? 'after' : 'before') : undefined}>
           <span data-sidebar-label=""><i data-sidebar-grip="" aria-hidden="true"><Icon name="grip-vertical" /></i>
-            <Icon name={glyph ?? ''} /><b>{label}</b></span>
+            <Icon name={glyph ?? ''} /><b>{translate(label)}</b></span>
           <span data-sidebar-actions="">
             <button type="button" data-sidebar-key={key} data-sidebar-move="-1" aria-label={`上移 ${label}`} title="上移"
               disabled={index === 0} onClick={() => step(key, -1)}><Icon name="chevron-up" /></button>
@@ -112,7 +113,7 @@ export function SidebarOrder({ host }: { host: SettingsPanelHost }) {
           <button type="button" data-sidebar-add-trigger="" aria-haspopup="listbox" aria-expanded={menuOpen}
             disabled={!chosen} ref={trigger} onClick={toggleMenu}>
             {chosen
-              ? <><Icon name={chosen[2] ?? ''} /><span data-sidebar-add-label="">{chosen[1]}</span><Icon name="chevron-down" /></>
+              ? <><Icon name={chosen[2] ?? ''} /><span data-sidebar-add-label="">{translate(chosen[1])}</span><Icon name="chevron-down" /></>
               : <><Icon name="check" /><span>全部页面都已显示</span></>}
           </button>
           {available.length
@@ -121,7 +122,7 @@ export function SidebarOrder({ host }: { host: SettingsPanelHost }) {
                   <button type="button" role="option" key={optionKey(key)} data-sidebar-add-option={optionKey(key)}
                     aria-selected={chosen?.[0] === key} tabIndex={chosen?.[0] === key ? 0 : -1} onKeyDown={optionKeys}
                     onClick={() => { setPicked(optionKey(key)); closeMenu(); trigger.current?.focus() }}>
-                    <Icon name={glyph ?? ''} /><span>{label}</span>
+                    <Icon name={glyph ?? ''} /><span>{translate(label)}</span>
                   </button>
                 ))}
               </div>

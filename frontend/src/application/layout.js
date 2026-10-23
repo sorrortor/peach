@@ -28,6 +28,7 @@ import { JAV_RELEASE_SORT, SORTS } from './../sort-preferences';
 import { dropBars } from './../catalog-bars';
 import { entityState, pushEntityPage, syncPhotoWalls } from './entity.js';
 import { routeMetaOf } from './../history/route-meta';
+import { translate } from '../i18n';
 import { peachHistory, shellNavigate, isPreferencePath, preferenceSection, settingsPath, settingsBackgroundOf } from '../history';
 import { filterScrollState } from './filter-scroll.js';
 import { releaseHoverPreviews } from './../card-art/hover';
@@ -220,7 +221,7 @@ export function paintListTitle(){
   const el=$('#listTitle');if(!el)return;
   const path=decodeURIComponent(location.pathname);
   const label=!manageSection()&&isCatalogPath(path)?STATE_LABELS[state.state]||'':'';
-  el.hidden=!label;if(label)el.textContent=label;
+  el.hidden=!label;if(label)el.textContent=translate(label);
   $('#catalogPageHeading').hidden=!!manageSection()||!isCatalogPath(path)||!!label||state.jav==='1';
 }
 

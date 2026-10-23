@@ -1,6 +1,8 @@
 import './styles.css';
+import { initializeLanguage } from '../i18n';
 import { installErrorReporting } from '../error-reporting';
 import { mountApplication } from './application';
+initializeLanguage();
 installErrorReporting();
 const host = document.getElementById('appRoot');
 if (!host) throw new Error('主界面宿主缺失');

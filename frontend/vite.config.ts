@@ -4,11 +4,12 @@
 import { fileURLToPath } from 'node:url';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
+import { i18nPlugin } from './i18n-plugin';
 
 const source = (name: string) => fileURLToPath(new URL(`./src/${name}`, import.meta.url));
 
 export default defineConfig({
-  plugins: [tailwindcss()],
+  plugins: [i18nPlugin(), tailwindcss()],
   resolve: { alias: {
     'next/link': source('react/components/board-navigation-link.tsx'),
     '@peach/legacy/core': source('core/index.ts'), '@peach/legacy/ui': source('ui-kit/index.ts'),

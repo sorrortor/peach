@@ -33,6 +33,7 @@ https://github.com/user-attachments/assets/a5610874-e611-41bb-be22-7d99f0d64b62
 
 ## Features
 
+- **Interface languages**: choose 中文, English or ไทย on the sign-in page or under Settings → Appearance and navigation. The browser remembers the choice across reloads and reopening. Main navigation, settings and basic library controls are translated; uncovered help and server errors retain their original text, as do titles, filenames and user input. Switching reloads the page, so save forms first.
 - **Local and cloud together**: browse hard drives and mounted cloud drives, including 115, PikPak and OneDrive, in one library.
 - **Pick from the video wall**: drag through a full-screen cover wall and play in place, with versions and parts of the same title grouped together.
 - **Player subtitles**: load local subtitles, search SubtitleCat for simplified and traditional Chinese subtitles by video code, then adjust fonts, size, colors and backgrounds. No API key is required; results may include machine translations.

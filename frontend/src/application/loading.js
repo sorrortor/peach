@@ -14,6 +14,7 @@ import { navigationState, paintNav } from './navigation.js';
 import { indexParams, paintIndexSkeleton } from './../index-skeleton';
 import { showEntityLoading } from './entity.js';
 import { routeMetaOf } from './../history/route-meta';
+import { translate } from '../i18n';
 import { javTab } from '../react/jav/jav-navigation';
 export const loadingState = { setGridCards: undefined, gridCards: undefined, managementPlaceholder: undefined, wantsDiscoveryBars: undefined, entityShapesReady: undefined, ENTITY_SHAPES_WAIT: undefined, syncPageTitle: undefined };
 
@@ -152,7 +153,7 @@ loadingState.syncPageTitle = path=>{
   const url=new URL(path,location.origin);
   const pathname=decodeURIComponent(url.pathname);
   const label=routeMetaOf(pathname)?.title;
-  document.title=label?`${label} · Peach`:'Peach · 蜜桃';
+  document.title=label?`${translate(label)} · Peach`:'Peach';
   document.body.dataset.surface=url.pathname;
   paintNav();
 };

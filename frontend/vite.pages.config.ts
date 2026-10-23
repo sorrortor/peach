@@ -11,9 +11,10 @@ import { fileURLToPath } from 'node:url';
 
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
+import { i18nPlugin } from './i18n-plugin';
 
 export default defineConfig({
-  plugins: [tailwindcss()],
+  plugins: [i18nPlugin(), tailwindcss()],
   resolve: {
     alias: {
       '@peach/legacy/ui': fileURLToPath(new URL('./src/react/pages/legacy-ui.ts', import.meta.url)),
