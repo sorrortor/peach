@@ -367,7 +367,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	界面音效: ["Interface sounds", "เสียงหน้าจอ"],
 	侧栏光晕: ["Sidebar glow", "แสงแถบด้านข้าง"],
 	导航入口与顺序: ["Navigation and order", "รายการและลำดับเมนู"],
-	配色: ["Colors", "สี"],
+	配色: ["Palette", "ชุดสี"],
 	颜色: ["Color", "สี"],
 	强度: ["Intensity", "ความเข้ม"],
 	颗粒: ["Grain", "เกรน"],
@@ -1174,7 +1174,25 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	重试未完成项: ["Retry unfinished items", "ลองรายการที่ยังไม่เสร็จอีกครั้ง"],
 	来源和凭证: ["Sources and credentials", "แหล่งข้อมูลและข้อมูลเข้าสู่ระบบ"],
 	复核资料: ["Review metadata", "ตรวจสอบข้อมูล"],
-	"当前：密集": ["Current: compact", "ปัจจุบัน: แบบกระชับ"]
+	"当前：密集": ["Current: compact", "ปัจจุบัน: แบบกระชับ"],
+	"Peach 首页": ["Peach home", "หน้าแรก Peach"],
+	明暗主题: ["Light and dark themes", "ธีมสว่างและมืด"],
+	关闭提示: ["Close notification", "ปิดการแจ้งเตือน"],
+	关闭任务提示: ["Close task notification", "ปิดการแจ้งเตือนงาน"],
+	通知: ["Notifications", "การแจ้งเตือน"],
+	光晕: ["Glow", "แสง"],
+	重置: ["Reset", "รีเซ็ต"],
+	强调色: ["Accent color", "สีเน้น"],
+	详细设置: ["Detailed settings", "ตั้งค่าเพิ่มเติม"],
+	光鸭云盘: ["Guangya Cloud", "Guangya Cloud"],
+	其他已挂载网盘: ["Other mounted cloud drive", "ไดรฟ์คลาวด์อื่นที่เมานต์แล้ว"],
+	未判定: ["Undetermined", "ยังไม่ระบุ"],
+	日本: ["Japan", "ญี่ปุ่น"],
+	韩国: ["Korea", "เกาหลี"],
+	国产: ["Chinese-language", "ภาษาจีน"],
+	欧美: ["Western", "ตะวันตก"],
+	横屏: ["Landscape", "แนวนอน"],
+	方形: ["Square", "สี่เหลี่ยมจัตุรัส"]
 }, d = [
 	"zh-CN",
 	"en",
@@ -31740,34 +31758,34 @@ function Yue({ host: e }) {
 			"data-glow-head": "",
 			"data-glow-presets": "",
 			hidden: !n.on,
-			children: [/* @__PURE__ */ (0, P.jsx)("span", { children: "光晕" }), /* @__PURE__ */ (0, P.jsx)("button", {
+			children: [/* @__PURE__ */ (0, P.jsx)("span", { children: _("光晕") }), /* @__PURE__ */ (0, P.jsx)("button", {
 				type: "button",
 				"data-glow-preset-reset": "",
 				onClick: () => Uue(t),
-				children: "重置"
+				children: _("重置")
 			})]
 		}),
 		/* @__PURE__ */ (0, P.jsx)(Kue, {
 			store: t,
-			label: "光晕",
+			label: _("光晕"),
 			hidden: !n.on
 		}),
 		/* @__PURE__ */ (0, P.jsx)("p", {
 			"data-glow-head": "",
 			"data-glow-sub": "",
-			children: /* @__PURE__ */ (0, P.jsx)("span", { children: "强调色" })
+			children: /* @__PURE__ */ (0, P.jsx)("span", { children: _("强调色") })
 		}),
 		/* @__PURE__ */ (0, P.jsx)("div", {
 			"data-accent-grid": "",
 			role: "group",
-			"aria-label": "强调色",
+			"aria-label": _("强调色"),
 			children: Bue.map(([e, n]) => /* @__PURE__ */ (0, P.jsx)("button", {
 				type: "button",
 				"data-glow-chip": "",
 				"data-accent": e,
 				"aria-pressed": e === r,
-				title: n,
-				"aria-label": n,
+				title: _(n),
+				"aria-label": _(n),
 				onClick: () => Hue(e, t),
 				children: /* @__PURE__ */ (0, P.jsx)("span", {
 					"data-glow-ball": "",
@@ -31781,7 +31799,7 @@ function Yue({ host: e }) {
 			className: "geist-button primary",
 			"data-glow-detail": "",
 			onClick: () => e.openDetails(),
-			children: "详细设置"
+			children: _("详细设置")
 		}) })
 	] });
 }
@@ -74423,8 +74441,8 @@ function gze({ index: e, value: t, onChange: n, options: r = JV }) {
 		},
 		children: r.map(([e, t]) => /* @__PURE__ */ (0, P.jsxs)(iF, {
 			id: e,
-			textValue: t,
-			children: [/* @__PURE__ */ (0, P.jsx)(lj, { mark: YV(e) }), t]
+			textValue: _(t),
+			children: [/* @__PURE__ */ (0, P.jsx)(lj, { mark: YV(e) }), _(t)]
 		}, e))
 	});
 }
@@ -77500,7 +77518,11 @@ function jH({ rows: e, filterKey: t, multi: n, selected: r, counts: i, host: a, 
 	return /* @__PURE__ */ (0, P.jsx)("div", {
 		"data-sidebar-chips": "",
 		children: e.map((e) => {
-			let a = e.n === null ? null : i ? i.get(`${t}\n${e.value}`) ?? 0 : e.n;
+			let a = e.n === null ? null : i ? i.get(`${t}\n${e.value}`) ?? 0 : e.n, s = [
+				"loc",
+				"region",
+				"orient"
+			].includes(t) ? _(e.label) : e.label;
 			return /* @__PURE__ */ (0, P.jsxs)("button", {
 				type: "button",
 				"data-sidebar-chip": "",
@@ -77510,13 +77532,13 @@ function jH({ rows: e, filterKey: t, multi: n, selected: r, counts: i, host: a, 
 				"data-multi": n ? "1" : "0",
 				"data-offline": e.offline ? "" : void 0,
 				disabled: !!e.offline,
-				title: e.offline || e.label,
+				title: e.offline ? _(e.offline) : s,
 				onClick: () => o(t, e.value, n),
 				children: [
 					/* @__PURE__ */ (0, P.jsx)(KBe, { dot: e.dot }),
 					/* @__PURE__ */ (0, P.jsx)("span", {
 						"data-sidebar-chip-label": "",
-						children: e.label
+						children: s
 					}),
 					a === null ? null : /* @__PURE__ */ (0, P.jsx)("span", {
 						"data-sidebar-count": "",
@@ -108045,8 +108067,8 @@ var Npt = (e, t) => {
 			left: 16,
 			bottom: "calc(var(--toast-bottom, 16px) + var(--processing-toast-space, 0px))"
 		},
-		toastOptions: { closeButtonAriaLabel: "关闭提示" },
-		containerAriaLabel: "通知",
+		toastOptions: { closeButtonAriaLabel: _("关闭提示") },
+		containerAriaLabel: _("通知"),
 		icons: {
 			success: Apt(t.success, !0),
 			error: Apt(t.error, !1)
@@ -108069,8 +108091,8 @@ var Npt = (e, t) => {
 			left: 16,
 			bottom: "var(--toast-bottom, 16px)"
 		},
-		toastOptions: { closeButtonAriaLabel: "关闭任务提示" },
-		containerAriaLabel: "后台任务"
+		toastOptions: { closeButtonAriaLabel: _("关闭任务提示") },
+		containerAriaLabel: _("后台任务")
 	})] }));
 }, Ppt = 6e3, Fpt = (e, t) => {
 	if (!String(t.html ?? "").trim()) return;
@@ -112586,9 +112608,9 @@ function Z_t() {
 			n.inert = r, Q.placeSidebarHead === S && (Q.placeSidebarHead = i);
 		}), document.documentElement.classList.toggle("board-high-contrast", localStorage.getItem("peach.high-contrast") === "true");
 		let c = document.querySelector("#brandHome");
-		c.setAttribute("aria-label", "Peach 首页");
+		c.setAttribute("aria-label", _("Peach 首页"));
 		let l = document.createElement("div");
-		l.className = "board-library-menu", l.id = "boardLibraryMenu", l.hidden = !0, l.setAttribute("popover", "manual"), l.setAttribute("role", "dialog"), l.setAttribute("aria-label", "媒体库"), document.body.append(l), e.own(() => l.remove()), c.setAttribute("aria-haspopup", "dialog"), c.setAttribute("aria-controls", l.id), c.insertAdjacentHTML("beforeend", "<svg class=\"board-library-chevron\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m5 6 3-3 3 3M5 10l3 3 3-3\"/></svg>");
+		l.className = "board-library-menu", l.id = "boardLibraryMenu", l.hidden = !0, l.setAttribute("popover", "manual"), l.setAttribute("role", "dialog"), l.setAttribute("aria-label", _("媒体库")), document.body.append(l), e.own(() => l.remove()), c.setAttribute("aria-haspopup", "dialog"), c.setAttribute("aria-controls", l.id), c.insertAdjacentHTML("beforeend", "<svg class=\"board-library-chevron\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m5 6 3-3 3 3M5 10l3 3 3-3\"/></svg>");
 		let u = c.lastElementChild;
 		e.own(() => u.remove()), e.handler(c, "onclick", (e) => {
 			e.preventDefault();
@@ -112652,13 +112674,13 @@ function Z_t() {
 		let h = document.querySelector("#filterBtn"), g = document.createComment("sidebar toggle");
 		h.before(g), e.own(() => g.remove());
 		let v = document.createElement("div");
-		v.className = "board-sidebar-foot", e.own(() => v.remove()), v.innerHTML = `<div class="board-theme-toggle" role="group" aria-label="明暗主题"><span class="board-theme-thumb" aria-hidden="true"></span><button type="button" data-board-theme="light" aria-label="浅色主题">${R("sun")}</button><button type="button" data-board-theme="dark" aria-label="深色主题">${R("moon")}</button></div>`, v.insertAdjacentHTML("beforeend", "<div class=\"board-foot-actions\"><button type=\"button\" class=\"board-glow-toggle\" id=\"boardGlowBtn\" aria-label=\"光晕配色\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"boardGlowMenu\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><use href=\"#ri-palette-line\"/></svg><span class=\"board-glow-mark\" aria-hidden=\"true\"><span class=\"board-glow-mark-glow\"></span><span class=\"board-glow-mark-accent\"></span></span></button></div>"), v.querySelector(".board-foot-actions").append(document.querySelector("#settingsBtn")), document.querySelector("#drawer").append(v), v.querySelectorAll("[data-board-theme]").forEach((t) => e.handler(t, "onclick", () => {
+		v.className = "board-sidebar-foot", e.own(() => v.remove()), v.innerHTML = `<div class="board-theme-toggle" role="group" aria-label="${z(_("明暗主题"))}"><span class="board-theme-thumb" aria-hidden="true"></span><button type="button" data-board-theme="light" aria-label="${z(_("浅色主题"))}">${R("sun")}</button><button type="button" data-board-theme="dark" aria-label="${z(_("深色主题"))}">${R("moon")}</button></div>`, v.insertAdjacentHTML("beforeend", `<div class="board-foot-actions"><button type="button" class="board-glow-toggle" id="boardGlowBtn" aria-label="${z(_("光晕配色"))}" aria-haspopup="dialog" aria-expanded="false" aria-controls="boardGlowMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ri-palette-line"/></svg><span class="board-glow-mark" aria-hidden="true"><span class="board-glow-mark-glow"></span><span class="board-glow-mark-accent"></span></span></button></div>`), v.querySelector(".board-foot-actions").append(document.querySelector("#settingsBtn")), document.querySelector("#drawer").append(v), v.querySelectorAll("[data-board-theme]").forEach((t) => e.handler(t, "onclick", () => {
 			t.getAttribute("aria-pressed") !== "true" && X_t(t, () => {
 				Q.appSettings.theme = t.dataset.boardTheme, Q.saveSettings(), wE();
 			});
 		})), wE();
 		let y = document.createElement("div");
-		y.className = "popmenu board-glow-menu", y.id = "boardGlowMenu", y.hidden = !0, y.setAttribute("popover", "manual"), y.setAttribute("role", "dialog"), y.setAttribute("aria-label", "配色"), document.body.append(y), e.own(() => y.remove());
+		y.className = "popmenu board-glow-menu", y.id = "boardGlowMenu", y.hidden = !0, y.setAttribute("popover", "manual"), y.setAttribute("role", "dialog"), y.setAttribute("aria-label", _("配色")), document.body.append(y), e.own(() => y.remove());
 		let b = v.querySelector("#boardGlowBtn"), x = bo(v, b, y);
 		e.own(x.dispose), e.own(Gue(b)), qpt({
 			root: y,

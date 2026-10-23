@@ -5,7 +5,7 @@ import messages from './src/i18n/messages.json' with { type: 'json' };
 
 const labels = new Set(['label', 'title', 'legend', 'hint', 'description', 'placeholder', 'aria-label', 'alt', 'lede', 'summary', 'term', 'status', 'topLabel', 'bottomLabel', 'busyLabel', 'emptyLabel', 'message']);
 const known = new Set(Object.keys(messages));
-export const localizedAreas = /\/src\/react\/(?:settings|settings-panel|sidebar|catalog-filter|catalog-grid|catalog-folders|library-shortcuts|library-processing|components|manage-header|entity-filter|item-detail|diagnostics|follow-manage(?=\/credentials\.tsx)|pages\/login)\//;
+export const localizedAreas = /\/src\/react\/(?:settings|settings-panel|sidebar|catalog-filter|catalog-grid|catalog-folders|library-shortcuts|library-processing|components|manage-header|entity-filter|item-detail|diagnostics|glow-picker|follow-manage(?=\/credentials\.tsx)|pages\/login)\//;
 
 /** JSX 的行首缩进不展示，同一行与内联节点之间的空格属于文案。 */
 function jsxText(value: string): string {

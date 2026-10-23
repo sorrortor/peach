@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 侧栏配色卡：侧栏底部那枚配色钮点开的那张卡，照 boardui.com 右下角那枚「Accent color」。
  *
  * 头部一行标题加「重置」文字键，主体是两组 6 列圆球——上面一组光晕（与设置面板「配色」同一组，
@@ -48,7 +49,7 @@ function GlowPicker({ host: at }: { host: GlowPickerHost }) {
         {/* 强调色那一排同样不带颜色：球拿的就是这一档真会写上去的 400 与 600 两级。 */}
         {ACCENT_CHOICES.map(([key, label]) => (
           <button type="button" key={key} data-glow-chip="" data-accent={key} aria-pressed={key === accent}
-            title={label} aria-label={label} onClick={() => chooseAccent(key, store)}>
+            title={translate(label)} aria-label={translate(label)} onClick={() => chooseAccent(key, store)}>
             <span data-glow-ball="" aria-hidden="true" data-accent-ball={key} />
           </button>
         ))}

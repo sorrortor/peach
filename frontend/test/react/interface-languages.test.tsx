@@ -1,5 +1,6 @@
 import { afterEach, expect, it } from 'vitest';
 import { saveLanguage } from '../../src/i18n';
+import { SourceSelect } from '../../src/react/settings/folder-rows';
 import { LoginPage } from '../../src/react/pages/login/login-page';
 import { mount, type } from './render';
 
@@ -24,6 +25,17 @@ it('登录表单在三种语言下保留原生校验、错误播报与提交字�
       ['token', 'test-only-password'], ['next', '/settings/library'], ['days', '30'],
     ]);
     expect(host.querySelector('select')?.value).toBe(locale);
+    host.remove();
+  }
+});
+
+it('媒体来源选择按语言显示名称，同时保留原始来源键', async () => {
+  for (const [locale, label] of [['th', 'ดิสก์ในเครื่อง'], ['en', 'Local disk'], ['zh-CN', '本地磁盘']]) {
+    saveLanguage(locale!);
+    const host = await mount(<SourceSelect index={0} value="local" onChange={() => {}} />);
+    expect(host.textContent).toContain(label);
+    expect(host.querySelector('select')?.value).toBe('local');
+    if (locale !== 'zh-CN') expect(host.textContent).not.toMatch(/\p{Script=Han}/u);
     host.remove();
   }
 });

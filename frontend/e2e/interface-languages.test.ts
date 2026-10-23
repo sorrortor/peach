@@ -96,7 +96,7 @@ describe('界面语言与浏览器持久保存', () => {
         await page.getByRole('radio', { name: text.list, exact: true }).waitFor();
         await page.locator('#grid [data-media-card]').first().waitFor();
         if (text.locale !== 'zh-CN') {
-          const missing = await untranslated(page, 'header,#brandHome,[data-catalog-root],#grid');
+          const missing = await untranslated(page, 'header,#drawer,#brandHome,[data-catalog-root],#grid,#toasts');
           if (missing.length) gaps[`${text.locale} library`] = missing;
         }
         await page.getByRole('radio', { name: text.list, exact: true }).press('Space');

@@ -341,13 +341,14 @@ function ChipList({ rows, filterKey, multi, selected, counts, host: at, onToggle
     <div data-sidebar-chips="">
       {rows.map((row) => {
         const n = row.n === null ? null : counts ? counts.get(`${filterKey}\n${row.value}`) ?? 0 : row.n;
+        const label = ['loc', 'region', 'orient'].includes(filterKey) ? translate(row.label) : row.label;
         return (
           <button type="button" key={row.value} data-sidebar-chip="" aria-pressed={selected.includes(row.value)}
             data-key={filterKey} data-val={row.value} data-multi={multi ? '1' : '0'}
-            data-offline={row.offline ? '' : undefined} disabled={!!row.offline} title={row.offline || row.label}
+            data-offline={row.offline ? '' : undefined} disabled={!!row.offline} title={row.offline ? translate(row.offline) : label}
             onClick={() => onToggle(filterKey, row.value, multi)}>
             <Dot dot={row.dot} />
-            <span data-sidebar-chip-label="">{row.label}</span>
+            <span data-sidebar-chip-label="">{label}</span>
             {n === null ? null : <span data-sidebar-count="" data-count-badge={`${filterKey}:${row.value}`}>{n.toLocaleString()}</span>}
           </button>
         );
