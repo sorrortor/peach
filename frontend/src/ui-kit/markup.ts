@@ -6,6 +6,7 @@
  * 就是同一语义的第二份实现，`peach-web-ui` 的门槛不允许。 */
 import { esc, icon, requestErrorMessage } from '../core';
 import { islandShortcutsEntry } from '../island-skeleton';
+import { translate } from '../i18n';
 
 const NOTE_VARIANTS=new Set(['secondary','warning','error','success']);
 
@@ -43,6 +44,8 @@ export function noteHtml(message:any,{variant='secondary',label='',className='',
   /** 逐条明细，收在 Note 里默认折叠的 details；`hint` 放路径这类次要标注。 */
   details?: NoteDetails | null;
 }={}):string{
+  if(typeof message === 'string')message=translate(message);
+  label=translate(label);actionLabel=translate(actionLabel);
   const kind=NOTE_VARIANTS.has(variant)?variant:'secondary';
   const symbol=kind==='secondary'?'info':kind==='success'?'check':'alert';
   const role=kind==='error'?' role="alert"':' role="note"';
@@ -50,7 +53,7 @@ export function noteHtml(message:any,{variant='secondary',label='',className='',
     :actionHref?`<a class="geist-button" href="${esc(actionHref)}" data-note-action>${esc(actionLabel)}</a>`
     :`<button type="button" class="geist-button primary" data-note-action>${esc(actionLabel)}</button>`;
   return `<div class="geist-note geist-note-${kind}${className?` ${esc(className)}`:''}${size==='small'?' geist-note-small':''}${filled?' geist-note-filled':''}"${role}>
-    ${icon(symbol)}<p>${label?`<b>${esc(label)}</b>`:''}<span>${esc(kind==='error'?requestErrorMessage(message):message)}</span></p>${action}${details?noteDetailsHtml(details):''}</div>`;
+    ${icon(symbol)}<p>${label?`<b>${esc(label)}</b>`:''}<span>${esc(kind==='error'?translate(requestErrorMessage(message)):message)}</span></p>${action}${details?noteDetailsHtml(details):''}</div>`;
 }
 
 const PROJECT_BANNER_CLASSES:Record<string,string>={gray:'project-banner-gray',success:'ui-project-banner-success',warning:'ui-project-banner-warning',error:'ui-project-banner-error'};
@@ -107,6 +110,7 @@ export function spinnerHtml(label='加载中'):string{
 export function searchInputHtml({label,id='',name='',value='',placeholder='',attrs=''}:{
   label?: string; id?: string; name?: string; value?: unknown; placeholder?: string; attrs?: string;
 }={}):string{
+  label=label === undefined ? label : translate(label);placeholder=translate(placeholder);
   const parts=[
     'type="search" enterkeyhint="search"',
     id?`id="${esc(id)}"`:'',
@@ -126,7 +130,7 @@ export function searchInputHtml({label,id='',name='',value='',placeholder='',att
 export function loadingDotsHtml(label='正在处理', {className=''}={}):string{
   return `<span class="ui-geist-loading${className?` ${esc(className)}`:''}" role="status">
     <span class="ui-geist-loading-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-    <span>${esc(label)}</span></span>`;
+    <span>${esc(translate(label))}</span></span>`;
 }
 
 /**
@@ -157,7 +161,7 @@ export function boardTabsHtml(items:{value:unknown;label:unknown;count?:unknown;
 export function emptyStateHtml(iconName:string,title:unknown,description:unknown,{className='',actions=''}={}):string{
   return `<div class="ui-emptystate${className?` ${esc(className)}`:''}" data-geist-empty-state role="status">
     <div class="ui-es-icon" aria-hidden="true">${icon(iconName)}</div>
-    <div class="ui-es-copy"><h3>${esc(title)}</h3><p>${esc(description)}</p></div>
+    <div class="ui-es-copy"><h3>${esc(typeof title === 'string' ? translate(title) : title)}</h3><p>${esc(typeof description === 'string' ? translate(description) : description)}</p></div>
     ${actions?`<div class="ui-es-actions">${actions}</div>`:''}
   </div>`;
 }

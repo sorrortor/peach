@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 「应用与维护」中的开机自启、桌面快捷方式与版本更新。 */
 import { useState, type FormEvent } from 'react';
 import { LanguagePicker } from '../components/language-picker';
@@ -58,7 +59,7 @@ export function StartupSettings({ startup, receipt }: { startup: StartupState; r
         <SettingsRow label="只启动托盘，不打开网页">
           <Switch aria-label="只启动托盘，不打开网页" isSelected={silent} isDisabled={!startup.available || !enabled} onChange={setSilent} />
         </SettingsRow>
-        <SettingsRow label="在桌面创建快捷方式" description={startup.desktop_message || undefined}>
+        <SettingsRow label="在桌面创建快捷方式" description={startup.desktop_message ? translate(startup.desktop_message) : undefined}>
           <Switch aria-label="在桌面创建快捷方式" isSelected={desktop} isDisabled={!desktopReady} onChange={setDesktop} />
         </SettingsRow>
       </Rows>

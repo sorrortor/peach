@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 来源和凭证：哪些站要登录、这台电脑上填没填、去哪儿取。
  *
  * 值不回显。服务端只报存在性，保存成功之后这一栏清空，看得到的只有字段名——凭据回到
@@ -39,7 +40,7 @@ function StateChip({ row }: { row: CredentialRow }) {
   if (done) return <Chip variant="caption" color="lime">已配置</Chip>;
   const color = row.requirement === 'required' ? 'yellow'
     : row.requirement === 'blocked' ? 'rose' : 'neutral';
-  return <Chip variant="caption" color={color}>{CREDENTIAL_STATE[row.requirement] || ''}</Chip>;
+  return <Chip variant="caption" color={color}>{translate(CREDENTIAL_STATE[row.requirement] || '')}</Chip>;
 }
 
 function CredentialForm({ row, readOnly, toast }:
@@ -79,7 +80,7 @@ function CredentialForm({ row, readOnly, toast }:
       {row.howto ? <Help>{row.howto}</Help> : null}
       <div className="flex w-full flex-col gap-3">
         {(row.needs || []).map((name) => (
-          <Input key={name} type="password" label={name} placeholder={fieldHint(row, name)}
+          <Input key={name} type="password" label={name} placeholder={translate(fieldHint(row, name))}
             autoComplete="off" spellCheck="false" isDisabled={readOnly}
             value={values[name] || ''} onChange={(value) => setValues({ ...values, [name]: value })}
             className="w-full min-w-0" />
@@ -156,8 +157,8 @@ export function Credentials(
         { title: '不需要凭据', rows: rows.filter((row) => row.requirement === 'none') },
         { title: '暂不支持', rows: rows.filter((row) => row.requirement === 'blocked') },
       ].filter((group) => group.rows.length).map((group) => (
-        <section key={group.title} aria-label={group.title} className="flex flex-col gap-2">
-          <h4 className="text-body-medium text-text-secondary">{group.title}</h4>
+        <section key={group.title} aria-label={translate(group.title)} className="flex flex-col gap-2">
+          <h4 className="text-body-medium text-text-secondary">{translate(group.title)}</h4>
           <div className={cardClass({ variant: 'outlined', padding: 'none', className: 'flex flex-col overflow-hidden' })}>
             {group.rows.map((row) => (
               <CredentialSection key={row.provider} row={row} readOnly={readOnly} toast={toast} />

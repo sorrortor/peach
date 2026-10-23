@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 「应用与维护」中的运行信息、安装教程与卸载。 */
 import { useState, type FormEvent } from 'react';
 import { confirmModal } from '@peach/legacy/ui';
@@ -74,10 +75,10 @@ export function AutomaticUpdates({ initial, receipt }: { initial: AutomaticUpdat
             isDisabled={!initial.available || !initial.download_available || mode === 'off'}
             onChange={(on) => setMode(on ? 'download' : 'check')} />
         </SettingsRow>
-        <SettingsRow label="检查频率" description={help}>
+        <SettingsRow label="检查频率" description={help ? translate(help) : undefined}>
           <Select aria-label="检查频率" selectedKey={String(hours)} isDisabled={!initial.available}
             onSelectionChange={(key) => { if (key !== null) setHours(Number(key)); }}>
-            {INTERVALS.map(([key, name]) => <SelectItem key={key} id={key}>{name}</SelectItem>)}
+            {INTERVALS.map(([key, name]) => <SelectItem key={key} id={key}>{translate(name)}</SelectItem>)}
           </Select>
         </SettingsRow>
       </Rows>
@@ -95,8 +96,8 @@ function Facts({ facts }: { facts: ConfigurationFact[] }) {
       <FactList>
         {facts.map((fact) => (
           <Fact key={fact.term} term={fact.term}>
-            {fact.value}
-            {fact.download_url ? <ExternalLink href={fact.download_url}>{fact.download_label}</ExternalLink> : null}
+            {translate(fact.value)}
+            {fact.download_url ? <ExternalLink href={fact.download_url}>{translate(fact.download_label || '')}</ExternalLink> : null}
           </Fact>
         ))}
       </FactList>
@@ -140,7 +141,7 @@ export function UninstallSettings(
           ))}
         </Disclosure>
       </Stack>
-      <Footer status={status ? <p role={accepted ? 'status' : undefined}>{status}</p> : null}>
+      <Footer status={status ? <p role={accepted ? 'status' : undefined}>{translate(status)}</p> : null}>
         <Button variant="danger" disabled={!uninstall.available || Boolean(accepted)} onClick={remove}>卸载 Peach</Button>
       </Footer>
     </Section>

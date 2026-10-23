@@ -2,8 +2,9 @@
  *
  * 注册表里没有行内 Note：`notification` 条目是带关闭键和计时的浮动通知。这里按语气取
  * `status-*` 与 `notification-*` token 组合，差异登记在 `../boardui/ORIGIN.md`。 */
-import type { ReactNode } from 'react';
+import { Children, type ReactNode } from 'react';
 import { cx } from '@/utils/cx';
+import { translate } from '../../i18n';
 
 type Tone = 'neutral' | 'info' | 'success' | 'warning' | 'error';
 
@@ -24,8 +25,8 @@ export function Note(
         actionLayout === 'inline' && '@xl:flex-row @xl:items-center @xl:justify-between')}>
         <div className="flex min-w-0 flex-1 flex-col justify-center gap-0.5 self-stretch">
           {/* 正文常是服务端原话：长 URL、堆栈和多行原因照原样换行，不撑宽所在的卡。 */}
-          {title ? <p className="text-body-medium wrap-anywhere">{title}</p> : null}
-          <p className="whitespace-pre-line text-body-2-regular wrap-anywhere">{children}</p>
+          {title ? <p className="text-body-medium wrap-anywhere">{translate(title)}</p> : null}
+          <p className="whitespace-pre-line text-body-2-regular wrap-anywhere">{Children.map(children, child => typeof child === 'string' ? translate(child) : child)}</p>
         </div>
         {action ? <div data-note-action="" className="max-w-full">{action}</div> : null}
       </div>

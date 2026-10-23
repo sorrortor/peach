@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/base/buttons/button';
@@ -31,7 +32,7 @@ const moment = (value: string) => new Date(value).toLocaleString();
 function DiagnosticStatus({ status }: { status: string }) {
   return <Chip variant="caption" data-diagnostic-status={status}
     color={status === 'failed' ? 'rose' : status === 'warning' || status === 'stale' ? 'yellow' : 'neutral'}>
-    {STATUS[status] ?? '未取得'}
+    {translate(STATUS[status] ?? '未取得')}
   </Chip>;
 }
 
@@ -68,15 +69,15 @@ function Check({ name, check, navigate, configure, compact = false }: Pick<Diagn
   return <div data-diagnostic-check={name} className={cx('flex flex-col gap-4 border-b border-separator-border pr-3 last:border-b-0 sm:flex-row sm:items-center sm:justify-between', compact ? 'py-3' : 'py-5')}>
     <div className={cx('flex min-w-0 flex-1 flex-col', compact ? 'gap-1' : 'gap-2')}>
       <div className="flex flex-wrap items-center gap-3">
-        <Heading className={cx('text-text-primary', compact ? 'text-body-2-medium' : 'text-body-medium')}>{check.label}</Heading>
+        <Heading className={cx('text-text-primary', compact ? 'text-body-2-medium' : 'text-body-medium')}>{translate(check.label)}</Heading>
         <DiagnosticStatus status={check.status} />
       </div>
-      <p data-check-reason className={cx('text-body-2-regular break-words', compact ? 'text-text-secondary' : 'text-text-primary')}>{check.reason}</p>
-      {check.action ? <p className="text-body-2-regular text-text-secondary">处理建议：{check.action}</p> : null}
+      <p data-check-reason className={cx('text-body-2-regular break-words', compact ? 'text-text-secondary' : 'text-text-primary')}>{translate(check.reason)}</p>
+      {check.action ? <p className="text-body-2-regular text-text-secondary">处理建议：{translate(check.action)}</p> : null}
     </div>
     {check.target ? <div className="shrink-0 self-end sm:self-auto"><Button size="small" variant="secondary" onClick={() => check.target === '/settings/library'
       ? configure(section) : navigate(check.target!)}>{check.target === '/settings/library'
-        ? `打开${section}` : TARGET_LABELS[check.target] ?? '打开相关页面'}</Button></div> : null}
+        ? `打开${translate(section)}` : translate(TARGET_LABELS[check.target] ?? '打开相关页面')}</Button></div> : null}
   </div>;
 }
 
@@ -112,8 +113,8 @@ export function DiagnosticsPage(props: DiagnosticsProps) {
       <Disclosure summary={`其他检查 · ${other.length} 项`} contentClassName="gap-5">
         {SECTIONS.map(([title, keys]) => {
           const rows = other.filter(([key]) => keys.some(name => name === key));
-          return rows.length ? <section key={title} aria-label={title} data-diagnostic-group="" className="flex min-w-0 flex-col gap-2">
-            <h3 className="flex items-center gap-2 px-3 text-body-medium text-text-primary">{title}
+          return rows.length ? <section key={title} aria-label={translate(title)} data-diagnostic-group="" className="flex min-w-0 flex-col gap-2">
+            <h3 className="flex items-center gap-2 px-3 text-body-medium text-text-primary">{translate(title)}
               <span className="text-caption-1-regular text-text-secondary">{rows.length} 项</span>
             </h3>
             <SettingsCard>{rows.map(([key, check]) => <Check key={key} name={key} check={check} compact {...props} />)}</SettingsCard>
@@ -126,11 +127,11 @@ export function DiagnosticsPage(props: DiagnosticsProps) {
       {data.sources.map(source => <article key={source.source} data-diagnostic-source={source.source}>
         <SettingsCard><Stack>
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h3 className="flex min-w-0 items-center gap-2 text-body-medium text-text-primary"><SiteMark source={source.source} />{source.label}</h3>
+          <h3 className="flex min-w-0 items-center gap-2 text-body-medium text-text-primary"><SiteMark source={source.source} />{translate(source.label)}</h3>
           <DiagnosticStatus status={source.status} />
         </div>
         {/* 原因常是整段堆栈：平时只露异常那一行，全文收在「查看详情」后面。 */}
-        <ErrorExcerpt text={source.reason} className="text-body-regular text-text-primary" />
+        <ErrorExcerpt text={translate(source.reason)} className="text-body-regular text-text-primary" />
         <FactList>
           <Fact term="上次解析成功">{source.last_success_at ? moment(source.last_success_at) : '尚无成功记录'}</Fact>
           {source.last_check_at ? <Fact term="上次检查">{moment(source.last_check_at)}

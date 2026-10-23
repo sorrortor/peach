@@ -97,11 +97,11 @@ export function SidebarOrder({ host }: { host: SettingsPanelHost }) {
           <span data-sidebar-label=""><i data-sidebar-grip="" aria-hidden="true"><Icon name="grip-vertical" /></i>
             <Icon name={glyph ?? ''} /><b>{translate(label)}</b></span>
           <span data-sidebar-actions="">
-            <button type="button" data-sidebar-key={key} data-sidebar-move="-1" aria-label={`上移 ${label}`} title="上移"
+            <button type="button" data-sidebar-key={key} data-sidebar-move="-1" aria-label={`上移 ${translate(label)}`} title="上移"
               disabled={index === 0} onClick={() => step(key, -1)}><Icon name="chevron-up" /></button>
-            <button type="button" data-sidebar-key={key} data-sidebar-move="1" aria-label={`下移 ${label}`} title="下移"
+            <button type="button" data-sidebar-key={key} data-sidebar-move="1" aria-label={`下移 ${translate(label)}`} title="下移"
               disabled={index === visible.length - 1} onClick={() => step(key, 1)}><Icon name="chevron-down" /></button>
-            <button type="button" data-sidebar-key={key} data-sidebar-hide="" aria-label={`隐藏 ${label}`} title="隐藏"
+            <button type="button" data-sidebar-key={key} data-sidebar-hide="" aria-label={`隐藏 ${translate(label)}`} title="隐藏"
               disabled={visible.length === 1}
               onClick={() => { if (order.length > 1) commit(order.filter((item) => item !== key)) }}><Icon name="eye-off" /></button>
           </span>

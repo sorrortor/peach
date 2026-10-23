@@ -9,7 +9,7 @@
  * 详情浮窗打开期间壳不推任何东西，关掉回来还是同一批节点（`buildBars` 那段注释讲了为什么）。 */
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { createPortal } from 'react-dom';
-import { translate } from '../../i18n';
+import { format, translate } from '../../i18n';
 import { fitSkeleton, popBadges, popCount } from '@peach/legacy/ui';
 
 import { FilterGlassRows, FilterPill } from '../components/filter-glass';
@@ -225,7 +225,7 @@ function Head({ count, refreshing, layout, sorts, actions }: CatalogFilterProps)
 function Readout({ count }: { count: CatalogFilterProps['count'] }) {
   const readout = useRef<HTMLSpanElement>(null);
   const skeleton = useRef<HTMLSpanElement>(null);
-  const text = count ? `${count.total.toLocaleString()} 个符合 · 显示 ${count.shown.toLocaleString()}` : '';
+  const text = count ? format('{0} 个符合 · 显示 {1}', count.total.toLocaleString(), count.shown.toLocaleString()) : '';
   useLayoutEffect(() => {
     if (count === false) return;
     if (!count) { fitSkeleton(skeleton.current); return }

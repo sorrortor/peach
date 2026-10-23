@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* Cloudflare Tunnel：临时链接显示服务实际返回的随机入口，命名隧道显示配置好的公开主机名。
  *
  * 临时链接没有稳定域名和独立身份层，服务端会在 `open` 模式下拒绝启动。命名隧道多一份
@@ -103,7 +104,7 @@ export function TunnelSettings({ revision: initialRevision, initial, receipt }: 
           ? <RadioGroup aria-label="公网入口的形态（二选一）" value={mode} isDisabled={active}
               onChange={(next) => setMode(next as TunnelState['mode'])} className={SEGMENTED_TRACK}>
               {MODES.map(([value, label]) => (
-                <Radio key={value} value={value} className={SEGMENT}>{label}</Radio>
+                <Radio key={value} value={value} className={SEGMENT}>{translate(label)}</Radio>
               ))}
             </RadioGroup>
           : null}

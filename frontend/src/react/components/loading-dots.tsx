@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 后台任务仍在推进、但没有总量可言时的 Loading Dots（`peach-web-ui`）。
  *
  * 不用 Spinner：Spinner 只反馈用户刚刚点下的那一下。也不画没有分母的进度条。
@@ -7,6 +8,7 @@
  * 字号跟着按钮走。 */
 
 export function LoadingDots({ label, inline = false }: { label: string; inline?: boolean }) {
+  label = translate(label);
   const dots = (
     <span aria-hidden className="inline-flex shrink-0 items-center gap-1">
       <i className="dot-wave-0 size-1 rounded-full bg-current" />

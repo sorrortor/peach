@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 带单位、可选开关与字段错误反馈的数值设置。
  *
  * 可选的那几项（悬停放大、相关推荐、搜索记录、关注自动更新）前面有一枚开关：关掉就是 0，
@@ -120,7 +121,7 @@ export function NumberSetting({ id, label, value, disabled = false, onApply }: {
               }
             }}
             onKeyDown={(event) => { if (event.key === 'Enter') { event.preventDefault(); commit() } }} />
-          <span aria-hidden="true">{unit}{dayReading(Number(draft), unit) ? ` · ${dayReading(Number(draft), unit)}` : ''}</span>
+          <span aria-hidden="true">{translate(unit)}{dayReading(Number(draft), unit) ? ` · ${translate(dayReading(Number(draft), unit))}` : ''}</span>
         </div>
         <small id={`${id}-error`} data-number-error="" role="status" hidden={!error}>{error}</small>
       </div>

@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 「媒体库与入库」分组：媒体目录与自动入库，每个文件夹标着挂载状态。
  *
  * 服务端检查管理权限后用 `editable` 控制表单；没有权限时只说明原因。
@@ -188,7 +189,7 @@ function MountStatus({ data }: { data: ConfigurationData }) {
     <Section title="挂载状态">
       <FactList>
         {sources.map((row, index) => (
-          <Fact key={index} term={<><SourceMark mark={sourceMark(row.location)} />{sourceName(row.location)}</>}>
+          <Fact key={index} term={<><SourceMark mark={sourceMark(row.location)} />{translate(sourceName(row.location))}</>}>
             {row.path || '未配置挂载点'}<MountBadge online={row.online} />
           </Fact>
         ))}

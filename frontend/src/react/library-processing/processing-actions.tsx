@@ -8,6 +8,7 @@ import { formModal, iconSwitchHtml } from '@peach/legacy/ui';
 import { MenuDialog } from '../components/menu-dialog';
 import { busyProps } from '../settings/use-action';
 import type { LibraryProcessingCommand, ProcessingSpeed } from './library-processing';
+import { translate } from '../../i18n';
 
 export const RESOURCE_NOTICE_KEY = 'peach.library-processing.resource-notice.v1';
 
@@ -41,12 +42,12 @@ export function ProcessingActions({ busy, scan = false, metadataOnly = false, sp
     const previews = command.stage === 'previews';
     const title = previews ? '生成视频预览' : command.stage === 'scan' ? '扫描媒体文件' : '同步媒体库';
     const dialog = formModal({
-      title,
-      description: previews
+      title: translate(title),
+      description: translate(previews
         ? '生成视频预览会读取视频并占用处理器，可能让电脑变慢。需要同时使用电脑时，可选择低占用模式。'
-        : `处理会读取媒体文件${command.stage === 'scan' ? '' : metadataOnly ? '并下载资料' : '、下载资料并生成视频预览'}，可能让电脑变慢。需要同时使用电脑时，可选择低占用模式。`,
-      body: iconSwitchHtml('processing-speed', '处理模式', [['low', '低占用'], ['standard', '标准'], ['high', '全速']], speedMode, { text: true }),
-      confirmLabel: title,
+        : `处理会读取媒体文件${command.stage === 'scan' ? '' : metadataOnly ? '并下载资料' : '、下载资料并生成视频预览'}，可能让电脑变慢。需要同时使用电脑时，可选择低占用模式。`),
+      body: iconSwitchHtml('processing-speed', translate('处理模式'), [['low', translate('低占用')], ['standard', translate('标准')], ['high', translate('全速')]], speedMode, { text: true }),
+      confirmLabel: translate(title),
       onConfirm: async () => {
         const selected = dialog.dialog.querySelector<HTMLInputElement>('input[name="processing-speed"]:checked')?.value;
         await onRun({ ...command, speed_mode: selected === 'low' ? 'low' : selected === 'high' ? 'high' : 'standard' });
@@ -58,7 +59,7 @@ export function ProcessingActions({ busy, scan = false, metadataOnly = false, sp
   };
   return <>
     <span data-button-group data-split-button data-variant="primary">
-      <Button leadingIcon={primary.icon} {...busyProps(busy)} onClick={() => run(primary.command)}>{primary.label}</Button>
+      <Button leadingIcon={primary.icon} {...busyProps(busy)} onClick={() => run(primary.command)}>{translate(primary.label)}</Button>
       <Button ref={trigger} iconOnly leadingIcon={RiArrowDownSLine} aria-label="更多同步方式"
         aria-haspopup="dialog" aria-expanded={open} {...busyProps(busy)} onClick={() => { if (!busy) setOpen(!open) }} />
     </span>
@@ -70,7 +71,7 @@ export function ProcessingActions({ busy, scan = false, metadataOnly = false, sp
           return <button key={label} type="button" disabled={blocked}
             title={blocked ? '请先在媒体库设置中开启视频预览生成' : undefined}
             className={cx(MENU_ITEM, MENU_ITEM_INTERACTIVE, 'text-body-2-medium')}
-            onClick={() => run(command)}><Icon aria-hidden className="size-4 shrink-0" />{label}</button>;
+            onClick={() => run(command)}><Icon aria-hidden className="size-4 shrink-0" />{translate(label)}</button>;
         })}
       </MenuDialog>
     </Popover>

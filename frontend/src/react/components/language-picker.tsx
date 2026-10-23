@@ -17,6 +17,6 @@ export function LanguagePicker({ hideLabel = false }: { hideLabel?: boolean }) {
       <option value="zh-CN">中文</option><option value="en">English</option><option value="th">ไทย</option>
     </select>
     <p className="text-sm text-text-secondary">{translate('切换语言会刷新页面，请先保存表单。')}</p>
-    {failure ? <p role="alert">Language could not be saved. / ไม่สามารถบันทึกภาษาได้ / 无法保存语言</p> : null}
+    {failure ? <p role="alert">无法保存语言</p> : null}
   </div>;
 }

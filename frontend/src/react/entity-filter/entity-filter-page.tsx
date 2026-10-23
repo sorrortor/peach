@@ -249,13 +249,13 @@ export function Segments({ name, label, value, options, onChange }: {
   name?: string; label: string; value: string; options: readonly SegmentOption[]; onChange(value: string): void;
 }) {
   return (
-    <RadioGroup name={name} aria-label={label} orientation="horizontal" value={value} onChange={onChange}
+    <RadioGroup name={name} aria-label={translate(label)} orientation="horizontal" value={value} onChange={onChange}
       data-entity-layout="" className={SEGMENTED_GLASS_TRACK}>
       {options.map(([option, text, symbol]) => {
         const Glyph = spriteGlyph(symbol);
         return (
-          <Radio key={option} value={option} aria-label={text} data-glass-segment="" className={SEGMENT_GLASS}>
-            <span title={text} className="contents"><Glyph className="size-4" /></span>
+          <Radio key={option} value={option} aria-label={translate(text)} data-glass-segment="" className={SEGMENT_GLASS}>
+            <span title={translate(text)} className="contents"><Glyph className="size-4" /></span>
           </Radio>
         );
       })}
@@ -293,7 +293,7 @@ export function SortKeys({ sorts, onSort }: { sorts: readonly EntitySortKey[]; o
         const Arrow = spriteGlyph(sort.dir === 'asc' ? 'arrow-up' : 'arrow-down');
         return (
           <button key={sort.key} type="button" data-entity-sort={sort.key} data-entity-press=""
-            aria-pressed={sort.pressed} aria-label={sort.ariaLabel || undefined} onClick={() => onSort(sort.key)}>
+            aria-pressed={sort.pressed} aria-label={sort.ariaLabel ? translate(sort.ariaLabel) : undefined} onClick={() => onSort(sort.key)}>
             {translate(sort.label)}{sort.pressed && sort.dir ? <Arrow className="size-3.5" /> : null}
           </button>
         );

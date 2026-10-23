@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TaskProgress } from '../components/task-progress';
 import { processingLine, type LibraryProcessingData } from './library-processing';
+import { translate } from '../../i18n';
 
 /** 服务端等待时长作为起点，本地时钟只推进当前显示。 */
 function useProcessingLine(state: LibraryProcessingData): string {
@@ -16,7 +17,7 @@ function useProcessingLine(state: LibraryProcessingData): string {
     return () => window.clearInterval(timer);
   }, [state, ticking]);
   const seconds = ticking && clock.snapshot === state ? clock.seconds : 0;
-  return processingLine(seconds ? { ...state, waited_seconds: waiting! + seconds } : state);
+  return translate(processingLine(seconds ? { ...state, waited_seconds: waiting! + seconds } : state));
 }
 
 export function ProcessingLine({ state }: { state: LibraryProcessingData }) {

@@ -3,6 +3,7 @@
  * 数据管理页卡片、常驻任务面与缺预览提示读同一个 `queryKey`，使用同一份任务快照。
  * 轮询也由 Query 合成一份，进度、失败与完成状态由服务端统一提供。
  * 端点在 `frontend/src` 里只在这里声明一次（`tests/test_frontend_build.py` 盯着）。 */
+import { format, translate } from '../../i18n';
 import { apiGet } from '../../api';
 import { elapsedText, progressText } from '../activity/tasks';
 import { queryClient } from '../query';
@@ -90,13 +91,13 @@ export const processingActive = (state?: LibraryProcessingData) =>
 /** 时间向分钟取整；区间两端始终使用同一单位。 */
 export function remainingTime(state: LibraryProcessingData): string {
   if (!processingActive(state)) return '';
-  if (state.status === 'paused') return '已暂停，继续后更新预估';
-  if (state.status === 'pausing') return '正在暂停，当前步骤结束后暂停';
-  if (state.stalled) return '等待当前文件响应，剩余时间待更新';
+  if (state.status === 'paused') return translate('已暂停，继续后更新预估');
+  if (state.status === 'pausing') return translate('正在暂停，当前步骤结束后暂停');
+  if (state.stalled) return translate('等待当前文件响应，剩余时间待更新');
   const low = state.eta_seconds_min, high = state.eta_seconds_max;
   if (low == null || high == null || !Number.isFinite(low) || !Number.isFinite(high) || low < 0 || high < low)
-    return '正在估算剩余时间…';
-  if (high < 60) return '预计剩余不到 1 分钟';
+    return translate('正在估算剩余时间…');
+  if (high < 60) return translate('预计剩余不到 1 分钟');
   const unit = high >= 86400 ? 86400 : high >= 3600 ? 3600 : 60;
   const label = unit === 86400 ? '天' : unit === 3600 ? '小时' : '分钟';
   const precision = unit === 60 ? 1 : 10;
@@ -104,7 +105,7 @@ export function remainingTime(state: LibraryProcessingData): string {
   const end = Math.max(start, Math.ceil(high / unit * precision) / precision);
   const span = start === end ? `${end}` : `${start}–${end}`;
   const rough = state.eta_initial || state.eta_kind !== 'measured' ? '（粗估）' : '';
-  return `预计剩余约 ${span} ${label}${rough}${state.eta_scope ? ` · ${state.eta_scope}` : ''}`;
+  return format('预计剩余约 {0} {1}{2}{3}', span, translate(label), translate(rough), state.eta_scope ? ` · ${translate(state.eta_scope)}` : '');
 }
 
 export const fetchLibraryProcessing = (signal?: AbortSignal) =>
@@ -153,26 +154,26 @@ const NOTE_LABELS: Record<string, string> = {
 export function notesLine(notes: Record<string, number>): string {
   const parts = Object.entries(notes)
     .filter(([key, count]) => NOTE_LABELS[key] && count > 0)
-    .map(([key, count]) => `${NOTE_LABELS[key]} ${count.toLocaleString()} 部`);
-  return parts.length ? `外部来源${parts.join('、')}，7 天内不再问。` : '';
+    .map(([key, count]) => format('{0} {1} 部', translate(NOTE_LABELS[key]), count.toLocaleString()));
+  return parts.length ? format('外部来源{0}，7 天内不再问。', parts.join(translate('、'))) : '';
 }
 
 /** 此刻在做什么：哪个文件、哪一步、等了多久。 */
 export function currentLine(state: LibraryProcessingData): string {
-  if (state.status === 'paused') return '已暂停';
-  if (state.status === 'pausing') return '正在暂停';
-  const action = ACTION_LABELS[state.current_action || ''] || state.stage || '正在处理';
-  const waited = state.waited_seconds ? ` · 已等待 ${elapsedText(state.waited_seconds)}` : '';
+  if (state.status === 'paused') return translate('已暂停');
+  if (state.status === 'pausing') return translate('正在暂停');
+  const action = translate(ACTION_LABELS[state.current_action || ''] || state.stage || '正在处理');
+  const waited = state.waited_seconds ? ` · ${format('已等待 {0}', translate(elapsedText(state.waited_seconds)))}` : '';
   return state.current_asset_name
-    ? `当前：${state.current_asset_name} · ${action}${waited}`
+    ? format('当前：{0} · {1}{2}', state.current_asset_name, action, waited)
     : action + waited;
 }
 
 /** 已知总量显示实际完成数；扫描目录期间显示持续发现的文件数。 */
 export function processingLine(state: LibraryProcessingData): string {
-  const count = state.total ? `${progressText(state.checked, state.total)} 项`
+  const count = state.total ? format('{0} 项', progressText(state.checked, state.total))
     : state.current_action === 'scanning_files' || state.stage === '扫描文件'
-      ? `已发现 ${(state.scanned || 0).toLocaleString()} 个文件` : '';
+      ? format('已发现 {0} 个文件', (state.scanned || 0).toLocaleString()) : '';
   return currentLine(state) + (count ? ` · ${count}` : '');
 }
 
@@ -189,13 +190,13 @@ export function issueDetails(state: LibraryProcessingData): IssueDetails | null 
   if (!issues.length) return null;
   return {
     label: state.issues_truncated
-      ? `问题清单：共 ${state.issue_count || 0} 项，展开查看前 ${issues.length} 项`
-      : `问题清单：共 ${state.issue_count || 0} 项`,
+      ? format('问题清单：共 {0} 项，展开查看前 {1} 项', state.issue_count || 0, issues.length)
+      : format('问题清单：共 {0} 项', state.issue_count || 0),
     items: issues.map((issue, at) => ({
       key: `${issue.asset_id ?? 'source'}-${at}`,
-      label: issue.title || (issue.asset_id ? `视频 ${issue.asset_id}` : '媒体来源'),
+      label: issue.title || (issue.asset_id ? format('视频 {0}', issue.asset_id) : translate('媒体来源')),
       href: issue.asset_id ? `/assets/${issue.asset_id}` : '',
-      note: issue.message,
+      note: translate(issue.message),
       hint: issue.path || '',
     })),
     log: state.issues_log || '',
@@ -223,10 +224,10 @@ export function announceCompletion(
     if (state.job_id) localStorage.setItem(ANNOUNCED_KEY, state.job_id);
   } catch { /* 存储不可用时照常提示，最多重复一次 */ }
   if (state.requested_stage === 'previews') {
-    toast(`视频预览已生成：${state.previews || 0} 部`);
+    toast(format('视频预览已生成：{0} 部', state.previews || 0));
     return;
   }
-  toast(`扫描与资料采集已完成：识别 ${state.identified || 0} 个番号，`
-    + `整理 ${state.candidates || 0} 组资料结果，自动保存 ${state.auto_applied || 0} 条`
-    + (state.previews ? `，生成 ${state.previews} 部视频预览` : ''));
+  toast(format('扫描与资料采集已完成：识别 {0} 个番号，整理 {1} 组资料结果，自动保存 {2} 条',
+    state.identified || 0, state.candidates || 0, state.auto_applied || 0)
+    + (state.previews ? format('，生成 {0} 部视频预览', state.previews) : ''));
 }

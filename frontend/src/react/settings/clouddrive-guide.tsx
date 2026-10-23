@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 媒体来源选了网盘时的 CloudDrive 起步配置。
  *
  * 页内只留填哪里、填多少、怎么确认；三处缓存的分工、换算与起步值的来源在
@@ -25,13 +26,13 @@ export function CloudDriveGuide() {
         {/* 三档同形、跨档比较：窄处每档一块纵排，宽处三项读数排成三列对齐。 */}
         <ul aria-label="按缓存所在硬盘分档" className="flex flex-col gap-2">
           {CLOUDDRIVE_PROFILES.map((profile) => (
-            <li key={profile.name} className="flex flex-col gap-2 rounded-2lg border border-separator-border bg-background-primary-default p-3">
-              <p className="text-body-medium text-text-primary">{profile.name}</p>
+            <li key={translate(profile.name)} className="flex flex-col gap-2 rounded-2lg border border-separator-border bg-background-primary-default p-3">
+              <p className="text-body-medium text-text-primary">{translate(profile.name)}</p>
               <dl className="inline-grid grid-cols-1 gap-2 @md:grid-cols-3">
                 {READINGS.map(([key, term]) => (
                   <div key={key} className="flex flex-col">
-                    <dt className="text-caption-1-regular text-text-secondary">{term}</dt>
-                    <dd className="text-body-regular text-text-primary">{profile[key]}</dd>
+                    <dt className="text-caption-1-regular text-text-secondary">{translate(term)}</dt>
+                    <dd className="text-body-regular text-text-primary">{translate(profile[key])}</dd>
                   </div>
                 ))}
               </dl>

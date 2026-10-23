@@ -1,3 +1,4 @@
+import { translate } from '../i18n';
 /* 卡片密度：大图为主，密集为辅。值存在自己的键（`density`）上，不在偏好对象里。
  *
  * 写的是 <html> 上的 `--tile`（一格的模块宽度）与 <body> 上的 `data-density`，以及顶栏那颗大小图键
@@ -20,7 +21,7 @@ function paintSizeGlyph(button: HTMLElement, size: string): void {
   const [big, small] = PHOTO_SIZES;
   if (!button.querySelector('[data-icon-swap]')) button.innerHTML = iconSwapHtml(big[2], small[2], size === small[0] ? 'b' : 'a');
   else setIconSwap(button, size === small[0] ? 'b' : 'a');
-  button.setAttribute('aria-label', size === 'big' ? '切换为小图' : '切换为大图');
+  button.setAttribute('aria-label', translate(size === 'big' ? '切换为小图' : '切换为大图'));
 }
 
 const densityButton = (): HTMLElement | null => document.querySelector<HTMLElement>('#density');
@@ -31,7 +32,7 @@ export function applyDensity(density: Density = currentDensity()): void {
   const button = densityButton();
   if (!button) return;
   button.setAttribute('aria-pressed', String(density === 'dense'));
-  button.title = '当前：' + (density === 'big' ? '大图' : '密集');
+  button.title = translate('当前：' + (density === 'big' ? '大图' : '密集'));
   paintSizeGlyph(button, density === 'big' ? 'big' : 'small');
 }
 
@@ -47,6 +48,6 @@ export function paintPhotoSizeButton(size: string): void {
   const button = densityButton();
   if (!button) return;
   button.setAttribute('aria-pressed', String(size === 'small'));
-  button.title = '当前：' + (size === 'big' ? '大图' : '小图');
+  button.title = translate('当前：' + (size === 'big' ? '大图' : '小图'));
   paintSizeGlyph(button, size);
 }

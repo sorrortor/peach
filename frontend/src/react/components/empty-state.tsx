@@ -5,7 +5,8 @@
  * 钩子，不参与样式。
  *
  * 外壳按它落在哪里选，不按「哪个好看」选：卡里的空态自己不再画一层框。 */
-import type { ComponentType, ReactNode } from 'react';
+import { Children, type ComponentType, type ReactNode } from 'react';
+import { translate } from '../../i18n';
 
 type Glyph = ComponentType<{ className?: string; 'aria-hidden'?: boolean | 'true' | 'false' }>;
 
@@ -36,8 +37,8 @@ export function EmptyState(
           </span>
         )
         : <Icon aria-hidden className="size-6 text-text-tertiary" />}
-      <h3 className={`${page ? 'text-body-semibold' : 'text-headline-medium'} text-text-primary`}>{title}</h3>
-      <p className={`${page ? 'max-w-empty-copy leading-empty-copy' : 'max-w-prose'} text-body-2-regular text-text-secondary`}>{children}</p>
+      <h3 className={`${page ? 'text-body-semibold' : 'text-headline-medium'} text-text-primary`}>{translate(title)}</h3>
+      <p className={`${page ? 'max-w-empty-copy leading-empty-copy' : 'max-w-prose'} text-body-2-regular text-text-secondary`}>{Children.map(children, child => typeof child === 'string' ? translate(child) : child)}</p>
       {/* 去处属于这一块，不摆到框外面：「还没有内容」和一个不知道属于谁的按钮分开放时，
           读者要先把两样东西连起来才知道按下去做什么。 */}
       {actions ? <div className="mt-2 flex flex-wrap justify-center gap-2">{actions}</div> : null}
