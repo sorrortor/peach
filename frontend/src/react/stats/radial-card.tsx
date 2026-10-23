@@ -7,6 +7,7 @@
  * 选中态，分不出「看一眼」和「钉住」，所以圈的形状与点击走 `radialBarProps` 接到这里。
  * 差异登记在 `../evilcharts/ORIGIN.md`。 */
 import { useState } from 'react';
+import { translate } from '../../i18n';
 import { Sector, type SectorProps } from 'recharts';
 
 import { fmtSize } from '@peach/legacy/core';
@@ -37,6 +38,7 @@ const TILE_PINNED = [
 export function RadialCard(
   { title, rows, empty, unit = '个视频' }: { title: string; rows: RadialSlice[]; empty: string; unit?: string },
 ) {
+  title = translate(title); empty = translate(empty); unit = translate(unit);
   /* 钉住的那一段和指针扫过的那一段分开记：扫过去要能回到钉住的那一段，合成一个状态的话
      鼠标一离开就把用户点下的选择也擦了。 */
   const [pinned, setPinned] = useState(-1);

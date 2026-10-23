@@ -80,6 +80,15 @@ describe('界面语言', () => {
     expect(nested).toContain('save("登录")');
   });
 
+  it('translates dashboard display props without touching editable templates or identifiers', () => {
+    const code = localizeJsx('const node=<Card figure={`${count} 项`} meta="离线，已跳过" detail="尚无主维度" value="标题" id="标题" />;', '/src/react/stats/sample.tsx');
+    expect(code).toContain('__peachFormat("{0} 项", (count))');
+    expect(code).toContain('__peachTranslate("离线，已跳过")');
+    expect(code).toContain('__peachTranslate("尚无主维度")');
+    expect(code).toContain('value="标题" id="标题"');
+    expect(localizeJsx('const node=<Card meta="离线，已跳过" />;', '/src/react/unrelated/sample.tsx')).toBeNull();
+  });
+
   it('covers every display message in the localized surfaces and preserves placeholders', () => {
     const root = resolve(process.cwd(), 'src/react');
     const missing: Record<string, string[]> = {};

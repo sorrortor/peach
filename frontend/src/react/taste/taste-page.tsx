@@ -13,6 +13,7 @@
  * 「读取浏览器历史」是后台任务，关掉页面照样在跑。首屏读到的旧终态不冒充新结果：只有本次
  * 点过读取、或者本次亲眼见过它在跑，终态才发回执并让 dashboard 重取（ADR-0031）。 */
 import { useRef, useState } from 'react';
+import { translate } from '../../i18n';
 import type { ChangeEvent } from 'react';
 import {
   RiArrowDownSLine, RiArrowRightSLine, RiCompassLine, RiDatabase2Line, RiDeleteBinLine,
@@ -54,7 +55,7 @@ import { ActivityHeat } from '../charts/heat-card';
 import { CreatorSankey, RankedBars, TasteRadar } from './charts';
 import { BrowserSources, SOURCE_TILE } from './browser-sources';
 import {
-  DEFAULT_WINDOW, fetchTaste, fetchTasteJob, historySpan, IDLE_POLL_MS, importTasteExport, radarRows,
+  analysisPresentation, DEFAULT_WINDOW, fetchTaste, fetchTasteJob, historySpan, IDLE_POLL_MS, importTasteExport, radarRows,
   rankDetail, rankShares, removeTasteSource, startTasteRefresh, tasteDate, tasteDimensions, tasteHours,
   tasteKey, TASTE_REFRESH_KEY, TASTE_WINDOWS, type RankRow, type TasteData, type TasteJob,
 } from './taste';
@@ -94,7 +95,7 @@ function SummaryCard({ icon: Icon, term, figure, detail, detailTitle, accent }:
 { icon: Glyph; term: string; figure: string; detail?: string; detailTitle?: string; accent: number }) {
   return (
     <div className={statCardClass()}>
-      <StatCard label={term} icon={Icon} accent={accent} figure={figure}
+      <StatCard label={translate(term)} icon={Icon} accent={accent} figure={figure}
         footer={<span className="block min-w-0 truncate" title={detailTitle || detail}>{detail ?? ''}</span>} />
     </div>
   );
@@ -207,7 +208,7 @@ function DimensionPanels(
     <Tabs className={`${cardClass({ padding: 'none' })} flex flex-col`}>
       <div className="px-4 pt-3">
         <TabList aria-label={label} className={SEGMENTED_TRACK}>
-          {panels.map((panel) => <Tab key={panel.id} id={panel.id} className={SEGMENT}>{panel.name}</Tab>)}
+          {panels.map((panel) => <Tab key={panel.id} id={panel.id} className={SEGMENT}>{translate(panel.name)}</Tab>)}
         </TabList>
       </div>
       {panels.map((panel) => (
@@ -222,7 +223,7 @@ function DimensionPanels(
 /** 口味总结：一句结论、几条要点，加上点进去就能做的事。 */
 function AnalysisCard({ data, onSignal, navigate }:
 { data: TasteData } & Pick<TasteProps, 'onSignal' | 'navigate'>) {
-  const analysis = data.analysis;
+  const analysis = analysisPresentation(data.analysis);
   if (!analysis?.headline) return null;
   const confidence = analysis.confidence || {};
   const leads = [
@@ -286,8 +287,8 @@ function HistoryGuide({ onboarding, done }: { onboarding: boolean; done: boolean
   return (
     <div className={cardClass({ padding: 'none', className: 'p-4' })}>
       <Disclosure summary="浏览器历史记录导入指南" defaultOpen={onboarding}>
-        <p className="text-body-2-regular text-text-secondary">{GUIDE_LOCAL}</p>
-        <p className="text-body-2-regular text-text-secondary">{GUIDE_REMOTE}</p>
+        <p className="text-body-2-regular text-text-secondary">{translate(GUIDE_LOCAL)}</p>
+        <p className="text-body-2-regular text-text-secondary">{translate(GUIDE_REMOTE)}</p>
         <ul className="flex list-disc flex-col gap-1 pl-5 text-body-2-regular text-text-secondary">
           <li>
             Chrome：在 <a href="https://takeout.google.com/" target="_blank" rel="noopener noreferrer"
@@ -300,7 +301,7 @@ function HistoryGuide({ onboarding, done }: { onboarding: boolean; done: boolean
             {' '}导出历史记录，再导入导出文件。
           </li>
         </ul>
-        <p className="text-body-2-regular text-text-secondary">{GUIDE_REFRESH}</p>
+        <p className="text-body-2-regular text-text-secondary">{translate(GUIDE_REFRESH)}</p>
         <span className="self-start">
           <Button variant="secondary" size="small" onClick={skip}>跳过</Button>
         </span>
@@ -322,7 +323,7 @@ function HistoryActions(
   return (
     <>
       <span data-button-group data-split-button data-variant="primary">
-        <Button leadingIcon={RiCompassLine} title={REFRESH_TITLE} onClick={onRefresh} {...busyProps(busy)}>
+        <Button leadingIcon={RiCompassLine} title={translate(REFRESH_TITLE)} onClick={onRefresh} {...busyProps(busy)}>
           读取浏览器记录
         </Button>
         <Button ref={trigger} iconOnly leadingIcon={RiArrowDownSLine}
@@ -376,7 +377,7 @@ function SourceList(
               <span className="flex min-w-0 grow flex-col gap-0.5">
                 <b className="min-w-0 text-body-2-medium break-words text-text-primary">{source.profile}</b>
                 <small className="min-w-0 text-caption-1-regular break-words text-text-secondary">
-                  {`导入文件 · ${source.host} · ${Number(source.visits || source.bookmarks || 0).toLocaleString()} ${source.bookmarks ? '枚书签' : '条历史'}`}
+                  {`导入文件 · ${source.host} · ${Number(source.visits || source.bookmarks || 0).toLocaleString()} ${translate(source.bookmarks ? '枚书签' : '条历史')}`}
                 </small>
               </span>
               <Button variant="secondary" size="small" aria-label={`移除 ${source.profile}`} className="shrink-0"
@@ -462,7 +463,7 @@ export function TastePage(props: TasteProps) {
   const coverage = data.coverage || {};
   const rank = data.rankings || {};
   const storage = data.storage || {};
-  const categories = tasteDimensions(rank.browser_categories || []);
+  const categories = tasteDimensions(rank.browser_categories || []).map(row => ({ ...row, name: translate(row.name) }));
   const radar = radarRows(categories).length > 0;
   const gaps = data.gaps || [];
   const tagged = coverage.tagged || 0;
@@ -485,7 +486,7 @@ export function TastePage(props: TasteProps) {
           <div className="flex flex-wrap items-center gap-2">
             <Select aria-label="分析范围" selectedKey={range}
               onSelectionChange={(key) => { if (key !== null) setRange(String(key)) }}>
-              {TASTE_WINDOWS.map(([key, name]) => <SelectItem key={key} id={key}>{name}</SelectItem>)}
+              {TASTE_WINDOWS.map(([key, name]) => <SelectItem key={key} id={key}>{translate(name)}</SelectItem>)}
             </Select>
             <HistoryActions busy={running || refresh.isPending || load.isPending}
               onRefresh={startRefresh} onImport={() => file.current?.click()}
@@ -588,6 +589,7 @@ export function TastePage(props: TasteProps) {
 
 /** 一条覆盖率：读数、待补的数量与那条条共用同一对分子分母。 */
 function CoverageMetric({ term, value, rest }: { term: string; value: number; rest: number }) {
+  term = translate(term);
   const total = Math.max(value + rest, 1);
   return (
     <div className="flex flex-col gap-1.5 border-b border-separator-border py-3 last:border-b-0">

@@ -11,6 +11,7 @@ export interface ActivityCounts {
 /** 热力图里的一格。`share` 是这一格相对最忙那一格的浓度，0 到 1。 */
 export interface HeatCell { key: string; label: string; count: number; share: number }
 
+import { translate } from '../../i18n';
 export const WEEKDAYS = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
 
 /** 有计数的格子至少留一成浓度：一次和一次都没有必须看得出差别。 */
@@ -29,7 +30,7 @@ export function hourGrid(activity: ActivityCounts | undefined): { cells: HeatCel
   const flat = counts.flat();
   const max = Math.max(1, ...flat);
   const cells = counts.flatMap((row, day) => row.map((count, hour) => ({
-    key: `${day}-${hour}`, label: `${WEEKDAYS[day]} ${hour}:00`, count, share: shareOf(count, max),
+    key: `${day}-${hour}`, label: `${translate(WEEKDAYS[day]!)} ${hour}:00`, count, share: shareOf(count, max),
   })));
   return { cells, total: flat.reduce((sum, count) => sum + count, 0) };
 }

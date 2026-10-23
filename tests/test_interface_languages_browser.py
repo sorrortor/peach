@@ -23,6 +23,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class InterfaceLanguagesBrowserTests(unittest.TestCase):
     def test_languages_persist_on_desktop_and_mobile(self):
+        self._check_languages(('e2e/interface-languages.test.ts', 'e2e/follow-player-languages.test.ts'))
+
+    def test_dashboard_languages_on_desktop_and_mobile(self):
+        self._check_languages(('e2e/dashboard-languages.test.ts',))
+
+    def _check_languages(self, files: tuple[str, ...]):
         node, chrome, ffmpeg = shutil.which('node'), chrome_executable(), shutil.which('ffmpeg')
         if not node or not chrome or not ffmpeg or not (ROOT / 'frontend/node_modules/playwright-core').is_dir():
             missing_prerequisite('三语浏览器验收需要 Node、Chrome、FFmpeg 与前端依赖')
@@ -66,7 +72,7 @@ class InterfaceLanguagesBrowserTests(unittest.TestCase):
                     else:
                         self.fail('临时服务未就绪')
                     result = subprocess.run(
-                        e2e_command(node, 1, ('e2e/interface-languages.test.ts', 'e2e/follow-player-languages.test.ts')), cwd=ROOT / 'frontend',
+                        e2e_command(node, 1, files), cwd=ROOT / 'frontend',
                         env=dict(os.environ, PEACH_E2E_ORIGIN=origin, PEACH_E2E_CHROME=chrome),
                         capture_output=True, text=True, encoding='utf-8', timeout=300)
                     self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

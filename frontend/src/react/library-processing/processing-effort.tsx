@@ -1,5 +1,6 @@
 /* Effort 公开演示的三档领域适配；视觉参数与证据登记在 HANDOFF。 */
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { translate } from '../../i18n';
 import { Label, Popover, Slider, SliderThumb, SliderTrack } from 'react-aria-components';
 import { RiArrowDownSLine } from '@remixicon/react';
 import { Button } from '@/components/base/buttons/button';
@@ -50,14 +51,14 @@ export function ProcessingMode({ value, busy, onChange, animate = true }: {
   return <>
     <span className="processing-effort-trigger" data-speed={value}>
     <Button ref={trigger} size="small" variant="secondary"
-      aria-label={`处理速度：${LABELS[index]}`}
+      aria-label={`处理速度：${translate(LABELS[index]!)}`}
       aria-haspopup="dialog" aria-expanded={open} aria-disabled={busy}
       leadingIcon={SPEED_ICONS[index]} trailingIcon={RiArrowDownSLine}
-      onClick={() => { if (!busy) setOpen(!open) }}>{LABELS[index]}</Button>
+      onClick={() => { if (!busy) setOpen(!open) }}>{translate(LABELS[index]!)}</Button>
     </span>
     <Popover triggerRef={trigger} isOpen={open} onOpenChange={setOpen} placement="top start" offset={8} className={MENU_POPOVER_SURFACE}>
       <MenuDialog aria-label="处理速度" className="processing-effort-panel flex flex-col gap-3 p-2 outline-none">
-        <p className="text-body-medium"><span className="text-text-tertiary">处理强度 </span>{LABELS[draft]}</p>
+        <p className="text-body-medium"><span className="text-text-tertiary">处理强度 </span>{translate(LABELS[draft]!)}</p>
         <div className="processing-effort-scale text-caption-1-regular text-text-tertiary" aria-hidden="true">
           <span data-selected={draft === 0 || undefined}><Snail />最慢</span>
           <span data-selected={draft === 1 || undefined}><Lightning />标准</span>

@@ -1,3 +1,4 @@
+import { translate, format } from '../../i18n';
 /* 统计页的数据契约与折算：`/api/stats` 一次请求供整页使用。
  *
  * 端点在 `frontend/src` 里只在这里声明一次（`tests/test_frontend_build.py` 盯着）。
@@ -99,7 +100,7 @@ export const known = (value: Count | undefined): value is number =>
 
 /** 一个计数的读法：千分位；取不到时读「未取得」。 */
 export const fmtCount = (value: Count | undefined): string =>
-  (known(value) ? value.toLocaleString() : '未取得');
+  (known(value) ? value.toLocaleString() : translate("未取得"));
 
 /** 整数百分比，夹在 0 到 100 之间。分母是 0 或取不到时读 0，不是 NaN。 */
 export const percentOf = (value: Count | undefined, total: Count | undefined): number =>
@@ -114,12 +115,12 @@ export const percentText = (value: Count | undefined, total: Count | undefined):
 
 /** 累计播放时长：不到一小时读分钟，不到 48 小时读小时，再往上读天。 */
 export const playedFor = (seconds: Count | undefined): string => {
-  if (!known(seconds)) return '未取得';
+  if (!known(seconds)) return translate("未取得");
   const value = Math.max(0, seconds);
   if (value >= 48 * 3600) {
-    return `${(value / 86_400).toLocaleString(undefined, { maximumFractionDigits: 1 })} 天`;
+    return format("{0} 天", ((value / 86_400).toLocaleString(undefined, { maximumFractionDigits: 1 })));
   }
-  return value >= 3600 ? `${(value / 3600).toFixed(1)} 小时` : `${Math.round(value / 60)} 分钟`;
+  return value >= 3600 ? format("{0} 小时", ((value / 3600).toFixed(1))) : format("{0} 分钟", (Math.round(value / 60)));
 };
 
 /** 真实看过的比例：播放秒数占时长，封顶 100%。时长未取得时读 0。 */
@@ -134,9 +135,9 @@ export const reachedShare = (row: RecentPlay): number => (row.max_reached || 0) 
  * 真实看过的比例比到达位置低一大截，说明中间大段是拖过去的——那和从头看到尾是两回事，
  * 一行里只显示一个百分比的话读者分不出来。 */
 export const watchNote = (row: RecentPlay): string => {
-  if (row.kind === 'online') return '在线直接观看';
-  if (watchedShare(row) < reachedShare(row) - 25) return '快进扫过';
-  return row.o_count ? `高潮 ${row.o_count}` : '正常观看';
+  if (row.kind === 'online') return translate("在线直接观看");
+  if (watchedShare(row) < reachedShare(row) - 25) return translate("快进扫过");
+  return row.o_count ? format("高潮 {0}", (row.o_count)) : translate("正常观看");
 };
 
 /** 点进去的去处。在线追更的条目不在馆藏里，走它自己那条详情路由。 */
@@ -157,7 +158,7 @@ export function radialSlices(rows: RadialSlice[], max = RADIAL_MAX): RadialSlice
   const ranked = [...slices].sort((a, b) => b.value - a.value);
   const rest = ranked.slice(max - 1);
   return [...ranked.slice(0, max - 1), {
-    name: `其余 ${rest.length.toLocaleString()} 项`,
+    name: format("其余 {0} 项", (rest.length.toLocaleString())),
     value: rest.reduce((sum, row) => sum + row.value, 0),
     bytes: rest.reduce((sum, row) => sum + (row.bytes ?? 0), 0),
   }];
@@ -183,7 +184,7 @@ const MEDIUM_LABEL: Record<string, string> = {
 
 /** 按文件类型分的条目数，多的在前。 */
 export const mediumRows = (rows: MediumCount[]): BarRow[] =>
-  rows.map((row) => ({ name: MEDIUM_LABEL[row.k] ?? row.k, value: row.n }))
+  rows.map((row) => ({ name: translate(MEDIUM_LABEL[row.k] ?? row.k), value: row.n }))
     .sort((a, b) => b.value - a.value);
 
 /** 时长分档的显示名。分界同 `media_probe.context_fields`：300、900、2400 秒。 */
@@ -193,7 +194,7 @@ const LENGTH_LABEL: Record<string, string> = {
 
 /** 时长与画质分档，顺序由服务端给。时长换成分钟区间，画质原样。 */
 export const bandRows = (rows: BandCount[], labels: Record<string, string> = {}): BarRow[] =>
-  rows.map((row) => ({ name: labels[row.k] ?? row.k, value: row.n }));
+  rows.map((row) => ({ name: translate(labels[row.k] ?? row.k), value: row.n }));
 
 export const lengthRows = (rows: BandCount[]): BarRow[] => bandRows(rows, LENGTH_LABEL);
 

@@ -3,6 +3,7 @@
  * 卡片和「扫描与采集」同一副形状：左边讲这件事和此刻的进度，页脚放媒体库与起停键；
  * 这一趟的下场挂在卡片外面。跑动时两秒问一次，空闲时不问。 */
 import { useState } from 'react';
+import { translate, format } from '../../i18n';
 import { useQuery } from '@tanstack/react-query';
 import { confirmModal, MEDIA_SOURCE_ICONS } from '@peach/legacy/ui';
 
@@ -47,10 +48,10 @@ export function MediaRepairCard() {
   const start = () => {
     if (!selected) return;
     void confirmModal({
-      title: `修复媒体库「${selected.name}」`,
-      body: '缺时间戳表的片子另存一份修好的头，原文件不动；缺索引的片子重建后替换原文件，'
-        + '坏原件改名成同目录的隐藏文件（.文件名.peach-original）留着。'
-        + (selected.metered ? '这个库在计费来源上，每修一部都要把片子完整拉一遍。' : ''),
+      title: format('修复媒体库「{0}」', selected.name),
+      body: translate('缺时间戳表的片子另存一份修好的头，原文件不动；缺索引的片子重建后替换原文件，')
+        + translate('坏原件改名成同目录的隐藏文件（.文件名.peach-original）留着。')
+        + (selected.metered ? translate('这个库在计费来源上，每修一部都要把片子完整拉一遍。') : ''),
       confirmLabel: '修复媒体库',
       onConfirm: async () => replace(await apiSend<MediaRepairState>(MEDIA_REPAIR_URL,
         { library: selected.id, restart: true })),
@@ -82,7 +83,7 @@ export function MediaRepairCard() {
       }>
         <div className="flex flex-col gap-2">
           <FieldsetTitle>媒体修复</FieldsetTitle>
-          <p className="text-body-2-regular text-text-secondary">{REPAIR_CARD_TEXT}</p>
+          <p className="text-body-2-regular text-text-secondary">{translate(REPAIR_CARD_TEXT)}</p>
           {running && state.total
             ? <Progress label="修复进度" value={state.checked} max={state.total} />
             : null}

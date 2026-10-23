@@ -5,6 +5,7 @@
  * `chart-*`，指到一格时其余格子淡下去，浮层与柱状、径向图共用 `./chart-tip.tsx` 那一块面；
  * 页头读数也跟着换，键盘聚焦一格时读的是它。取舍见 ADR-0076。 */
 import { useState } from 'react';
+import { translate } from '../../i18n';
 import type { ReactNode } from 'react';
 
 import { CHART_CARD, ChartEmpty, ChartHead } from './chart-card';
@@ -55,6 +56,8 @@ export function HeatCard(
   },
 ) {
   const [shown, setShown] = useState(-1);
+  title = translate(title);
+  words = { unit: translate(words.unit), series: translate(words.series), cellUnit: translate(words.cellUnit) };
   const left = axis ? 30 : 0;
   const top = axis ? 18 : 0;
   const width = left + columns * STEP;
@@ -110,7 +113,7 @@ const HOUR_AXIS = (
   <>
     {WEEKDAYS.map((name, day) => (
       <text key={name} x={0} y={18 + day * STEP + 7} dominantBaseline="middle"
-        className="fill-text-secondary text-caption-1-regular">{name}</text>
+        className="fill-text-secondary text-caption-1-regular">{translate(name)}</text>
     ))}
     {Array.from({ length: 24 }, (_, hour) => (hour % 2 ? null : (
       <text key={hour} x={30 + hour * STEP} y={8} dominantBaseline="middle"

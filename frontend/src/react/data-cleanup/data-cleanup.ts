@@ -1,3 +1,4 @@
+import { format, translate } from '../../i18n';
 /* 数据管理页的数据契约。
  *
  * 这一页是「库里已经有的东西怎么收拾」的唯一入口。顶上一排读数各是一条内容在库里的经过：
@@ -70,14 +71,14 @@ const count = (value: number | undefined) => Number(value || 0).toLocaleString()
 export function reviewSummary(data: ReviewCounts | undefined): { figure: string; meta: string } {
   const labels = REVIEW_LABELS as Record<string, string>;
   const counts = Object.entries(data?.counts ?? {})
-    .map(([key, value]) => [labels[key] || key, Number(value) || 0] as const)
+    .map(([key, value]) => [translate(labels[key] || key), Number(value) || 0] as const)
     .filter(([, value]) => value > 0)
     .sort((a, b) => b[1] - a[1]);
   const total = counts.reduce((sum, [, value]) => sum + value, 0);
   const top = counts.slice(0, 3).map(([label, value]) => `${label} ${value.toLocaleString()}`);
   const rest = counts.slice(3).reduce((sum, [, value]) => sum + value, 0);
-  if (rest) top.push(`其余 ${rest.toLocaleString()}`);
-  return { figure: `${total.toLocaleString()} 条待复核`, meta: top.join(' · ') };
+  if (rest) top.push(format("其余 {0}", (rest.toLocaleString())));
+  return { figure: format("{0} 条待复核", (total.toLocaleString())), meta: top.join(' · ') };
 }
 
 /** 垃圾文件那张卡的分项：只列真的有东西的类别，已忽略的接在后面。 */
@@ -85,8 +86,8 @@ export function junkBreakdown(summary: JunkSummary | undefined): string {
   if (!summary) return '';
   const parts = JUNK_KINDS
     .filter(([key]) => Number(summary.counts?.[key]) > 0)
-    .map(([key, label]) => `${label} ${count(summary.counts[key])}`);
-  if (Number(summary.dismissed_total) > 0) parts.push(`已忽略 ${count(summary.dismissed_total)}`);
+    .map(([key, label]) => `${translate(label)} ${count(summary.counts[key])}`);
+  if (Number(summary.dismissed_total) > 0) parts.push(format("已忽略 {0}", (count(summary.dismissed_total))));
   return parts.join(' · ');
 }
 

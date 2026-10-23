@@ -1,3 +1,4 @@
+import { translate, format } from '../../i18n';
 /* 孤儿记录的数据契约：文件已不在盘上、带着个人记录的作品（ADR-0087）。
  *
  * 一个读端点、一个写端点。列表带每条在六张表里的记录数、行上的评分与次数和在库候选；
@@ -66,21 +67,21 @@ export const purgeOrphan = (id: number | number[]) =>
 
 /** 行上四列的写法：分值与次数照写；只记过最近播放、没有播放次数时写「播放过」。 */
 const rowRecordsText = (records: OrphanRecord['records']) => [
-  records.rating ? `评分 ${records.rating}` : '',
-  records.play_count ? `播放 ${Number(records.play_count).toLocaleString()} 次`
-    : records.last_played ? '播放过' : '',
-  records.o_count ? `高潮 ${Number(records.o_count).toLocaleString()} 次` : '',
+  records.rating ? format("评分 {0}", (records.rating)) : '',
+  records.play_count ? format("播放 {0} 次", (Number(records.play_count).toLocaleString()))
+    : records.last_played ? translate("播放过") : '',
+  records.o_count ? format("高潮 {0} 次", (Number(records.o_count).toLocaleString())) : '',
 ];
 
 /** 一条带的记录排成一句：「喜欢与理由 1 · 观看历史 3 · 评分 4 · 播放 2 次」。 */
 export const recordsText = (records: OrphanRecord['records']) => [
   ...RECORD_LABELS
     .filter(([table]) => records[table])
-    .map(([table, label]) => `${label} ${Number(records[table]).toLocaleString()}`),
+    .map(([table, label]) => `${translate(label)} ${Number(records[table]).toLocaleString()}`),
   ...rowRecordsText(records),
 ].filter(Boolean).join(' · ');
 
-const minutes = (seconds: number | null) => (seconds ? `${Math.round(seconds / 60)} 分钟` : '');
+const minutes = (seconds: number | null) => (seconds ? format("{0} 分钟", (Math.round(seconds / 60))) : '');
 
 /** 下拉框里一个候选文件那一行。 */
 export const candidateText = (item: OrphanCandidate) =>

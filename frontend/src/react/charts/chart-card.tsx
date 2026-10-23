@@ -4,6 +4,7 @@
  * 都是 20px。页头是两列：标题压着大数在左，那句注解贴右下角对齐大数的基线，注解长短不一
  * 也不会把标题挤走。 */
 import type { ReactNode } from 'react';
+import { translate } from '../../i18n';
 import { Text } from 'recharts';
 
 import type { ChartConfig } from '@/registry/ui/recharts-chart';
@@ -14,6 +15,8 @@ export const CHART_CARD = `${cardClass({ radius: 'chart' })} flex flex-col gap-4
 
 /** 一张没有可画数据的图：标题照旧，图的位置换成一句说明。统计页与口味页的图共用。 */
 export function ChartEmpty({ title, children }: { title: string; children: ReactNode }) {
+  title = translate(title);
+  if (typeof children === 'string') children = translate(children);
   return (
     <section className={CHART_CARD} aria-label={title}>
       <h3 className="text-title-2-medium text-text-primary">{title}</h3>
@@ -80,6 +83,7 @@ export function CategoryTick(
 
 /** 一张图的头：一个标题、一个大数、一句它此刻指的是什么。 */
 export function ChartHead({ title, figure, note }: { title: string; figure: string; note: string }) {
+  title = translate(title);
   return (
     <header className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1">
       <span className="flex min-w-0 flex-col gap-1">

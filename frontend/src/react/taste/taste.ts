@@ -1,3 +1,4 @@
+import { format, translate, language } from '../../i18n';
 /* 口味页的数据契约、轮询节律与纯折算。
  *
  * 四个端点在 `frontend/src` 里都只在这里声明一次（`tests/test_frontend_build.py` 盯着）。
@@ -192,18 +193,36 @@ export async function importTasteExport(file: File): Promise<{ dashboard: TasteD
 export const IDLE_POLL_MS = 10_000;
 
 export const tasteDate = (value: string | null | undefined): string =>
-  (value ? new Date(value).toLocaleDateString('zh-CN') : '—');
+  (value ? new Date(value).toLocaleDateString(language()) : '—');
 
 /** 浏览记录那张读数卡的脚注：几个数据源，加上记录覆盖的日期范围；两头都没有日期时不写范围。 */
 export function historySpan(summary: TasteSummary): string {
-  const sources = `${Number(summary.history_sources || 0).toLocaleString()} 个数据源`;
+  const sources = format("{0} 个数据源", (Number(summary.history_sources || 0).toLocaleString()));
   if (!summary.range_start && !summary.range_end) return sources;
   const sameYear = summary.range_start?.slice(0, 4) === summary.range_end?.slice(0, 4);
   const date = (value: string | null | undefined) => value && sameYear
-    ? new Date(value).toLocaleDateString('zh-CN', { month: 'numeric', day: 'numeric' }) : tasteDate(value);
+    ? new Date(value).toLocaleDateString(language(), { month: 'numeric', day: 'numeric' }) : tasteDate(value);
   return `${sources} · ${date(summary.range_start)}–${date(summary.range_end)}`;
 }
 
+/** 只折算服务端生成的总结文案；作品标签、创作者名、路由与动作参数保留原文。 */
+export function analysisPresentation(analysis: TasteAnalysis | undefined): TasteAnalysis | undefined {
+  if (!analysis) return analysis;
+  let headline = translate(analysis.headline || '');
+  const both = /^浏览兴趣以(.+?)为主，Peach 中稳定出现(.+)。$/.exec(analysis.headline || '');
+  const browser = /^浏览兴趣目前以(.+?)为主，Peach 观看证据仍偏少。$/.exec(analysis.headline || '');
+  if (both) headline = format('浏览兴趣以{0}为主，Peach 中稳定出现{1}。', translate(both[1]!), both[2]);
+  else if (browser) headline = format('浏览兴趣目前以{0}为主，Peach 观看证据仍偏少。', translate(browser[1]!));
+  return { ...analysis, headline,
+    ...(analysis.confidence ? { confidence: { ...analysis.confidence, label: translate(analysis.confidence.label || '') } } : {}),
+    ...(analysis.points ? { points: analysis.points.map(point => ({ ...point, label: translate(point.label),
+      text: point.label === 'Peach 印证' ? point.text
+        : point.text.split('、').map(part => translate(part)).join(language() === 'zh-CN' ? '、' : ', ') })) } : {}),
+    ...(analysis.explore ? { explore: analysis.explore.map(item => ({ ...item, title: language() === 'zh-CN' ? item.title : format('探索 {0}', item.tag), detail: translate(item.detail) })) } : {}),
+    ...(analysis.next_steps ? { next_steps: analysis.next_steps.map(item => ({ ...item, title: translate(item.title),
+      detail: item.route === '/subscriptions' ? item.detail : translate(item.detail) })) } : {}),
+  };
+}
 /** 累计时长。与统计页同一套口径。 */
 export const tasteHours = playedFor;
 
@@ -222,8 +241,8 @@ export function rankDetail(row: RankRow): string {
   const parts: string[] = [];
   const bookmarks = Number(row.web_bookmarks || 0);
   const visits = Number(row.web_visits ?? row.visits ?? 0) - bookmarks;
-  if (visits > 0) parts.push(`浏览 ${visits.toLocaleString()}`);
-  if (bookmarks) parts.push(`书签 ${bookmarks.toLocaleString()}`);
+  if (visits > 0) parts.push(format("浏览 {0}", (visits.toLocaleString())));
+  if (bookmarks) parts.push(format("书签 {0}", (bookmarks.toLocaleString())));
   if (row.peach_items) parts.push(`Peach ${Number(row.peach_items).toLocaleString()}`);
   return parts.join(' · ');
 }
@@ -297,8 +316,8 @@ export function flowGraph(rows: CreatorFlow[] = []): FlowGraph | null {
   const valid = rows.filter((row) =>
     row.source && row.target && Number.isFinite(row.value) && row.value > 0);
   if (!valid.length) return null;
-  const sourceOf = foldSide(valid, 'source', (count) => `其余 ${count.toLocaleString()} 个网站`);
-  const targetOf = foldSide(valid, 'target', (count) => `其余 ${count.toLocaleString()} 位创作者`);
+  const sourceOf = foldSide(valid, 'source', (count) => format("其余 {0} 个网站", (count.toLocaleString())));
+  const targetOf = foldSide(valid, 'target', (count) => format("其余 {0} 位创作者", (count.toLocaleString())));
   const folded = new Map<string, CreatorFlow>();
   for (const row of valid) {
     const source = sourceOf(row.source);

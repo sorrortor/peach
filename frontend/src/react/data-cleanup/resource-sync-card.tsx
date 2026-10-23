@@ -8,6 +8,7 @@
  * 现状了，结果区改画服务器留着的最近一次清理回执。 */
 import { confirmModal, MEDIA_SOURCE_ICONS } from '@peach/legacy/ui';
 import { fmtSize } from '@peach/legacy/core';
+import { translate } from '../../i18n';
 
 import { Button } from '@/components/base/buttons/button';
 
@@ -47,7 +48,7 @@ function ScanResult({ scan, partial = false }: { scan: ResourceScanState; partia
       <div className={RESULT_ROW}>
         {(scan.sources ?? []).map((source) => (
           <article key={source.location} className={plainStatClass()}>
-            <PlainStat label={SOURCE_LABELS[source.location] || '媒体来源'}
+            <PlainStat label={translate(SOURCE_LABELS[source.location] || '媒体来源')}
               mark={<SourceMark mark={MEDIA_SOURCE_ICONS[source.location] ?? 'database'} />}
               aside={<span className={source.online ? 'text-notification-success-foreground' : 'text-text-error-primary'}>
                 {source.online ? '可访问' : '离线，已跳过'}
@@ -162,7 +163,7 @@ export function ResourceSyncCard(
         <div className="flex flex-wrap items-center justify-end gap-2">
           {changes
             ? <Button variant="danger" {...busyProps(cleaning)} onClick={() => runApply(state)}>
-                {cleaning ? '正在复核并清理…' : APPLY_LABEL}
+                {cleaning ? '正在复核并清理…' : translate(APPLY_LABEL)}
               </Button>
             : <p className="mr-auto text-body-regular text-notification-success-foreground">
                 已检查可访问的来源，没有待清理的记录、空文件夹或缓存。
@@ -179,7 +180,7 @@ export function ResourceSyncCard(
     <section id="resource-sync" aria-labelledby="resource-sync-title" className="flex scroll-mt-20 flex-col gap-4">
       <Fieldset layout="split" labelledBy="resource-sync-title" footer={
         <Button data-resource-scan leadingIcon={scanned && !scanning ? AGAIN : COMPARE} {...busyProps(scanning)}
-          onClick={() => { if (!scanning) scan.start.mutate() }}>{label}</Button>
+          onClick={() => { if (!scanning) scan.start.mutate() }}>{translate(label)}</Button>
       }>
         <FieldsetTitle id="resource-sync-title" gap="small">资源同步</FieldsetTitle>
         <p className="max-w-190 text-body-2-regular leading-5 text-text-secondary">
