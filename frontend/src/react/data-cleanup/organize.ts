@@ -1,3 +1,4 @@
+import { format, translate } from '../../i18n';
 /* 整理（ADR-0039）的数据契约：媒体默认留在原目录，这一块是唯一会动文件名和目录的入口。
  * 两份模板、一次预览、一次执行，外加把上一批原样退回去。
  *
@@ -98,10 +99,10 @@ const count = (value: number | undefined) => Number(value || 0).toLocaleString()
 /** 预览结果那一句。只列会变的行：库里几万行里改不到的那部分是背景，不是结果。 */
 export function planSummary(plan: OrganizePlan): string {
   const skipped = Object.entries(plan.reasons || {}).sort((a, b) => b[1] - a[1])
-    .map(([reason, value]) => `${reason} ${count(value)}`).join(' · ');
-  if (!Number(plan.counts?.change || 0)) return `没有要改的文件。${skipped ? `跳过：${skipped}。` : ''}`;
-  return `${count(plan.counts.change)} 个文件会改名或移动，${count(plan.counts.unchanged)} 个已经就是目标名字`
-    + `${skipped ? `；跳过 ${skipped}` : ''}。`;
+    .map(([reason, value]) => `${translate(reason)} ${count(value)}`).join(' · ');
+  if (!Number(plan.counts?.change || 0)) return format("没有要改的文件。{0}", (skipped ? format("跳过：{0}。", (skipped)) : ''));
+  return format("{0} 个文件会改名或移动，{1} 个已经就是目标名字", (count(plan.counts.change)), (count(plan.counts.unchanged)))
+    + `${skipped ? format("；跳过 {0}", (skipped)) : ''}。`;
 }
 
 /** 跑完的那一趟怎么说。回滚那一趟有 `restored`。 */
@@ -110,7 +111,7 @@ export function organizeOutcome(job: OrganizeJob): { text: string; failed: numbe
   const failed = Number(job.failed || 0);
   const done = Number(rollback ? job.restored : job.moved || 0);
   const text = rollback
-    ? `已退回 ${count(done)} 个文件${failed ? `，${count(failed)} 行未能退回` : ''}。`
-    : `已整理 ${count(done)} 个文件${failed ? `，${count(failed)} 行未能处理` : ''}。`;
+    ? format("已退回 {0} 个文件{1}。", (count(done)), (failed ? format("，{0} 行未能退回", (count(failed))) : ''))
+    : format("已整理 {0} 个文件{1}。", (count(done)), (failed ? format("，{0} 行未能处理", (count(failed))) : ''));
   return { text, failed, rollback };
 }

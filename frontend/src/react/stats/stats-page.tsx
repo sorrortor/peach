@@ -12,6 +12,7 @@ import {
 } from '@remixicon/react';
 import { useQuery } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
+import { translate } from '../../i18n';
 import { Tab, TabList, TabPanel, Tabs } from 'react-aria-components';
 
 import { fmtSize, LOC } from '@peach/legacy/core';
@@ -65,6 +66,7 @@ const within = (value: number, max: number) => Math.min(Math.max(value, 0), max)
 /** 一格事实：一个名字配一个数。面取浮层那一档（旧 `.insightfacts .kv` 的 `--surface`），
  *  比卡面亮一级。 */
 function Fact({ term, value }: { term: string; value: Count }) {
+  term = translate(term);
   return (
     <div className="flex min-h-16 min-w-0 flex-col gap-1.5 rounded-2lg bg-background-primary-default p-3">
       <span className="text-caption-1-regular text-text-secondary">{term}</span>
@@ -75,6 +77,7 @@ function Fact({ term, value }: { term: string; value: Count }) {
 
 /** 一条带进度的覆盖率：读数、占比与那条条共用同一对分子分母。 */
 function Coverage({ term, value, total }: { term: string; value: Count; total: number }) {
+  term = translate(term);
   const max = Math.max(total, 1);
   return (
     <div className="flex flex-col gap-1.5 border-b border-separator-border py-3 last:border-b-0">
@@ -98,6 +101,7 @@ function Coverage({ term, value, total }: { term: string; value: Count; total: n
  * 两栏之间不画线：旧 `board.css` 专门把 `.insightcopy` 的 `border-right` 清成 `border:0`，
  * 一张填充卡里再切一刀，看起来就是两张卡挤在一起。 */
 function Headline({ term, figure, unit }: { term: string; figure: string; unit: string }) {
+  term = translate(term); unit = translate(unit);
   return (
     <div className="flex shrink-0 flex-col gap-0.5 pb-5 md:w-64 md:pr-6 md:pb-0">
       <span className="text-caption-1-regular text-text-secondary">{term}</span>
@@ -135,7 +139,7 @@ function InventoryDetail({ data, configurable, openMediaSettings }: { data: Stat
     <div className="flex flex-col gap-5">
       <div className="inline-grid w-full gap-5 md:grid-cols-2">
         <RadialCard title="网盘与本地" empty={NO_VIDEO_HINT} rows={data.by_loc.map((row) => (
-          { name: LOC[row.k] ?? row.k, value: row.videos, bytes: row.bytes, mark: MEDIA_SOURCE_ICONS[row.k] || 'database' }))} />
+          { name: translate(LOC[row.k] ?? row.k), value: row.videos, bytes: row.bytes, mark: MEDIA_SOURCE_ICONS[row.k] || 'database' }))} />
         <RadialCard title="媒体库" empty={NO_LIBRARY_HINT} rows={data.by_library.map((row) => (
           { name: row.name, value: row.videos, bytes: row.bytes, mark: MEDIA_SOURCE_ICONS[row.icon] || row.icon || 'database' }))} />
       </div>
@@ -179,12 +183,13 @@ function CoverageDetail({ attribution }: { attribution: Attribution }) {
 /** 一个卷一行，与覆盖率同一个节律：名字配已用量与占比，下面一条进度，再下面一行小字
  *  写它挂在哪、还剩多少。取不到容量的卷不画进度，读数那一格换成它的状态。 */
 function VolumeRow({ volume }: { volume: StorageVolume }) {
+  const label = volume.label.replace(/^(系统盘|资源盘)(?= \d+$|$)/u, name => translate(name));
   const total = volume.total;
   const used = volume.used ?? 0;
   return (
     <article className="flex min-w-0 flex-col gap-1.5 border-b border-separator-border py-3 last:border-b-0">
       <header className="flex items-baseline justify-between gap-3 text-body-2-regular text-text-primary">
-        <h3 className="min-w-0 break-words">{volume.label}</h3>
+        <h3 className="min-w-0 break-words">{label}</h3>
         {total != null ? (
           <b className="whitespace-nowrap tabular-nums">
             {fmtSize(used)}
@@ -193,7 +198,7 @@ function VolumeRow({ volume }: { volume: StorageVolume }) {
         ) : <span className="whitespace-nowrap text-text-secondary">{volume.online ? '容量未取得' : '离线'}</span>}
       </header>
       {total != null
-        ? <Progress label={`${volume.label}空间使用率`} value={within(used, Math.max(total, 1))} max={Math.max(total, 1)} />
+        ? <Progress label={`${label}空间使用率`} value={within(used, Math.max(total, 1))} max={Math.max(total, 1)} />
         : null}
       <p className="flex justify-between gap-3 text-caption-1-regular text-text-secondary">
         <span className="min-w-0 break-words">{volume.root ?? '未映射'}</span>
@@ -314,7 +319,7 @@ function MetricTab(
 ) {
   return (
     <Tab id={id} className={statCardClass({ interactive: true, selectable: true })}>
-      <StatCard label={label} icon={Icon} accent={accent} figure={figure} footer={detail} />
+      <StatCard label={translate(label)} icon={Icon} accent={accent} figure={translate(figure)} footer={translate(detail)} />
     </Tab>
   );
 }

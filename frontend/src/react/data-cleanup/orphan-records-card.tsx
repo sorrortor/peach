@@ -4,6 +4,7 @@
  * 选一个文件接过去，记录搬到那个文件上、旧行删掉，整批可按批次号撤回；彻底删除连记录一起
  * 删，过危险档确认弹层。没有已消失的作品时整块不出现。 */
 import { useState } from 'react';
+import { translate, format } from '../../i18n';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { confirmModal } from '@peach/legacy/ui';
 import { LOC } from '@peach/legacy/core';
@@ -90,7 +91,7 @@ function OrphanIdentity({ item }: { item: OrphanRecord }) {
           <span className="flex min-w-0 flex-col gap-0.5">
             <span title={item.name} className="max-w-56 truncate text-body-regular text-text-primary">{item.name}</span>
             <small className="max-w-56 truncate text-caption-1-regular text-text-secondary">
-              {[item.code, LOC[item.location] || item.location].filter(Boolean).join(' · ')}
+              {[item.code, translate(LOC[item.location] || item.location)].filter(Boolean).join(' · ')}
             </small>
           </span>
         </span>
@@ -104,7 +105,8 @@ export function OrphanRecordsCard({ toast }: { toast(message: string): void }) {
   const purge = useMutation({
     mutationFn: (ids: number[]) => purgeOrphan(ids),
     onSuccess: (data) => {
-      toast(`已彻底删除 ${data.purged} 条记录${data.blocked.length ? `，${data.blocked.length} 条文件已恢复，未删除` : ''}`);
+      toast(format('已彻底删除 {0} 条记录{1}', data.purged,
+        data.blocked.length ? format('，{0} 条文件已恢复，未删除', data.blocked.length) : ''));
       setSelected([]); void refresh();
     },
   });

@@ -4,8 +4,9 @@ import type { Plugin } from 'vite';
 import messages from './src/i18n/messages.json' with { type: 'json' };
 
 const labels = new Set(['label', 'title', 'legend', 'hint', 'description', 'placeholder', 'aria-label', 'alt', 'lede', 'summary', 'term', 'status', 'topLabel', 'bottomLabel', 'busyLabel', 'emptyLabel', 'message']);
+const dashboardLabels = new Set(['empty', 'unit', 'series', 'figure', 'meta', 'detail', 'note', 'textValue', 'detailTitle']);
 const known = new Set(Object.keys(messages));
-export const localizedAreas = /\/src\/react\/(?:settings|settings-panel|sidebar|catalog-filter|catalog-grid|catalog-folders|library-shortcuts|library-processing|components|manage-header|entity-filter|item-detail|diagnostics|glow-picker|follow-feed|follow-detail|follow-manage|stage|pages\/login)\//;
+export const localizedAreas = /\/src\/react\/(?:settings|settings-panel|sidebar|catalog-filter|catalog-grid|catalog-folders|library-shortcuts|library-processing|components|manage-header|entity-filter|item-detail|diagnostics|glow-picker|follow-feed|follow-detail|follow-manage|stage|stats|taste|data-cleanup|media-repair|charts|pages\/login)\//;
 
 /** JSX 的行首缩进不展示，同一行与内联节点之间的空格属于文案。 */
 function jsxText(value: string): string {
@@ -21,6 +22,8 @@ function jsxText(value: string): string {
 
 /** 仅转换 JSX 的展示字串；不处理 value、键、网络参数、用户数据或控制流。 */
 function displayEdits(source: string, id: string) {
+  const displayAttribute = (name: string) => labels.has(name)
+    || /\/src\/react\/(?:stats|taste|data-cleanup|media-repair|charts)\//.test(id) && dashboardLabels.has(name);
   const edits: { start: number; end: number; value: string }[] = [];
   const messages = new Set<string>();
   const ast = parseSync(id, source);
@@ -55,11 +58,11 @@ function displayEdits(source: string, id: string) {
     if (item.type === 'JSXExpressionContainer') {
       display(item.expression);
     }
-    if (item.type === 'JSXAttribute' && labels.has(item.name.name) && item.value?.type === 'Literal') {
+    if (item.type === 'JSXAttribute' && displayAttribute(item.name.name) && item.value?.type === 'Literal') {
       text = item.value.value; target = item.value;
     }
     // 非展示属性（value、id、data-*、事件、请求参数）不进入表达式转换。
-    if (item.type === 'JSXAttribute' && !labels.has(item.name.name)) {
+    if (item.type === 'JSXAttribute' && !displayAttribute(item.name.name)) {
       // top、children、render 等非文案属性也能承载 JSX；只进入嵌套节点，不改参数或属性值。
       const embedded = (value: unknown) => {
         if (!value || typeof value !== 'object') return;

@@ -184,7 +184,7 @@ export function LibraryProcessingCard(props: LibraryProcessingProps) {
       }>
         <div className="flex flex-col gap-2">
           <FieldsetTitle>扫描与采集</FieldsetTitle>
-          <p className="text-body-2-regular text-text-secondary">{SCAN_CARD_TEXT}</p>
+          <p className="text-body-2-regular text-text-secondary">{translate(SCAN_CARD_TEXT)}</p>
           {state.status === 'paused' && !state.total
             ? <p className="text-caption-1-regular text-text-secondary">已暂停</p>
             : processingActive(state)

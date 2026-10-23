@@ -4,6 +4,7 @@
  * `/api/organize` 的顶层，所以 `useBackgroundJob` 用 `withJob` 只换任务那几格，来源、模板
  * 与上一批原样留着。执行与回滚动的是真实文件名与数据库路径，都要先过确认弹层。 */
 import { useRef, useState } from 'react';
+import { translate, format } from '../../i18n';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { confirmModal, MEDIA_SOURCE_ICONS } from '@peach/legacy/ui';
 import { LOC } from '@peach/legacy/core';
@@ -26,10 +27,10 @@ import {
   type OrganizeCommand, type OrganizeData, type OrganizeJob, type OrganizePlan,
 } from './organize';
 
-const APPLY_BODY = (name: string) => `将按这两份模板改动「${name}」上的文件名与目录，目标已存在的行会整行跳过。`
-  + '这一批可以从「回滚上一批」整批退回。';
-const ROLLBACK_BODY = '将把上一批整理动过的文件退回整理前的名字与位置，数据库路径跟着退回。'
-  + '退回后这一批不再出现在这里。';
+const APPLY_BODY = (name: string) => format('将按这两份模板改动「{0}」上的文件名与目录，目标已存在的行会整行跳过。', name)
+  + translate('这一批可以从「回滚上一批」整批退回。');
+const ROLLBACK_BODY = () => translate('将把上一批整理动过的文件退回整理前的名字与位置，数据库路径跟着退回。')
+  + translate('退回后这一批不再出现在这里。');
 /** 预览只列前 8 行：这里是给人扫一眼方向对不对，完整计划在 CSV 里。 */
 const PLAN_ROWS = 8;
 
@@ -100,8 +101,8 @@ export function OrganizeCard(
   const running = job.running || job.start.isPending;
   const plan = preview.data;
   const changes = Number(plan?.counts?.change || 0);
-  const name = LOC[location] || location;
-  const hint = (data?.placeholders ?? []).map((item) => `{${item.key}} ${item.label}`).join(' · ');
+  const name = translate(LOC[location] || location);
+  const hint = (data?.placeholders ?? []).map((item) => `{${item.key}} ${translate(item.label)}`).join(' · ');
 
   const runPreview = () => {
     if (preview.isPending || !location) return;
@@ -120,7 +121,7 @@ export function OrganizeCard(
     },
   });
   const runRollback = () => void confirmModal({
-    title: '回滚上一批整理', body: ROLLBACK_BODY, confirmLabel: '回滚整理',
+    title: '回滚上一批整理', body: ROLLBACK_BODY(), confirmLabel: '回滚整理',
     onConfirm: () => job.start.mutateAsync({ kind: 'rollback' }),
   });
 
@@ -175,8 +176,8 @@ export function OrganizeCard(
                 setChosen(String(key)); setInvalid(null); preview.reset();
               }}>
               {locations.map((row) => (
-                <SelectItem key={row.location} id={row.location} textValue={LOC[row.location] || row.location}>
-                  <SourceMark mark={MEDIA_SOURCE_ICONS[row.location] || 'database'} />{LOC[row.location] || row.location}
+                <SelectItem key={row.location} id={row.location} textValue={translate(LOC[row.location] || row.location)}>
+                  <SourceMark mark={MEDIA_SOURCE_ICONS[row.location] || 'database'} />{translate(LOC[row.location] || row.location)}
                 </SelectItem>
               ))}
             </Select>
@@ -190,10 +191,10 @@ export function OrganizeCard(
         {data?.presets?.length
           ? <div className="flex flex-wrap gap-2">
               {data.presets.map((preset) => (
-                <Button key={preset.label} variant="secondary" title={preset.label}
+                <Button key={preset.label} variant="secondary" title={translate(preset.label)}
                   className="max-w-full [&>span]:min-w-0 [&>span]:shrink"
                   onClick={() => { edit({ file: preset.file, dir: preset.dir }); setInvalid(null) }}>
-                  <span className="truncate">{preset.label}</span>
+                  <span className="truncate">{translate(preset.label)}</span>
                 </Button>
               ))}
             </div>

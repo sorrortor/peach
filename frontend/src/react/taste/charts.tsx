@@ -6,6 +6,7 @@
  * 是 `stroke-width`，颜色只取 BoardUI 的 `chart-*` 档；指向一条流或一个节点时读数换成它的，
  * 换的是 React 状态，指针离开或焦点移走就回到总数。差异登记在 `../boardui/ORIGIN.md`。 */
 import { useState } from 'react';
+import { translate } from '../../i18n';
 import { Text } from 'recharts';
 
 import { EvilBarChart } from '@/registry/charts/recharts-bar-chart';
@@ -53,7 +54,7 @@ const FLOW_FILL = [
 ];
 
 /** 口味维度两张图的系列：一个维度下命中的标签次数。颜色跟着口味页读数卡的 `chart-4`。 */
-const DIMENSION_CONFIG = { value: { label: '标签命中', colors: tone(CHART_COLORS[3]) } };
+const DIMENSION_CONFIG = { value: { label: translate('标签命中'), colors: tone(CHART_COLORS[3]) } };
 
 /** 排行条的最低高度按条数给，一条一格 32：窄屏里排行条独占一行、或维度不足三个画不出雷达时，
  *  它就是这么高。旁边有雷达时整块跟着雷达那一栏拉到等高，多出来的高度拉开条与条的间距。

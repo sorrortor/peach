@@ -1,3 +1,4 @@
+import { format, translate } from '../../i18n';
 /* 链接管理的数据契约。
  *
  * 外链是别人服务器上的东西，会在我们不知情的时候烂掉——实测 719 条里 152 条打不开，
@@ -99,12 +100,12 @@ const count = (value: number | undefined) => Number(value || 0).toLocaleString()
 
 /** 删完那一句。 */
 export const pruneText = (state: LinkPruneState) =>
-  `已删除 ${count(state.removed)} 条；${state.marked ? `已隐退女优的 ${count(state.marked)} 条留作不可点的记录；` : ''}`
-  + `保留 ${count(state.recovered)} 条未确认失效的链接。`;
+  format("已删除 {0} 条；{1}", (count(state.removed)), (state.marked ? format("已隐退女优的 {0} 条留作不可点的记录；", (count(state.marked))) : ''))
+  + format("保留 {0} 条未确认失效的链接。", (count(state.recovered)));
 
 /** 检查推进到哪儿了。总量还没算出来时只说在做什么。 */
 export function checkLine(state: LinkCheckState): string {
   const retrying = state.scope === 'retry';
-  if (!state.total) return retrying ? '正在重验链接' : '正在检查链接';
-  return `${retrying ? '已重验' : '已检查'} ${count(state.checked)} / ${count(state.total)} 条链接`;
+  if (!state.total) return retrying ? translate("正在重验链接") : translate("正在检查链接");
+  return format("{0} {1} / {2} 条链接", (retrying ? translate("已重验") : translate("已检查")), (count(state.checked)), (count(state.total)));
 }

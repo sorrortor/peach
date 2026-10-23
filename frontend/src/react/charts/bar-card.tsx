@@ -4,6 +4,7 @@
  * 短柱子从刻度上读不出数。柱子由 Motion 逐根长出来，系统开了减弱动态效果时直接画终态
  * （`../entry.tsx` 的 `MotionConfig`）；悬停浮层是 `./chart-tip.tsx`。 */
 import { EvilBarChart } from '@/registry/charts/recharts-bar-chart';
+import { language, translate } from '../../i18n';
 
 import { CategoryTick, categoryAxisWidth, CHART_CARD, ChartEmpty, ChartHead, tone } from './chart-card';
 import { ChartTip } from './chart-tip';
@@ -19,6 +20,7 @@ export const BAR_LABEL_ROOM = 56;
 
 /** 柱端的数：十万以上读成「万」「亿」，柱端那一小截放得下；全数在悬停浮层里。 */
 export function shortCount(value: number): string {
+  if (language() !== 'zh-CN') return new Intl.NumberFormat(language(), { notation: 'compact', maximumFractionDigits: 1 }).format(value);
   const abs = Math.abs(value);
   const scaled = (unit: number, name: string) => {
     const figure = value / unit;
@@ -45,6 +47,7 @@ export function BarCard(
     layout?: 'vertical' | 'horizontal';
   },
 ) {
+  title = translate(title); unit = translate(unit); series = translate(series); empty = translate(empty);
   const data = rows
     .filter((row) => Number.isFinite(row.value) && row.value >= 0)
     .map((row) => ({ name: row.name, value: row.value }));

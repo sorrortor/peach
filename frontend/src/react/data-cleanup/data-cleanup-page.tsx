@@ -5,6 +5,7 @@
  * 管理、只在有文件已消失的作品时才出现的孤儿记录，最后是只在有来源配了根目录时才出现的
  * 资源同步。 */
 import { useQuery } from '@tanstack/react-query';
+import { translate } from '../../i18n';
 import { fmtSize } from '@peach/legacy/core';
 
 import type { DataCleanupProps, DataCleanupSection } from '../bundle';
@@ -44,7 +45,7 @@ function EntryCard(
   return (
     <button type="button" className={plainStatClass({ interactive: true })} data-cleanup-go={section}
       onClick={() => open(section)}>
-      <PlainStat label={label} icon={icon} figure={value.figure} meta={value.meta} />
+      <PlainStat label={translate(label)} icon={icon} figure={translate(value.figure)} meta={translate(value.meta || '')} />
     </button>
   );
 }

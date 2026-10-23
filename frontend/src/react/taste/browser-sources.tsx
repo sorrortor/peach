@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { translate } from '../../i18n';
 import type { ReactNode } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { RiCompassLine, RiPauseLine, RiPlayLine, RiDeleteBinLine } from '@remixicon/react';
@@ -62,7 +63,7 @@ export function BrowserSources({ browsers, sources, range, children }:
         <span className="flex shrink-0 gap-1">
         <Button variant="secondary" size="small" {...busyProps(change.isPending)} iconOnly
           leadingIcon={browser.enabled ? RiPauseLine : RiPlayLine}
-          aria-label={`${browser.enabled ? '停止读取' : '启用'} ${browser.name}`} onClick={() => {
+          aria-label={`${translate(browser.enabled ? '停止读取' : '启用')} ${browser.name}`} onClick={() => {
             if (!browser.enabled) change.mutate({ operation: 'enable', id: browser.id });
             else void confirmModal({ title: `停止读取 ${browser.name}`, body: '已导入的历史与书签仍用于口味分析。', confirmLabel: '停止读取',
               onConfirm: () => change.mutateAsync({ operation: 'disable', id: browser.id }) });

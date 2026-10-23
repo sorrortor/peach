@@ -8,6 +8,7 @@
  * 链接本身好好的。混成一张会让人顺手把好链接一起删掉，所以「地址已失效」和「本次未
  * 访问成功」各占一张，只有前一张接得上删除。 */
 import { useEffect, useState, type ReactNode } from 'react';
+import { translate, format } from '../../i18n';
 import { RiExternalLinkLine } from '@remixicon/react';
 import { useQuery } from '@tanstack/react-query';
 import { confirmModal } from '@peach/legacy/ui';
@@ -46,6 +47,7 @@ const count = (value: number | undefined) => Number(value || 0).toLocaleString()
 /** 一格读数：名目、数字、可选的一句注。每一类各占一格：挤成一行时标签和数字之间只剩
  *  间隔点，数字归谁全靠猜。 */
 function Stat({ label, value, note }: { label: string; value: string; note?: string }) {
+  label = translate(label);
   return (
     <div className="flex min-w-0 flex-col gap-0.5">
       <span className="text-caption-1-regular leading-5 text-text-secondary">{label}</span>
@@ -67,7 +69,7 @@ function LinkTable(
     { id: 'entity', label: '所属', value: (item) => item.entity,
       render: (item) => <span className="block min-w-24 wrap-anywhere">{item.entity}</span> },
     { id: 'kind', label: '类型', value: (item) => LINK_KINDS[item.link_kind] || item.link_kind,
-      render: (item) => LINK_KINDS[item.link_kind] || item.link_kind },
+      render: (item) => translate(LINK_KINDS[item.link_kind] || item.link_kind) },
     { id: 'label', label: '标签', value: (item) => item.label || '',
       render: (item) => <span className="block min-w-24 wrap-anywhere">{item.label || ''}</span> },
     { id: 'note', label: '结果', value: (item) => item.note,
@@ -82,8 +84,8 @@ function LinkTable(
   return (
     <div className={RESULT_SECTION}>
       <DataTable label={title} items={items} columns={columns} rowId={(item) => String(item.id)}
-        description={hint} unit="条链接" panel={false} footerActions={footer}
-        rowLabel={(item) => `${item.entity} 的${item.label || item.url}`}
+        description={translate(hint)} unit="条链接" panel={false} footerActions={footer}
+        rowLabel={(item) => format('{0} 的{1}', item.entity, item.label || item.url)}
         selected={picked.map(String)} onSelected={(ids) => onPick(ids.map(Number))}
         actions={() => children} />
     </div>
@@ -185,12 +187,12 @@ export function LinkManager() {
           {retryable.length
             ? <>
                   <Button leadingIcon={RETRY} disabled={!selectedRetryable.length} {...busyProps(running)}
-                    onClick={() => run(selectedRetryable)}>{pickedLabel}</Button>
+                    onClick={() => run(selectedRetryable)}>{translate(pickedLabel)}</Button>
               </>
             : null}
         </LinkTable>
         {done && gone.length
-          ? <PanelFooter tone="error" status={PRUNE_HINT}>
+          ? <PanelFooter tone="error" status={translate(PRUNE_HINT)}>
               <Button variant="danger" {...busyProps(removing)} onClick={() => removeGone()}>
                 {`删除 ${gone.length} 条失效链接`}
               </Button>
