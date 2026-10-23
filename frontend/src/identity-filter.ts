@@ -1,3 +1,4 @@
+import { translate } from './i18n';
 /* 艺人页本地名册的身份分类：一组按身份筛名册的小号键，React 页（`react/index/index-page.tsx`）与
  * 进页骨架（`index-skeleton.ts`）共用这一张词表。
  *
@@ -6,7 +7,7 @@
 import { islandButton } from './island-skeleton';
 
 export const IDENTITY_CATEGORIES: readonly (readonly [string, string])[] = [
-  ['all', '全部'], ['japanese_av', '女优'], ['amateur', '素人'], ['western', '西方'], ['blogger', '网黄博主'], ['animation', '动画作者'],
+  ['all', translate("全部")], ['japanese_av', translate("女优")], ['amateur', translate("素人")], ['western', translate("西方")], ['blogger', translate("网黄博主")], ['animation', translate("动画作者")],
 ];
 
 /** 页面那一行的容器类，骨架与页面同一串。 */

@@ -1,3 +1,4 @@
+import { translate, format } from '../../i18n';
 /* 实体资料页的正文（`entity-body` island）：名册、作品网格与照片墙三个视图里的一个。
  *
  * 数据全由壳取好推进来，这里只挑出当前视图画。作品网格按 `revision` 换键：壳每发起一次新的
@@ -68,8 +69,8 @@ function VideoSection(props: EntityBodyProps) {
 
 /** 一部作品的样张铺成几格。张数、站名和标题已随 `/api/photos` 下来，不再请求一次。 */
 const sampleItems = (set: EntityCodeSet): EntitySamplePhoto[] => Array.from({ length: set.n }, (_, i) => ({
-  sample: true, code: set.code, position: i + 1, total: set.n, name: `${set.code} 样张 ${i + 1}`,
-  source: set.site_label || '官方样张',
+  sample: true, code: set.code, position: i + 1, total: set.n, name: format("{0} 样张 {1}", (set.code), (i + 1)),
+  source: set.site_label || translate("官方样张"),
 }));
 
 const isSample = (item: EntityWallPhoto): item is EntitySamplePhoto => (item as EntitySamplePhoto).sample === true;

@@ -1,3 +1,4 @@
+import { translate } from '../../../i18n';
 /* 设置完成：扫描是否已排队、进入 Peach 的入口，运行信息默认折叠。口令不出现在页面上。
  *
  * 独立包的服务端在 `redirect` 里给入口地址，过 `RESTART_REDIRECT_MS` 自己跳过去，与配置页保存后
@@ -15,7 +16,7 @@ export function SetupDoneView({ done }: { done: SetupDone }) {
   const entry = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
-    document.title = 'Peach · 设置完成';
+    document.title = translate("Peach · 设置完成");
     entry.current?.focus();
   }, []);
 

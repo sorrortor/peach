@@ -1,3 +1,4 @@
+import { translate, format } from '../../i18n';
 /* 卡片下方的磁链候选。可见时查询，提交复用云下载的幂等与失败分类。 */
 import { useEffect, useMemo, useRef, useState, type ComponentType, type ReactNode } from 'react';
 import { RiLink, RiHardDrive2Line, RiFileList2Line,
@@ -93,17 +94,17 @@ export function WantMagnets({ want, readOnly, downloads, provider, toast, onSour
         magnet: candidate.uri, provider: configured.key, target: configured.target,
         code: want.code, title: want.title, origin: queryUrl ? `work:${want.code}` : `wishlist:${want.id}`,
       }, 'POST', signal);
-      if (!result.ok) throw new Error(result.task.failure_detail || result.task.failure_label || '添加下载失败');
+      if (!result.ok) throw new Error(result.task.failure_detail || result.task.failure_label || translate("添加下载失败"));
       return result;
     }, (result) => {
       setSubmitted((current) => [...current, candidate.id]);
-      toast(result.outcome === 'submitted' ? `已添加下载：${candidate.name}` : `已关联现有下载：${candidate.name}`);
+      toast(result.outcome === 'submitted' ? format("已添加下载：{0}", (candidate.name)) : format("已关联现有下载：{0}", (candidate.name)));
       void client.invalidateQueries({ queryKey: DOWNLOADS_KEY });
     });
   };
   const copy = (candidate: MagnetCandidate) => {
     void action.run(`copy:${candidate.id}`, () => navigator.clipboard.writeText(candidate.uri),
-      () => toast('已复制链接'));
+      () => toast(translate("已复制链接")));
   };
   const waiting = query.isFetching || query.data?.state === 'busy';
   const failure = query.error ? errorMessage(query.error) : query.data?.error;

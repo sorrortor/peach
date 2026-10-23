@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 播放列表页：保存下来的 Mix 与手动建的列表，按最近改动排。
  *
  * 一份播放列表就是一叠视频，和首页那张 Mix 卡是同一件东西，所以穿同一身
@@ -39,7 +40,7 @@ const TRASH = spriteGlyph('trash');
 const PLAYLIST = spriteGlyph('playlist');
 
 const MENU_ROW = cx(MENU_ITEM, MENU_ITEM_INTERACTIVE, 'text-body-2-medium');
-const EMPTY_NAME = '播放列表名称不能为空';
+const EMPTY_NAME = translate("播放列表名称不能为空");
 
 type Toast = PlaylistsProps['toast'];
 
@@ -61,9 +62,9 @@ function CreateForm({ toast }: { toast: Toast }) {
       setName('');
       setProblem('');
       void refreshPlaylists();
-      toast('已新建播放列表', { undo: undoing(() => deletePlaylist(result.playlist.id)) });
+      toast(translate("已新建播放列表"), { undo: undoing(() => deletePlaylist(result.playlist.id)) });
     },
-    onError: (cause) => setProblem(errorMessage(cause) || '新建失败'),
+    onError: (cause) => setProblem(errorMessage(cause) || translate("新建失败")),
   });
   const submit = (event: FormEvent) => {
     event.preventDefault();
@@ -101,7 +102,7 @@ function RenameDialog({ target, close, toast }: { target: PlaylistRow | null; cl
     onSuccess: (_result, { row }) => {
       close();
       void refreshPlaylists();
-      toast('已重命名播放列表', { undo: undoing(() => renamePlaylist(row.id, row.name)) });
+      toast(translate("已重命名播放列表"), { undo: undoing(() => renamePlaylist(row.id, row.name)) });
     },
     onError: (cause) => setProblem(errorMessage(cause)),
   });
@@ -178,12 +179,12 @@ export function PlaylistsPage({ openPlaylist, openEntity, canFlip, toast, revisi
 
   const remove = (row: PlaylistRow) => {
     void confirmModal({
-      title: '删除播放列表', body: '这个播放列表将被删除，视频文件保留。', confirmLabel: '删除播放列表', danger: true,
+      title: translate("删除播放列表"), body: translate("这个播放列表将被删除，视频文件保留。"), confirmLabel: translate("删除播放列表"), danger: true,
       onConfirm: async () => {
         const kept = await keepPlaylist(row.id);
         await deletePlaylist(row.id);
         void refreshPlaylists();
-        toast('已删除播放列表', kept ? { undo: undoing(() => recreatePlaylist(kept)) } : undefined);
+        toast(translate("已删除播放列表"), kept ? { undo: undoing(() => recreatePlaylist(kept)) } : undefined);
       },
     });
   };

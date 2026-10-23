@@ -1,3 +1,4 @@
+import { format, translate } from '../../i18n';
 /* 实体资料页（路由树画进 `#index`，`managed-routes.tsx` 的 `ENTITY_ROUTES`）：资料卡、筛选浮层、新作那一行与正文，一棵根、四块宿主。
  *
  * 资料卡画在壳交出的宿主里（`[data-entity-hero]` 那一格），浮层、新作与正文经 portal 画进壳排好的另外三块：浮层
@@ -71,10 +72,10 @@ const newSeed = () => String(((Date.now() ^ (Math.random() * 1e9 | 0)) >>> 0) % 
 
 /** 照片一屏的读数：本地图片与样张各数各的；只有样张时不写「0 张」。 */
 function photoReadout(page: PhotoPage, codeSets: number) {
-  return `照片 · ${[
-    page.total || !codeSets ? `${(page.total || 0).toLocaleString()} 张` : '',
-    codeSets ? `样张 ${(page.sample_total || 0).toLocaleString()} 张 · ${codeSets.toLocaleString()} 部作品` : '',
-  ].filter(Boolean).join(' · ')}`;
+  return format("照片 · {0}", ([
+    page.total || !codeSets ? format("{0} 张", ((page.total || 0).toLocaleString())) : '',
+    codeSets ? format("样张 {0} 张 · {1} 部作品", ((page.sample_total || 0).toLocaleString()), (codeSets.toLocaleString())) : '',
+  ].filter(Boolean).join(' · ')));
 }
 
 function EntityLoaded(props: EntityPageProps & { entity: EntityPageData }) {
@@ -213,14 +214,14 @@ function EntityLoaded(props: EntityPageProps & { entity: EntityPageData }) {
       const current = entity.canonical_name;
       if (chosen === current) return;
       void confirmModal({
-        title: '更改统称',
-        body: `「${chosen}」将成为这份档案显示的名称，「${current}」留作别名。作品上的署名、搜索和标签都会跟着改写。`,
-        confirmLabel: '更改统称',
+        title: translate("更改统称"),
+        body: format("「{0}」将成为这份档案显示的名称，「{1}」留作别名。作品上的署名、搜索和标签都会跟着改写。", (chosen), (current)),
+        confirmLabel: translate("更改统称"),
         onConfirm: () => rename.mutateAsync({ from: current, to: chosen }),
       }).then(({ confirmed, result }) => {
         const done = result as { changed?: boolean; canonical_name?: string; previous_name?: string } | undefined;
         if (!confirmed || !done?.changed) return;
-        helpers.receipt(`已把统称更改为 ${done.canonical_name}`, { undo: async () => {
+        helpers.receipt(format("已把统称更改为 {0}", (done.canonical_name)), { undo: async () => {
           await rename.mutateAsync({ from: done.canonical_name || '', to: done.previous_name || '' });
           actions.openEntity(kind, done.previous_name || '');
         } });
@@ -232,7 +233,7 @@ function EntityLoaded(props: EntityPageProps & { entity: EntityPageData }) {
       try {
         await follow.mutateAsync(on);
       } catch (error) {
-        helpers.failure(on ? '订阅新作' : '取消订阅新作', error);
+        helpers.failure(on ? translate("订阅新作") : translate("取消订阅新作"), error);
         throw error;
       }
     },
@@ -267,10 +268,10 @@ function EntityLoaded(props: EntityPageProps & { entity: EntityPageData }) {
       try {
         await bindFollow.mutateAsync(key);
       } catch (error) {
-        helpers.failure('绑定关注作者', error);
+        helpers.failure(translate("绑定关注作者"), error);
         throw error;
       }
-      helpers.receipt(`已把关注里的 ${author} 记到 ${entity.canonical_name} 名下`);
+      helpers.receipt(format("已把关注里的 {0} 记到 {1} 名下", (author), (entity.canonical_name)));
       await refreshEntity();
     },
   }), [actions, alias, bindFollow, entity, entityId, filters, follow, followKey, helpers, kind, name, refreshEntity, rename]);
@@ -328,8 +329,8 @@ function EntityLoaded(props: EntityPageProps & { entity: EntityPageData }) {
   /* 艺人名册、视频、照片与在线是这一页的互斥视图，共用一组圆键；只有一类东西时不出这一组。 */
   const viewKinds = [roster.length, !onlineOnly, photoCount, followKey].filter(Boolean).length;
   const views: EntityViewKeys | null = viewKinds > 1 ? {
-    label: roster.length ? '页面视图' : '媒体类型',
-    people: roster.length ? { label: kind === 'studio' ? '厂牌' : '艺人', count: roster.length,
+    label: roster.length ? translate("页面视图") : translate("媒体类型"),
+    people: roster.length ? { label: kind === 'studio' ? translate("厂牌") : translate("艺人"), count: roster.length,
       icon: kind === 'studio' ? 'clapperboard' : 'user-round' } : null,
     videos: onlineOnly ? null : { count: entity.asset_count || 0 },
     photos: photoCount ? { count: photoCount } : null,
@@ -354,19 +355,19 @@ function EntityLoaded(props: EntityPageProps & { entity: EntityPageData }) {
     { ...filters, state: '', tag: '', creator: '', studio: '', owner: '' }, EMPTY_MEDIA);
   let readout = '';
   let busy = false;
-  if (view === 'people') readout = `${kind === 'studio' ? '厂牌' : '艺人'} · ${roster.length.toLocaleString()}`;
+  if (view === 'people') readout = `${kind === 'studio' ? translate("厂牌") : translate("艺人")} · ${roster.length.toLocaleString()}`;
   else if (view === 'online') {
     busy = online.busy;
-    readout = `在线 · ${(online.total ?? entity.follow?.n ?? 0).toLocaleString()} 项更新`;
+    readout = format("在线 · {0} 项更新", ((online.total ?? entity.follow?.n ?? 0).toLocaleString()));
   }
   else if (view === 'videos') {
     busy = !items.data;
     /* 选了哪几枚标签由上面那条交集条一枚一枚列着，读数只报个数：标签名再列一遍，几枚长标签
        就能把这一行撑出页面。 */
     const picked = tagList(filters.tag).length;
-    readout = `视频 · ${(items.data?.work_total ?? items.data?.total ?? 0).toLocaleString()}${picked ? ` · 已选 ${picked.toLocaleString()} 个标签` : ''}`;
+    readout = format("视频 · {0}{1}", ((items.data?.work_total ?? items.data?.total ?? 0).toLocaleString()), (picked ? format(" · 已选 {0} 个标签", (picked.toLocaleString())) : ''));
   } else if (wallPage && !wallPage.error) {
-    readout = inSet ? `${wallPage.title} · ${(wallPage.total || 0).toLocaleString()} 张`
+    readout = inSet ? format("{0} · {1} 张", (wallPage.title), ((wallPage.total || 0).toLocaleString()))
       : photoReadout(wallPage, codeSetsOf(wallPage).length);
   } else busy = wall.isPending;
 

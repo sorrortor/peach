@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { translate } from '../../../i18n';
 
 import { Button } from '@/components/base/buttons/button';
 import { Input } from '@/components/base/input/input';
@@ -28,7 +29,7 @@ export function SetupRestore({ onDone }: { onDone: (done: SetupDone) => void }) 
     <form className="flex flex-col gap-4" onSubmit={submit} noValidate>
       <Input label="已有数据目录" value={path} onChange={setPath} isRequired autoComplete="off" spellCheck="false"
         validationBehavior="aria" isInvalid={Boolean(error)}
-        hint={error ? <span role="alert">{error}</span> : '选择包含 config.toml 和 database 文件夹的数据目录。'} />
+        hint={error ? <span role="alert">{translate(error)}</span> : '选择包含 config.toml 和 database 文件夹的数据目录。'} />
       <Button type="submit" className="self-start" {...busyProps(busy)}>{busy ? '正在连接数据目录…' : '使用此目录'}</Button>
     </form>
   );

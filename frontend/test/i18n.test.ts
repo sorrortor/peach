@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import messages from '../src/i18n/messages.json';
 import { LANGUAGE_KEY, initializeLanguage, language, saveLanguage, translate, format, markupText } from '../src/i18n';
-import { localizeJsx, localizePlayer, playerDisplayMessages, displayMessages, localizedAreas } from '../i18n-plugin';
+import { localizeJsx, localizePlayer, localizeMarkup, markupDisplayMessages, playerDisplayMessages, displayMessages, localizedAreas } from '../i18n-plugin';
 
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); localStorage.clear(); });
 
@@ -86,24 +86,49 @@ describe('界面语言', () => {
     expect(code).toContain('__peachTranslate("离线，已跳过")');
     expect(code).toContain('__peachTranslate("尚无主维度")');
     expect(code).toContain('value="标题" id="标题"');
-    expect(localizeJsx('const node=<Card meta="离线，已跳过" />;', '/src/react/unrelated/sample.tsx')).toBeNull();
+    expect(localizeJsx('const node=<Card meta="离线，已跳过" />;', '/src/react/jav/sample.tsx')).toContain('__peachTranslate("离线，已跳过")');
+    expect(localizedAreas.test('/src/react/boardui/example.tsx')).toBe(false);
+  });
+
+  it.each(['en', 'th'])('localizes shell markup in %s without changing keys, values or escaped content', locale => {
+    saveLanguage(locale);
+    const source = 'const state="播放"; const output=`<button data-state="播放" title="播放">播放</button><span>${name}</span>`;';
+    const code = localizeMarkup(source, 'shell.ts')!;
+    const run = new Function('__peachMarkup', 'name', code.replace(/^import[^\n]+\n/, '') + '\nreturn {state,output};');
+    const result = run(markupText, 'Private 中文 ไทย &lt;b&gt;');
+    expect(result.state).toBe('播放');
+    expect(result.output).toContain('data-state="播放"');
+    expect(result.output).toContain(`title="${translate('播放')}"`);
+    expect(result.output).toContain('Private 中文 ไทย &lt;b&gt;');
+    expect(markupDisplayMessages(source, 'shell.ts')).toEqual(['播放']);
+  });
+
+  it.each(['en', 'th'])('localizes shell display calls in %s and preserves request values and control strings', locale => {
+    saveLanguage(locale);
+    const source = 'const state="播放"; node.setAttribute("data-state","播放"); node.setAttribute("title","播放"); node.textContent=`已发现 ${name} 个文件`; send({value:"播放"});';
+    const code = localizeMarkup(source, 'shell.ts')!;
+    const run = new Function('__peachTranslate', '__peachFormat', 'node', 'name', 'send', code.replace(/^import[^\n]+\n/, '') + '\nreturn state;');
+    const node = document.createElement('button');
+    const send = vi.fn();
+    const name = 'Private 中文 ไทย <b> $&';
+    expect(run(translate, format, node, name, send)).toBe('播放');
+    expect(node.dataset.state).toBe('播放');
+    expect(node.title).toBe(translate('播放'));
+    expect(node.textContent).toBe(format('已发现 {0} 个文件', name));
+    expect(send).toHaveBeenCalledWith({value:'播放'});
   });
 
   it('covers every display message in the localized surfaces and preserves placeholders', () => {
-    const root = resolve(process.cwd(), 'src/react');
+    const root = resolve(process.cwd(), 'src');
     const missing: Record<string, string[]> = {};
     for (const entry of readdirSync(root, { recursive: true, withFileTypes: true })) {
       const path = resolve(entry.parentPath, entry.name);
-      if (!entry.isFile() || !/\.tsx?$/.test(path) || !localizedAreas.test(path)) continue;
-      const gaps = displayMessages(readFileSync(path, 'utf8'), path).filter(key => !Object.hasOwn(messages, key));
+      if (!entry.isFile() || !/\.(?:tsx?|js)$/.test(path) || /\.d\.ts$/.test(path) || /\/(?:boardui|evilcharts|i18n)\//.test(path)) continue;
+      const source = readFileSync(path, 'utf8');
+      const texts = path.includes('/src/player/') ? playerDisplayMessages(source, path)
+        : path.endsWith('.tsx') && localizedAreas.test(path) ? displayMessages(source, path) : markupDisplayMessages(source, path);
+      const gaps = texts.filter(key => !Object.hasOwn(messages, key));
       if (gaps.length) missing[path.slice(root.length + 1)] = gaps;
-    }
-    const playerRoot = resolve(root, '../player');
-    for (const entry of readdirSync(playerRoot)) {
-      if (!entry.endsWith('.ts')) continue;
-      const path = resolve(playerRoot, entry);
-      const gaps = playerDisplayMessages(readFileSync(path, 'utf8'), path).filter(key => !Object.hasOwn(messages, key));
-      if (gaps.length) missing[`player/${entry}`] = gaps;
     }
     expect(missing).toEqual({});
     const slots = (text: string) => [...new Set(text.match(/\{\d+\}/g) ?? [])].sort();

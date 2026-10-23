@@ -1,3 +1,4 @@
+import { translate } from './i18n';
 /* 垃圾文件队列（`/junk-files`）的路由与计数行骨架。
  *
  * 看哪一类、看待判断还是已排除，全由地址决定：分类链接是可深链的 `<a href>`，刷新后原样恢复。
@@ -17,9 +18,9 @@ export interface JunkRoute { kind: JunkKind; view: JunkView }
 
 /** 分类条上的几项：键、标签、雪碧图字形。键与 `/api/ads?kind=` 的取值一一对应。 */
 export const JUNK_KIND_OPTIONS: readonly (readonly [JunkKind, string, string])[] = [
-  ['', '全部', 'layout-grid'], ['video', '视频', 'play'], ['image', '图片', 'pics'],
-  ['archive', '压缩包', 'file-archive'], ['audio', '音频', 'file-audio'], ['url', '网址', 'globe'],
-  ['other', '其它', 'hard-drive'],
+  ['', translate("全部"), 'layout-grid'], ['video', translate("视频"), 'play'], ['image', translate("图片"), 'pics'],
+  ['archive', translate("压缩包"), 'file-archive'], ['audio', translate("音频"), 'file-audio'], ['url', translate("网址"), 'globe'],
+  ['other', translate("其它"), 'hard-drive'],
 ];
 
 /** 认不出的分类一律落回「全部」。 */
@@ -44,11 +45,11 @@ export function junkPath(kind: JunkKind = '', view: JunkView = 'pending'): strin
 /** 分类条末尾那一项：待判断时去「已排除」，已排除时回「待判断」。 */
 export function junkViewLink(view: JunkView): { view: JunkView; label: string; glyph: string; href: string } {
   return view === 'dismissed'
-    ? { view: 'pending', label: '返回待判断', glyph: 'rotate-ccw', href: junkPath('', 'pending') }
-    : { view: 'dismissed', label: '已排除', glyph: 'eye-off', href: junkPath('', 'dismissed') };
+    ? { view: 'pending', label: translate("返回待判断"), glyph: 'rotate-ccw', href: junkPath('', 'pending') }
+    : { view: 'dismissed', label: translate("已排除"), glyph: 'eye-off', href: junkPath('', 'dismissed') };
 }
 
-export const junkSummaryLabel = (view: JunkView) => (view === 'dismissed' ? '已排除' : '待判断');
+export const junkSummaryLabel = (view: JunkView) => (view === 'dismissed' ? translate("已排除") : translate("待判断"));
 
 const glyph = (name: string) => `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-${name}"></use></svg>`;
 

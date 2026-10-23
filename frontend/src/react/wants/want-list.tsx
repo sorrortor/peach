@@ -1,3 +1,4 @@
+import { format, translate } from '../../i18n';
 /* JAV 想要：按状态分组的作品卡，复用资源链接查询与查找资源弹层。 */
 import { useState } from 'react';
 import { Radio } from 'react-aria-components';
@@ -29,10 +30,10 @@ import {
   WANTS_KEY, type Want,
 } from './wants';
 
-const ORIGINS: Record<Want['origin'], string> = { code: '手动添加', feed: '订阅新作', follow: '关注' };
+const ORIGINS: Record<Want['origin'], string> = { code: translate("手动添加"), feed: translate("订阅新作"), follow: translate("关注") };
 /** 每一段一页摆多少张：一张卡二十来个节点，上千条一次摆开就是十几万像素高的一页。 */
 export const WANT_PAGE_SIZE = 20;
-const MAGNET_FILTERS = [['all', '全部'], ['available', '有磁链'], ['missing', '没磁链']] as const;
+const MAGNET_FILTERS = [['all', translate("全部")], ['available', translate("有磁链")], ['missing', translate("没磁链")]] as const;
 
 
 /** 资料那一行：发行日、厂牌、女优、从哪儿加进来的。 */
@@ -157,7 +158,7 @@ export function WantList({ readOnly, toast, query = '' }: WantListProps) {
     const text = code.trim();
     if (!text || readOnly) return;
     void action.run('add', (signal) => addWant({ code: text }, signal), (done) => {
-      toast(done.created ? `已加入想要：${wantName(done.want)}` : `${wantName(done.want)} 已经在想要里`);
+      toast(done.created ? format("已加入想要：{0}", (wantName(done.want))) : format("{0} 已经在想要里", (wantName(done.want))));
       setCode('');
       void invalidateWants();
     });
@@ -167,13 +168,13 @@ export function WantList({ readOnly, toast, query = '' }: WantListProps) {
   };
   const remove = (want: Want) => {
     void action.run(`remove:${want.id}`, (signal) => removeWants([want.id], signal), () => {
-      toast(`已移除：${wantName(want)}`);
+      toast(format("已移除：{0}", (wantName(want))));
       void invalidateWants();
     });
   };
   const reset = (want: Want) => {
     void action.run(`reset:${want.id}`, (signal) => resetWants([want.id], signal), () => {
-      toast(`${wantName(want)} 回到待找`);
+      toast(format("{0} 回到待找", (wantName(want))));
       void invalidateWants();
     });
   };

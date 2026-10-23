@@ -6,7 +6,7 @@ import messages from './src/i18n/messages.json' with { type: 'json' };
 const labels = new Set(['label', 'title', 'legend', 'hint', 'description', 'placeholder', 'aria-label', 'alt', 'lede', 'summary', 'term', 'status', 'topLabel', 'bottomLabel', 'busyLabel', 'emptyLabel', 'message']);
 const dashboardLabels = new Set(['empty', 'unit', 'series', 'figure', 'meta', 'detail', 'note', 'textValue', 'detailTitle']);
 const known = new Set(Object.keys(messages));
-export const localizedAreas = /\/src\/react\/(?:settings|settings-panel|sidebar|catalog-filter|catalog-grid|catalog-folders|library-shortcuts|library-processing|components|manage-header|entity-filter|item-detail|diagnostics|glow-picker|follow-feed|follow-detail|follow-manage|stage|stats|taste|data-cleanup|media-repair|charts|activity|review|duplicates|batch-dock|pages\/login)\//;
+export const localizedAreas = /\/src\/react\/(?!boardui\/|evilcharts\/)/;
 
 /** JSX 的行首缩进不展示，同一行与内联节点之间的空格属于文案。 */
 function jsxText(value: string): string {
@@ -23,7 +23,7 @@ function jsxText(value: string): string {
 /** 仅转换 JSX 的展示字串；不处理 value、键、网络参数、用户数据或控制流。 */
 function displayEdits(source: string, id: string) {
   const displayAttribute = (name: string) => labels.has(name)
-    || /\/src\/react\/(?:stats|taste|data-cleanup|media-repair|charts|activity|review|duplicates|batch-dock)\//.test(id) && dashboardLabels.has(name);
+    || localizedAreas.test(id) && dashboardLabels.has(name);
   const edits: { start: number; end: number; value: string }[] = [];
   const messages = new Set<string>();
   const ast = parseSync(id, source);
@@ -50,6 +50,14 @@ function displayEdits(source: string, id: string) {
   const walk = (node: unknown) => {
     if (!node || typeof node !== 'object') return;
     const item = node as Record<string, any>;
+    // 遗留壳的展示出口与 JSX 使用同一边界；属性名、请求参数和数据值不转换。
+    if (item.type === 'CallExpression') {
+      const method = item.callee?.type === 'MemberExpression' ? item.callee.property?.name : item.callee?.name;
+      if (method === 'setAttribute' && ['aria-label', 'title', 'placeholder', 'alt'].includes(item.arguments[0]?.value)) display(item.arguments[1]);
+      if (['toast', 'receipt', 'actionReceipt', 'actionFailure', 'spinnerHtml', 'loadingDotsHtml'].includes(method)) display(item.arguments[0]);
+    }
+    if (item.type === 'AssignmentExpression' && item.left?.type === 'MemberExpression'
+      && ['textContent', 'title', 'placeholder'].includes(item.left.property?.name)) display(item.right);
     if (item.type === 'CallExpression' && ['translate', 'format', 'markupText'].includes(item.callee?.name)
       && typeof item.arguments[0]?.value === 'string' && /\p{Script=Han}/u.test(item.arguments[0].value)) messages.add(item.arguments[0].value);
     let text: string | undefined;
@@ -108,7 +116,7 @@ export function localizeJsx(source: string, id: string, runtime = '/src/i18n/ind
 }
 
 /** 播放器自有菜单的静态 HTML；插值、资源地址、属性键与用户字幕名不参与翻译。 */
-function playerDisplay(source: string, id: string) {
+function playerDisplay(source: string, id: string, markupOnly = false) {
   const catalog = new Set<string>();
   type Edit = { start: number; end: number; value: string };
   const apply = (start: number, end: number, edits: Edit[]) => {
@@ -122,6 +130,8 @@ function playerDisplay(source: string, id: string) {
     const pattern = /\b(?:aria-label|title|label|placeholder|alt)=["']([^"']*\p{Script=Han}[^"']*)(?:["']|$)|(?:^|>)([^<>]*\p{Script=Han}[^<>]*)(?=<|$)/gu;
     for (const match of text.matchAll(pattern)) {
       const value = match[1] ?? match[2]!;
+      // 插值可能把属性截成两段；不把属性残片当正文，也不转换 data-*。
+      if (!match[1] && /["']|\b[\w-]+=/.test(value)) continue;
       const key = value.trim();
       catalog.add(key);
       if (!known.has(key)) continue;
@@ -142,6 +152,7 @@ function playerDisplay(source: string, id: string) {
     }
     if (node.type === 'Literal' && typeof node.value === 'string' && /\p{Script=Han}/u.test(node.value)) {
       if (/<[a-z/][^>]*>/i.test(node.value)) return [{ start: node.start, end: node.end, value: `(${markup(node.value)})` }];
+      if (markupOnly) return nested;
       catalog.add(node.value);
       if (known.has(node.value)) return [{ start: node.start, end: node.end, value: `__peachTranslate(${JSON.stringify(node.value)})` }];
     }
@@ -152,6 +163,7 @@ function playerDisplay(source: string, id: string) {
         const parts = node.quasis.flatMap((part: any, index: number) => [markup(part.value.cooked), ...(index < values.length ? [values[index]] : [])]);
         return [{ start: node.start, end: node.end, value: `(${parts.join(' + ')})` }];
       }
+      if (markupOnly) return nested;
       catalog.add(key);
       if (known.has(key)) return [{ start: node.start, end: node.end, value: `__peachFormat(${JSON.stringify(key)}${values.length ? ', ' + values.join(', ') : ''})` }];
     }
@@ -164,6 +176,13 @@ function playerDisplay(source: string, id: string) {
 }
 
 export const playerDisplayMessages = (source: string, id: string) => playerDisplay(source, id).messages;
+export const markupDisplayMessages = (source: string, id: string) => [...new Set([...playerDisplay(source, id, true).messages, ...displayMessages(source, id)])];
+export function localizeMarkup(source: string, id: string, runtime = '/src/i18n/index.ts'): string | null {
+  const { code } = playerDisplay(source, id, true);
+  const localized = localizeJsx(code ?? source, id, runtime);
+  const result = localized ?? code;
+  return result ? (code ? `import { markupText as __peachMarkup } from ${JSON.stringify(runtime)};\n` : '') + result : null;
+}
 export function localizePlayer(source: string, id: string, runtime = '/src/i18n/index.ts'): string | null {
   const { code } = playerDisplay(source, id);
   return code ? `import { translate as __peachTranslate, format as __peachFormat, markupText as __peachMarkup } from ${JSON.stringify(runtime)};\n${code}` : null;
@@ -173,8 +192,10 @@ export function i18nPlugin(): Plugin {
   const runtime = fileURLToPath(new URL('./src/i18n/index.ts', import.meta.url));
   return { name: 'peach-ui-languages', enforce: 'pre', transform(source, id) {
     const player = /\/src\/player\/[^/]+\.ts$/.test(id);
-    if (!player && (!id.endsWith('.tsx') || !localizedAreas.test(id))) return;
-    const code = player ? localizePlayer(source, id, runtime) : localizeJsx(source, id, runtime);
+    const jsx = id.endsWith('.tsx') && localizedAreas.test(id);
+    const markup = /\/src\//.test(id) && /\.(?:ts|js)$/.test(id) && !/\/(?:boardui|evilcharts|i18n)\//.test(id);
+    if (!player && !jsx && !markup) return;
+    const code = player ? localizePlayer(source, id, runtime) : jsx ? localizeJsx(source, id, runtime) : localizeMarkup(source, id, runtime);
     return code ? { code, map: null } : null;
   } };
 }

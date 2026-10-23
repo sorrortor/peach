@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type FormEvent } from 'react';
+import { translate } from '../../i18n';
 import { useQuery } from '@tanstack/react-query';
 import { entityPath } from '@peach/legacy/core';
 import { RiCompassLine, RiExternalLinkLine } from '@remixicon/react';
@@ -119,7 +120,7 @@ function Discover({ readOnly, receipt, resource, query, navigate, clearText }: {
       busy={waiting} topClassName="gap-1.5 overflow-visible" bottomClassName="min-h-12" top={<div data-catalog-scroll="">
       <div data-catalog-views="">
         {([['external', '库外发现'], ['library', '馆藏探索']] as const).map(([key, label]) =>
-          <FilterPill key={key} data-entity-tag={key} data-entity-press="" pressed={scope === key} onPress={() => { setScope(key); setTag('') }}>{label}</FilterPill>)}
+          <FilterPill key={key} data-entity-tag={key} data-entity-press="" pressed={scope === key} onPress={() => { setScope(key); setTag('') }}>{translate(label)}</FilterPill>)}
         <span data-entity-sep="" aria-hidden="true" />
       </div><div data-catalog-tags="" dangerouslySetInnerHTML={waiting ? { __html: javTagSkeleton() } : undefined}>
         {waiting ? null : tags.map(name => <FilterPill key={name} data-catalog-tag={name} data-entity-press="" pressed={tag === name} onPress={() => setTag(tag === name ? '' : name)}>

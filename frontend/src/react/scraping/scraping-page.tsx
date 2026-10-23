@@ -1,3 +1,4 @@
+import { translate, language } from '../../i18n';
 /* 来源和凭证页：每个采集来源怎么连、拿什么身份连，外加一趟按番号补高清封面。
  *
  * 这是第一个带写操作的 React 档，两件事在这里定型：
@@ -39,7 +40,7 @@ import {
   type AmaneBridge, type Check, type CoverJob, type ScrapingData, type Source,
 } from './scraping';
 
-const NETWORKS = [['peach', 'Peach 代理'], ['direct', '直接连接']] as const;
+const NETWORKS = [['peach', translate("Peach 代理")], ['direct', translate("直接连接")]] as const;
 
 /** 连接方式的选项。数据库里存着这两种以外的值（旧版写下的、手改的）时把它原样列成一项，
  *  下拉框照实显示现在是什么，不落到空占位上。 */
@@ -55,7 +56,7 @@ export function linkHost(url: string): string {
     return url;
   }
 }
-const COOKIE_METHODS = [['paste', '粘贴 Cookie'], ['file', '导入文件']] as const;
+const COOKIE_METHODS = [['paste', translate("粘贴 Cookie")], ['file', translate("导入文件")]] as const;
 
 function GitHubMark() {
   return <SiteMark source="github" />;
@@ -93,7 +94,7 @@ function SourceCard({ source, toast }: { source: Source } & ScrapingProps) {
           (row) => (row.source === result.saved.source ? result.saved : row)),
       });
       forgetSecrets();
-      toast(revoke ? 'Cookie 已撤销' : '来源设置已保存');
+      toast(revoke ? translate("Cookie 已撤销") : translate("来源设置已保存"));
     },
   });
   const check = useMutation({
@@ -132,7 +133,7 @@ function SourceCard({ source, toast }: { source: Source } & ScrapingProps) {
       // 超限的多半根本不是 Cookie 文件。在浏览器里就拦住，不拿它去占一次请求。
       input.value = '';
       setFileName('');
-      setFileProblem('Cookie 文本超过 256 KiB');
+      setFileProblem(translate("Cookie 文本超过 256 KiB"));
       return;
     }
     try {
@@ -140,7 +141,7 @@ function SourceCard({ source, toast }: { source: Source } & ScrapingProps) {
       setCookieText(text);
       setFileName(selected.name);
     } catch {
-      setFileProblem('Cookie 文件未读取，请重新选择');
+      setFileProblem(translate("Cookie 文件未读取，请重新选择"));
     }
   }
 
@@ -168,7 +169,7 @@ function SourceCard({ source, toast }: { source: Source } & ScrapingProps) {
         </SettingsRow>
       </Rows>
       {source.cooldown_until && source.cooldown_until > Date.now() / 1000 ? (
-        <Note tone="warning">来源正在冷却，截止 {new Date(source.cooldown_until * 1000).toLocaleString('zh-CN')}</Note>
+        <Note tone="warning">来源正在冷却，截止 {new Date(source.cooldown_until * 1000).toLocaleString(language())}</Note>
       ) : null}
       {detailed ? <Stack divided>
         {network === 'peach'
@@ -244,7 +245,7 @@ function CoverCard({ toast }: ScrapingProps) {
     queryFn: ({ signal }) => fetchCoverJob(signal),
     start: () => apiSend<CoverJob>(SCRAPING_COVER_URL, { code }),
     onFinish: (state) => {
-      if (state.status === 'complete') toast(state.result || '封面采集完成');
+      if (state.status === 'complete') toast(state.result || translate("封面采集完成"));
     },
   });
 
@@ -255,7 +256,7 @@ function CoverCard({ toast }: ScrapingProps) {
   };
 
   const problem = start.error ? errorMessage(start.error)
-    : outcome?.status === 'failed' ? (outcome.error || '采集未取得') : '';
+    : outcome?.status === 'failed' ? (outcome.error || translate("采集未取得")) : '';
   return (
     <Section title="高清封面" onSubmit={submit}>
       <Stack>
@@ -291,7 +292,7 @@ function AmaneBridgeCard({ toast }: ScrapingProps) {
     jobOf: (card) => card.job,
     withJob: (card, started) => card && { ...card, job: started },
     onFinish: (state) => {
-      if (state.status === 'complete') toast(state.result || 'amane 桥已重建');
+      if (state.status === 'complete') toast(state.result || translate("amane 桥已重建"));
     },
   });
   const check = useMutation({
@@ -308,7 +309,7 @@ function AmaneBridgeCard({ toast }: ScrapingProps) {
   const busy = running || rebuild.isPending || check.isPending;
   const problem = rebuild.error ? errorMessage(rebuild.error)
     : check.error ? errorMessage(check.error)
-    : outcome?.status === 'failed' ? (outcome.error || '重建未完成') : '';
+    : outcome?.status === 'failed' ? (outcome.error || translate("重建未完成")) : '';
   return (
     <Section title="amane" aside={<ExternalLink href={data.repository} leadingIcon={GitHubMark}>{data.repository}</ExternalLink>}>
       <FactList>

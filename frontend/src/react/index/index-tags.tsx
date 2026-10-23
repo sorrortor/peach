@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 标签页的三块：筛选浮层、正文（字母表或标签云）、所选标签的操作条。
  *
  * 两套词表共用这三块，区别在颜色和去处：本地是 ledger 里的中文标签，按 ledger 的九类着色，
@@ -59,7 +60,7 @@ export function TagAlphabet({ groups, actions }: { groups: [string, TagEntry[]][
         <section key={letter} data-alpha-group={at}
           className={cardClass({ radius: 'plain', padding: 'none', className: 'px-5 pt-4 pb-3' })}>
           <h3 className="mb-2 flex items-center text-title-2-medium text-text-primary">
-            {letter}<TabCount value={tags.length} />
+            {letter === '中文' ? translate('中文标签') : translate(letter)}<TabCount value={tags.length} />
           </h3>
           <div className="index-tag-list gap-x-4 gap-y-0.5">
             {tags.map((tag) => <AlphaTag key={tag.k} tag={tag} actions={actions} />)}
@@ -95,7 +96,7 @@ export function TagCloud({ tags, actions }: { tags: TagEntry[]; actions: TagActi
 }
 
 const VIEWS: readonly (readonly [TagView, string, string])[] = [
-  ['cloud', '标签云', 'tags'], ['alphabet', '字母表', 'text-aa'],
+  ['cloud', translate("标签云"), 'tags'], ['alphabet', translate("字母表"), 'text-aa'],
 ];
 
 /** 筛选浮层：上排类型药丸，下排读数、按首字跳转与视图切换。只摆数得到的那几类。 */
@@ -131,7 +132,7 @@ export function TagFilters(
             {letters.map((letter, at) => (
               <button key={letter} type="button" onClick={() => onJump(at)}
                 className="h-7.5 min-w-7.5 flex-none cursor-pointer rounded-glass-key px-1.5 text-caption-1-regular leading-5 text-(--glass-text)/60 outline-none hover:text-(--glass-text) focus-visible:ring-2 focus-visible:ring-border-focus-ring">
-                {letter}
+                {letter === '中文' ? translate('中文标签') : translate(letter)}
               </button>
             ))}
           </nav>

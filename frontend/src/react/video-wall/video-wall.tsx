@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 import { memo, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 import { Radio } from 'react-aria-components';
@@ -269,7 +270,7 @@ export function VideoWall({ items, finite, hasMore, busy, loading = false, error
     try { await actions.watchLater(activeItem, on => setLater({ id: activeItem.id, on })) }
     finally { setLaterBusy(false) }
   };
-  const label = (item: MediaItem) => helpers.displayName(item, String(item.name || item.code || '未命名视频'));
+  const label = (item: MediaItem) => helpers.displayName(item, String(item.name || item.code || translate("未命名视频")));
   const current = activeItem || selected;
   useLayoutEffect(() => {
     const node = codeTitle.current;

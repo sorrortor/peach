@@ -31,6 +31,9 @@ class InterfaceLanguagesBrowserTests(unittest.TestCase):
     def test_management_languages_on_desktop_and_mobile(self):
         self._check_languages(('e2e/management-languages.test.ts',))
 
+    def test_whole_app_languages_on_desktop_and_mobile(self):
+        self._check_languages(('e2e/whole-app-languages.test.ts',))
+
     def _check_languages(self, files: tuple[str, ...]):
         node, chrome, ffmpeg = shutil.which('node'), chrome_executable(), shutil.which('ffmpeg')
         if not node or not chrome or not ffmpeg or not (ROOT / 'frontend/node_modules/playwright-core').is_dir():

@@ -1,3 +1,4 @@
+import { translate } from './i18n';
 import { emptyStateHtml } from '@peach/legacy/ui';
 
 type Request = (url: string) => Promise<any>;
@@ -26,17 +27,17 @@ export async function catalogSuggestions(state: Record<string, string>, request:
 export function catalogEmptyHtml({ kind = 'catalog', filtered = false, jav = false, configurable = false, online = false } = {}): string {
   const add = configurable ? '<button class="geist-button primary" data-empty-settings>添加内容</button>' : '';
   const follow = '<a class="geist-button' + (!configurable || online ? ' primary' : '') + '" href="/subscriptions?tab=add">添加关注</a>';
-  if (filtered || jav) return emptyStateHtml('search', jav ? '还没有符合条件的 JAV 作品' : '没有符合条件的内容',
-    jav ? '已扫描但尚未补充发行资料的视频可在全部内容中查看。' : '清除筛选或搜索条件后查看全部内容。',
+  if (filtered || jav) return emptyStateHtml('search', jav ? translate("还没有符合条件的 JAV 作品") : translate("没有符合条件的内容"),
+    jav ? translate("已扫描但尚未补充发行资料的视频可在全部内容中查看。") : translate("清除筛选或搜索条件后查看全部内容。"),
     { actions: '<a class="geist-button primary" href="/?loc=&thumb=0">查看全部内容</a>' });
   if (kind !== 'catalog') {
-    const labels: Record<string, string> = { tags: '标签', performers: '艺人', creators: '卖家', studios: '厂牌', agencies: '事务所', series: '系列' };
+    const labels: Record<string, string> = { tags: translate("标签"), performers: translate("艺人"), creators: translate("卖家"), studios: translate("厂牌"), agencies: translate("事务所"), series: translate("系列") };
     // 在线那一档数的是来源上的东西，名字也跟着来源的说法：艺人页在线摆的是关注来源里的创作者。
-    const onlineLabels: Record<string, string> = { tags: '标签', performers: '创作者' };
-    const label = (online ? onlineLabels[kind] : '') || labels[kind] || '资料';
-    return emptyStateHtml(kind === 'tags' ? 'tags' : 'user-round', '还没有' + label,
-      online ? '添加关注来源并获取内容后，这里会显示来源上的' + label + '。' : '添加内容并补充资料后，这里会显示对应信息。',
+    const onlineLabels: Record<string, string> = { tags: translate("标签"), performers: translate("创作者") };
+    const label = (online ? onlineLabels[kind] : '') || labels[kind] || translate("资料");
+    return emptyStateHtml(kind === 'tags' ? 'tags' : 'user-round', translate("还没有") + label,
+      online ? translate("添加关注来源并获取内容后，这里会显示来源上的") + label + '。' : translate("添加内容并补充资料后，这里会显示对应信息。"),
       { actions: online ? follow : add + follow });
   }
-  return emptyStateHtml('play', '还没有视频', '添加媒体目录或关注来源，开始建立你的馆藏。', { actions: add + follow });
+  return emptyStateHtml('play', translate("还没有视频"), translate("添加媒体目录或关注来源，开始建立你的馆藏。"), { actions: add + follow });
 }

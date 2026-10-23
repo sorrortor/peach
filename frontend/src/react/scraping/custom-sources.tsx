@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/base/buttons/button';
@@ -14,10 +15,10 @@ import { SelectField } from '../settings-panel/legacy-controls';
 import { CUSTOM_SOURCES_URL as URL, CUSTOM_SOURCES_KEY as KEY, fetchCustomSources,
   type CustomSource as Source } from './custom-source-data';
 
-const FIELDS = [['code', '番号'], ['title', '标题'], ['studio', '厂牌'], ['series', '系列'],
-  ['release_date', '发行日期'], ['performers', '演员（文本数组）'], ['tags', '标签（文本数组）']] as const;
-const TYPES = [['censored', '有码'], ['amateur', '素人'], ['uncensored', '无码'], ['fc2', 'FC2'],
-  ['kmib', '韩国 MIB'], ['other', '其他'], ['unsure', '待核番号'], ['unknown', '未知']] as const;
+const FIELDS = [['code', translate("番号")], ['title', translate("标题")], ['studio', translate("厂牌")], ['series', translate("系列")],
+  ['release_date', translate("发行日期")], ['performers', translate("演员（文本数组）")], ['tags', translate("标签（文本数组）")]] as const;
+const TYPES = [['censored', translate("有码")], ['amateur', translate("素人")], ['uncensored', translate("无码")], ['fc2', 'FC2'],
+  ['kmib', translate("韩国 MIB")], ['other', translate("其他")], ['unsure', translate("待核番号")], ['unknown', translate("未知")]] as const;
 const blank = (): Source => ({ name: '', endpoint: '', enabled: false, fields: { code: 'id', title: 'title' }, content_types: ['censored'] });
 
 export function CustomSources({ receipt }: { receipt(message: string): void }) {

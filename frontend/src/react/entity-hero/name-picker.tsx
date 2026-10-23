@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 名字右边那枚下拉：在这条实体已有的写法里挑一个当统称，或者添一个新的。
  *
  * 统称由用户自己定。同一个人在库里常有中文、日文、罗马字几种写法，哪一个该顶在标题上是他的
@@ -28,7 +29,7 @@ export function NamePicker({ current, choices, onChoose, onAddAlias }: {
   const toggle = useRef<HTMLButtonElement>(null);
   /* title 给壳的提示条用（board-controls 只认 [title]），和旧资料卡那枚一样悬停就出字。
      react-aria 的 Button 不收 title，挂载后直接写到节点上；提示条收起时会把它放回来。 */
-  useEffect(() => { toggle.current?.setAttribute('title', '名字与别名') }, []);
+  useEffect(() => { toggle.current?.setAttribute('title', translate("名字与别名")) }, []);
   return (
     <MenuTrigger isOpen={open} onOpenChange={setOpen}>
       <Button ref={toggle} data-namepick-toggle="" aria-label="名字与别名">

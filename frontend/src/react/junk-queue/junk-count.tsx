@@ -1,3 +1,4 @@
+import { format } from '../../i18n';
 /* 垃圾文件页的计数行：一块摘要面（这一视图、这一类有多少个）和一条分类条。
  *
  * 分类有哪几项、选中哪一项、看的是待判断还是已排除，全由地址决定，等数据时就是最终样子；
@@ -44,7 +45,7 @@ export function JunkCount({ route, page, failed, onNavigate }: {
     onNavigate(link.getAttribute('href') || junkPath());
   };
   /* 读不到就不再转圈：失败的原因写在网格那一格里，这里只说「没有数」。 */
-  const figure = page ? `${Number(page.total || 0).toLocaleString()} 个` : failed ? '—' : '';
+  const figure = page ? format("{0} 个", (Number(page.total || 0).toLocaleString())) : failed ? '—' : '';
   return (
     <div data-junk-count="">
       <div data-junk-summary="" aria-live="polite">

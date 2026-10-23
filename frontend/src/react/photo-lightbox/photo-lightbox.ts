@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 图片灯箱（ADR-0031 第 10f 步）：数据形状、Swiper 的按需加载与缩放条的换算。
  *
  * 灯箱服务资料页的照片墙（本地图片与番号样张）和关注页的在线图集。每个调用方把自己的
@@ -127,17 +128,17 @@ export function photoZoom(box: Element, main: SwiperInstance, show: (percent: nu
 /** 一千字节以下也写 1 KB；数和单位之间是不换行空格，窄面板里不拆成两行。 */
 export const fmtPhotoSize = (raw: unknown): string => {
   const size = Number(raw) || 0;
-  if (!size) return '大小未知';
+  if (!size) return translate("大小未知");
   return (size < 1024 * 1024 ? `${Math.max(1, Math.round(size / 1024))} KB` : fmtSize(size)).replace(' ', ' ');
 };
 
-export const photoTitle = (slide: LightboxSlide): string => (slide.asset?.name || slide.name) || '未命名图片';
+export const photoTitle = (slide: LightboxSlide): string => (slide.asset?.name || slide.name) || translate("未命名图片");
 
 /** 面板第二行。本地图是来源与大小；别的是来源、分辨率（大图到了才有）和大小。第几张只有底栏那一个编号。 */
 export function photoMeta(slide: LightboxSlide, natural: readonly [number, number] | undefined): string {
   const asset = slide.asset;
-  if (asset) return [LOC[asset.location ?? ''] || asset.location || '来源未知', fmtPhotoSize(asset.size)].join(' · ');
+  if (asset) return [LOC[asset.location ?? ''] || asset.location || translate("来源未知"), fmtPhotoSize(asset.size)].join(' · ');
   const resolution = natural?.[0] && natural[1] ? `${natural[0]} × ${natural[1]}` : '';
-  return [slide.source || '在线图片', resolution, slide.size ? fmtPhotoSize(slide.size) : '']
+  return [slide.source || translate("在线图片"), resolution, slide.size ? fmtPhotoSize(slide.size) : '']
     .filter(Boolean).join(' · ');
 }

@@ -1,3 +1,4 @@
+import { translate } from './i18n';
 /* 索引五页（艺人、卖家、厂牌、事务所、标签）的进页骨架与地址解析。
  *
  * 页头此刻就能给出最终样子：标题、读数的占位、版式开关、收藏入口、过滤框、页面级 Tabs 与本地艺人的身份分类，
@@ -23,18 +24,18 @@ export interface IndexParams {
 }
 
 export const INDEX_TITLES: Readonly<Record<IndexPageKind, string>> = {
-  performers: '艺人', creators: '卖家', studios: '厂牌', agencies: '事务所', tags: '标签',
+  performers: translate("艺人"), creators: translate("卖家"), studios: translate("厂牌"), agencies: translate("事务所"), tags: translate("标签"),
 };
 
 /* 艺人索引版式，思路同 JAV 大图：列宽不变、只把图从圆框拉成竖幅，一屏里的人数不变而每张脸更大；紧凑就是
    圆头像那一屏。资料页的名册读的是同一个设置值。 */
-const PEOPLE_LAYOUTS =[['big', '大图 · 竖幅头像', 'maximize'], ['compact', '紧凑 · 圆形头像', 'layout-grid']] as const;
+const PEOPLE_LAYOUTS =[['big', translate("大图 · 竖幅头像"), 'maximize'], ['compact', translate("紧凑 · 圆形头像"), 'layout-grid']] as const;
 /* 公司那一格摆的是方形标识而不是脸，说法跟着换；档位仍是同一个设置值。 */
-const COMPANY_LAYOUTS = [['big', '大图 · 完整标识', 'maximize'], ['compact', '紧凑 · 圆形标识', 'layout-grid']] as const;
-const MAKER_INDEX_KINDS = [['studios', '厂牌', 'clapperboard'], ['agencies', '事务所', 'briefcase']] as const;
-const INDEX_SCOPES = [['local', '本地', 'hard-drive'], ['online', '在线', 'rss']] as const;
-const PEOPLE_INDEX_TABS = [['performers', '艺人', 'user-round'], ['creators', '卖家', 'user-round'], ['online', '在线', 'rss']] as const;
-const TAG_VIEWS = [['cloud', '标签云', 'tags'], ['alphabet', '字母表', 'text-aa']] as const;
+const COMPANY_LAYOUTS = [['big', translate("大图 · 完整标识"), 'maximize'], ['compact', translate("紧凑 · 圆形标识"), 'layout-grid']] as const;
+const MAKER_INDEX_KINDS = [['studios', translate("厂牌"), 'clapperboard'], ['agencies', translate("事务所"), 'briefcase']] as const;
+const INDEX_SCOPES = [['local', translate("本地"), 'hard-drive'], ['online', translate("在线"), 'rss']] as const;
+const PEOPLE_INDEX_TABS = [['performers', translate("艺人"), 'user-round'], ['creators', translate("卖家"), 'user-round'], ['online', translate("在线"), 'rss']] as const;
+const TAG_VIEWS = [['cloud', translate("标签云"), 'tags'], ['alphabet', translate("字母表"), 'text-aa']] as const;
 
 /** 存着的版式偏好，认不出的回到大图。 */
 export const peopleLayoutOf = (saved: unknown): 'big' | 'compact' => (saved === 'compact' ? 'compact' : 'big');
@@ -58,21 +59,21 @@ const tabs = (items: Choices, active: string, label: string) => boardTabsHtml(
 const tagFilterSkeletonHtml = (view: string) => `<div class="board-filter-frame" data-filter-frame>
     <div class="tagbar" data-filter-row="top" data-skeleton-tier="pill" aria-label="标签类型"></div>
     <div class="count" data-filter-row="bottom"><span class="mono"><span class="countskeleton"></span></span>
-      ${iconSwitchHtml('tag-view', '标签视图', TAG_VIEWS, view)}</div></div>`;
+      ${iconSwitchHtml('tag-view', translate("标签视图"), TAG_VIEWS, view)}</div></div>`;
 
 export function indexPlaceholderHtml({ kind, q, scope, view, category }: IndexParams, layout: 'big' | 'compact'): string {
-  const title = INDEX_TITLES[kind] || '标签', people = kind !== 'tags', company = kind === 'studios' || kind === 'agencies';
+  const title = INDEX_TITLES[kind] || translate("标签"), people = kind !== 'tags', company = kind === 'studios' || kind === 'agencies';
   const switcher = people
-    ? iconSwitchHtml('people-layout', title + '索引版式', company ? COMPANY_LAYOUTS : PEOPLE_LAYOUTS, layout) : '';
+    ? iconSwitchHtml('people-layout', title + translate("索引版式"), company ? COMPANY_LAYOUTS : PEOPLE_LAYOUTS, layout) : '';
   return `<div class="ihead peach-react" data-index-head>
       <h2 class="disp indexheading">${title}</h2>
       ${people ? '<span class="mono" id="indexCount"><span class="countskeleton"></span></span>' : ''}${switcher}
       ${islandShortcutsEntry()}
-      <div data-index-search class="ml-auto min-w-35 max-w-80 flex-1 max-board-narrow:order-1 max-board-narrow:basis-40">${islandSearchInput('', q, '过滤' + title)}</div>
+      <div data-index-search class="ml-auto min-w-35 max-w-80 flex-1 max-board-narrow:order-1 max-board-narrow:basis-40">${islandSearchInput('', q, translate("过滤") + title)}</div>
     </div>
-    ${kind === 'tags' ? tabs(INDEX_SCOPES, scope, '词表') : kind === 'performers' || kind === 'creators'
-      ? tabs(PEOPLE_INDEX_TABS, kind === 'performers' && scope === 'online' ? 'online' : kind, '人物名册')
-      : company ? tabs(MAKER_INDEX_KINDS, kind, '公司类型') : ''}
+    ${kind === 'tags' ? tabs(INDEX_SCOPES, scope, translate("词表")) : kind === 'performers' || kind === 'creators'
+      ? tabs(PEOPLE_INDEX_TABS, kind === 'performers' && scope === 'online' ? 'online' : kind, translate("人物名册"))
+      : company ? tabs(MAKER_INDEX_KINDS, kind, translate("公司类型")) : ''}
     ${kind === 'tags' ? tagFilterSkeletonHtml(view) : ''}
     ${kind === 'performers' && scope !== 'online' ? identityFilterSkeletonHtml(category) : ''}
     ${indexSkeletonHtml({ kind, layout, mode: view })}`;

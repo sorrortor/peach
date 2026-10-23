@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 五张索引页：艺人、创作者、厂牌、事务所四份名册，和标签词表。
  *
  * 地址栏是唯一真相。壳从地址读出 kind／q／scope／view／category 作初值挂上来，页面换档
@@ -37,25 +38,25 @@ import { TagAlphabet, TagCloud, TagDock, TagFilters, type TagEntry } from './ind
 /* 厂牌与事务所是两种实体，不是同一份数据的两种筛选：厂牌出片，事务所出人。所以这个开关切的
    是地址。场记板归厂牌，公文包归事务所，字形各说各的那一件事。 */
 const MAKER_TABS: BoardTab<'studios' | 'agencies'>[] = [
-  { value: 'studios', label: '厂牌', symbol: 'clapperboard' },
-  { value: 'agencies', label: '事务所', symbol: 'briefcase' },
+  { value: 'studios', label: translate("厂牌"), symbol: 'clapperboard' },
+  { value: 'agencies', label: translate("事务所"), symbol: 'briefcase' },
 ];
 /* 本地与在线是两套词表：计数口径、类别划分和点开去哪儿都不同，所以也是页面级的 Tabs。 */
 const SCOPE_TABS: BoardTab<IndexScope>[] = [
-  { value: 'local', label: '本地', symbol: 'hard-drive' },
-  { value: 'online', label: '在线', symbol: 'rss' },
+  { value: 'local', label: translate("本地"), symbol: 'hard-drive' },
+  { value: 'online', label: translate("在线"), symbol: 'rss' },
 ];
 const PEOPLE_TABS: BoardTab<'performers' | 'creators' | 'online'>[] = [
-  { value: 'performers', label: '艺人', symbol: 'user-round' },
-  { value: 'creators', label: '卖家', symbol: 'user-round' },
-  { value: 'online', label: '在线', symbol: 'rss' },
+  { value: 'performers', label: translate("艺人"), symbol: 'user-round' },
+  { value: 'creators', label: translate("卖家"), symbol: 'user-round' },
+  { value: 'online', label: translate("在线"), symbol: 'rss' },
 ];
 
 /* 公司那一格摆的是标识而不是脸，沿用艺人那套词就是提示说着「竖幅头像」、屏幕上摆着方标识。
    档位仍是同一个设置值，分开的只有说法。 */
 const LAYOUTS: Record<'people' | 'company', readonly (readonly [PeopleLayout, string, string])[]> = {
-  people: [['big', '大图 · 竖幅头像', 'maximize'], ['compact', '紧凑 · 圆形头像', 'layout-grid']],
-  company: [['big', '大图 · 完整标识', 'maximize'], ['compact', '紧凑 · 圆形标识', 'layout-grid']],
+  people: [['big', translate("大图 · 竖幅头像"), 'maximize'], ['compact', translate("紧凑 · 圆形头像"), 'layout-grid']],
+  company: [['big', translate("大图 · 完整标识"), 'maximize'], ['compact', translate("紧凑 · 圆形标识"), 'layout-grid']],
 };
 
 function LayoutSwitch(
@@ -295,7 +296,7 @@ export function IndexPage(props: IndexProps) {
 }
 
 const LABELS: Record<IndexKind, string> = {
-  tags: '标签', performers: '艺人', creators: '卖家', studios: '厂牌', agencies: '事务所',
+  tags: translate("标签"), performers: translate("艺人"), creators: translate("卖家"), studios: translate("厂牌"), agencies: translate("事务所"),
 };
 
 /** 空馆藏、筛选无结果与在线来源还没有内容分别给出可执行的去处。文案同目录页的空态
@@ -312,7 +313,7 @@ function IndexEmpty(
     );
   }
   // 在线那一档数的是来源上的东西，名字也跟着来源的说法：艺人页在线摆的是关注来源里的创作者。
-  const label = online && kind === 'performers' ? '创作者' : LABELS[kind];
+  const label = online && kind === 'performers' ? translate("创作者") : LABELS[kind];
   const follow = (
     <ButtonLink variant={!configurable || online ? 'primary' : 'secondary'} href="/subscriptions?tab=add">添加关注</ButtonLink>
   );

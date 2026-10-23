@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 实体资料页顶上那块资料卡，连同资料卡下面、作品上面那一行未入库的新作。
  *
  * 资料卡按 Board 的 profile 卡排：一块 secondary 底、18px 圆角的卡，正文是头像加身份三行
@@ -267,7 +268,7 @@ function IdentityMeta({ entity }: { entity: EntityHeroData }) {
   if (!entity.identity_labels?.length) return null;
   return (
     <span data-meta-item="classification" data-identity-classification="">
-      <Glyph name="user-round" /><span>{entity.identity_labels.join(' · ')}</span>
+      <Glyph name="user-round" /><span>{entity.identity_labels.map(label => translate(label)).join(' · ')}</span>
     </span>
   );
 }
@@ -382,7 +383,7 @@ function EntryMarks({ entity, actions, helpers }: {
   };
   const toggle = async (on: boolean) => {
     if (!await write(on)) return;
-    helpers.receipt(on ? '已订阅新作' : '已取消订阅新作', { undo: async () => { await write(!on) } });
+    helpers.receipt(on ? translate("已订阅新作") : translate("已取消订阅新作"), { undo: async () => { await write(!on) } });
     if (on) actions.refreshFeedAfterCheck();
   };
   return (
