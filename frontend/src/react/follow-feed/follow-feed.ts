@@ -1,3 +1,4 @@
+import { format, translate } from '../../i18n';
 /* 关注页 `/follow`（ADR-0031 第 10g 步）：数据形状、取数键与这一页自己的判定。
  *
  * 整页一个岛，自己拥有取数：`/api/follow` 与 `/api/follow/credentials` 两趟都在 TanStack Query
@@ -376,7 +377,7 @@ export function followStack({ cover = '', coverFace = null, stack = null, imageV
   const copies = stack?.copies || 0;
   const kind = stack?.kind || '';
   const label = media > 1 ? `${media} ${UNITS[kind] || UNITS.mixed}`
-    : copies > 1 ? `${copies} 个来源` : '';
+    : copies > 1 ? format("{0} 个来源", (copies)) : '';
   /* 字形说的是点开以后看什么：视频起播是 play，图片是 pics。图和视频混在一起时，点开落在哪一种由
      视图决定，字形跟着视图走。 */
   const glyph = kind === 'image' || (kind !== 'video' && imageView) ? 'pics' : 'play';
@@ -401,8 +402,8 @@ export function backfillState(sources: readonly FollowSource[]): string {
   if (!pages.length) return '';
   const deepest = Math.max(...pages);
   const shallowest = Math.min(...pages);
-  if (deepest <= 1) return '每个来源都只抓了第 1 页';
-  return shallowest === deepest ? `每个来源都抓到第 ${deepest} 页` : `已抓到第 ${shallowest}–${deepest} 页`;
+  if (deepest <= 1) return translate("每个来源都只抓了第 1 页");
+  return shallowest === deepest ? format("每个来源都抓到第 {0} 页", (deepest)) : format("已抓到第 {0}–{1} 页", (shallowest), (deepest));
 }
 
 /* ── 排序键 ── */
@@ -419,7 +420,7 @@ export function sortAriaLabel(key: string, label: string, current: string, dir: 
   const next = nextSort(key, current, dir);
   if (!next) return '';
   const words = FOLLOW_FEED_DIR_WORDS[next.sort];
-  return `按${label}${words ? words[next.dir === 'asc' ? 1 : 0] : ''}排序`;
+  return format("按{0}{1}排序", translate(label), translate(words ? words[next.dir === 'asc' ? 1 : 0] : ''));
 }
 
 /* ── 壳递进来的那几样 ── */

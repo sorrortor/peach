@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 关注页的一张卡：一个作品，本站的 alt 与 WIP、跨站的另见都折在里面。
  *
  * 形状同馆藏作品卡（`../components/media-card.tsx`）：封面格在上，下面一行头像、两行标题、一行署名
@@ -191,7 +192,7 @@ function FollowCardView(props: FollowCardProps) {
             {stack.isMix ? (
               <button type="button" data-follow-collection={mixTarget}
                 onClick={(event) => act(event, () => actions.openDetail(mixTarget))}>
-                <span className="contents" dangerouslySetInnerHTML={{ __html: icon(stack.glyph) }} />{stack.label}
+                <span className="contents" dangerouslySetInnerHTML={{ __html: icon(stack.glyph) }} />{translate(stack.label)}
               </button>
             ) : null}
             {props.variant !== 'next' ? <div data-follow-actions="">
@@ -235,10 +236,10 @@ function FollowCardView(props: FollowCardProps) {
                 {identity.author}
               </FollowAuthorLink>
             ) : <span data-follow-author="" title={identity.author}>{identity.author}</span>}
-            <time dateTime={item.published_at || ''} title={followWhen(item)}>{followCompactWhen(item)}</time>
+            <time dateTime={item.published_at || ''} title={translate(followWhen(item))}>{translate(followCompactWhen(item))}</time>
             {identity.credited ? <span data-follow-credit="" title={`署名含 ${identity.credited}`}>{`署名含 ${identity.credited}`}</span> : null}
           </div>
-          {issue ? <span data-follow-issue="">{issue}</span> : null}
+          {issue ? <span data-follow-issue="">{translate(issue)}</span> : null}
         </div>
         <div data-media-tags="" data-follow-labels="">
           {tags.map((tag) => (

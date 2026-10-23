@@ -1,3 +1,4 @@
+import { translate, format } from '../../i18n';
 /* 关注详情（ADR-0031）：舞台里那一整块——媒体区、右侧队列与侧栏。
  *
  * 舞台（`<dialog id="stage">`）、它的进出场、小窗与 Video.js 都归舞台岛（`../stage/`），JAV 详情
@@ -155,7 +156,7 @@ function Related({ data, media, limit, context, helpers, actions }: {
   const relatedContext = { ...context, sources, aliases: result.data?.pages.at(-1)?.author_aliases || context.aliases };
   return <RelatedSection data-follow-related="" wireDrag={helpers.wireDrag} busy={result.isPending}
     empty={!!result.data && !groups.length}
-    error={result.isError ? `读取接着看失败：${requestErrorMessage(result.error)}` : undefined}
+    error={result.isError ? format('读取接着看失败：{0}', requestErrorMessage(result.error)) : undefined}
     onRetry={() => { void result.refetch() }}>
     {result.data ? groups.map(group => <FollowCard key={group.primary.id} variant="next" group={group} media={media}
       authorSources={authorSources(group.primary, sources)} context={relatedContext} selected={false} selectMode={false}
@@ -264,7 +265,7 @@ function CollectionQueue({ group, itemId, helpers, actions }: {
             <span data-follow-queue-meta="">
               {siteIcon
                 ? <span data-follow-queue-source="" dangerouslySetInnerHTML={{ __html: siteIcon }} />
-                : <i data-follow-variant={member.variant_kind || ''}>{copy.label}</i>}
+                : <i data-follow-variant={member.variant_kind || ''}>{translate(copy.label)}</i>}
               <time dateTime={member.published_at || ''}>{followWhen(member)}</time>
             </span>
           </MixQueueRow>
@@ -489,7 +490,7 @@ function useDetailWrite(item: FollowDetailItem, actions: FollowDetailActions, on
     setFollowItemStatus(id, to);
   };
   const failed = (error: unknown) => {
-    setFailure(requestErrorMessage(error) || '操作失败');
+    setFailure(translate(requestErrorMessage(error) || '操作失败'));
     actions.failure('更新关注状态', error);
   };
   const statusMutation = useMutation({

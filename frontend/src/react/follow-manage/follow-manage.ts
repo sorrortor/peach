@@ -1,3 +1,4 @@
+import { translate, format } from '../../i18n';
 /* 关注管理页的数据契约、轮询节律与纯折算。九条端点在 `frontend/src` 里都只在这里声明
  * 一次（`tests/test_frontend_build.py` 盯着）。
  *
@@ -221,7 +222,7 @@ const SORT_DIR_WORDS: Record<SortKey, readonly [string, string]> = {
 /** 方向按钮的无障碍名称：说的是点下去会得到什么，所以取反方向的词。照抄当前方向，
  *  读屏那边会以为点下去还是这个顺序。 */
 export const sortLabel = (sort: SortKey, dir: SortDir): string =>
-  `按${SORT_LABELS[sort]}${SORT_DIR_WORDS[sort][dir === 'asc' ? 0 : 1]}排序`;
+  format('按{0}{1}排序', translate(SORT_LABELS[sort]), translate(SORT_DIR_WORDS[sort][dir === 'asc' ? 0 : 1]));
 
 /* ── 分组、排序、分页 ── */
 
@@ -235,10 +236,10 @@ export function statusRank(source: FollowSource): number {
 
 /** 这一条此刻是什么状态。四种写法对应四种徽章。 */
 export function statusText(source: FollowSource): string {
-  if (source.history_exhausted) return '没有更多';
-  if (!source.enabled) return '已暂停';
-  if (source.last_status === 'ok') return '正常';
-  return source.last_status === 'error' || source.last_status === 'unauthorized' ? '检查失败' : '未检查';
+  if (source.history_exhausted) return translate("没有更多");
+  if (!source.enabled) return translate("已暂停");
+  if (source.last_status === 'ok') return translate("正常");
+  return source.last_status === 'error' || source.last_status === 'unauthorized' ? translate("检查失败") : translate("未检查");
 }
 
 export const isBroken = (source: FollowSource): boolean =>
@@ -247,9 +248,9 @@ export const isBroken = (source: FollowSource): boolean =>
 /** 订阅源的拉取频率：一小时以内按分钟，两天以内按小时，再长按天。 */
 export function feedIntervalText(minutes: number): string {
   const value = Number(minutes) || 0;
-  if (value >= 2880) return `每 ${Math.round(value / 1440).toLocaleString()} 天`;
-  if (value >= 60) return `每 ${Math.round(value / 60)} 小时`;
-  return `每 ${value} 分钟`;
+  if (value >= 2880) return format("每 {0} 天", (Math.round(value / 1440).toLocaleString()));
+  if (value >= 60) return format("每 {0} 小时", (Math.round(value / 60)));
+  return format("每 {0} 分钟", (value));
 }
 
 /** 一段报错在列表里只露的那一行。Python traceback 的第一行永远是「Traceback (most recent call
@@ -512,7 +513,7 @@ export interface FeedsData {
 /** 认不出的响应当读失败：没有 sources 的那份不是订阅源的数据，画出来只会在第一次取长度时炸掉。 */
 export async function fetchFeeds(signal?: AbortSignal): Promise<FeedsData> {
   const payload = await apiGet<FeedsData>(FEEDS_URL, signal);
-  if (!Array.isArray(payload?.sources)) throw new Error('没有读到订阅源');
+  if (!Array.isArray(payload?.sources)) throw new Error(translate('没有读到订阅源'));
   return payload;
 }
 
@@ -613,12 +614,12 @@ export function checkReceipt(job: Pick<CheckJob, 'results'>): string {
   const updated = rows.reduce((total, row) => total + (row.updated || 0), 0);
   const failed = rows.filter((row) => !row.ok).length;
   const bits: string[] = [];
-  if (added) bits.push(`新增 ${added} 条`);
-  if (updated) bits.push(`更新 ${updated} 条`);
-  if (!bits.length && failed < rows.length) bits.push('没有更新');
-  if (failed) bits.push(`${failed} 个失败`);
-  if (!bits.length) bits.push('没有更新');
-  return `已检查 ${rows.length} 个来源：${bits.join(' · ')}`;
+  if (added) bits.push(format("新增 {0} 条", (added)));
+  if (updated) bits.push(format("更新 {0} 条", (updated)));
+  if (!bits.length && failed < rows.length) bits.push(translate("没有更新"));
+  if (failed) bits.push(format("{0} 个失败", (failed)));
+  if (!bits.length) bits.push(translate("没有更新"));
+  return format("已检查 {0} 个来源：{1}", (rows.length), (bits.join(' · ')));
 }
 
 /** 一次检查的完整统计。 */
@@ -635,19 +636,19 @@ export function checkSummary(job: CheckJob): string {
   const quiet = rows.filter((row) => row.ok && !row.added && !row.updated).length;
   const failed = rows.filter((row) => !row.ok).length;
   const bits: string[] = [];
-  if (added) bits.push(`新增 ${added} 条`);
-  if (updated) bits.push(`更新 ${updated} 条`);
-  if (skipped) bits.push(`跳过 ${skipped} 条无资源`);
-  if (compilations) bits.push(`排除 ${compilations} 个超大合集`);
-  if (history) bits.push(`跳过 ${history} 条超出首次采集范围的历史内容`);
-  if (probed) bits.push(`回查 ${probed} 条`);
-  if (quiet) bits.push(`${quiet} 个来源没有更新`);
-  if (!bits.length) bits.push('没有任何更新');
+  if (added) bits.push(format("新增 {0} 条", (added)));
+  if (updated) bits.push(format("更新 {0} 条", (updated)));
+  if (skipped) bits.push(format("跳过 {0} 条无资源", (skipped)));
+  if (compilations) bits.push(format("排除 {0} 个超大合集", (compilations)));
+  if (history) bits.push(format("跳过 {0} 条超出首次采集范围的历史内容", (history)));
+  if (probed) bits.push(format("回查 {0} 条", (probed)));
+  if (quiet) bits.push(format("{0} 个来源没有更新", (quiet)));
+  if (!bits.length) bits.push(translate("没有任何更新"));
   /* 来源没有更多内容与本次没有更新分别计数。 */
   const exhausted = rows.filter((row) => row.exhausted).length;
-  if (exhausted) bits.push(`${exhausted} 个没有更多内容`);
-  if (failed) bits.push(`${failed} 个失败`);
-  return `检查了 ${rows.length} 个来源：${bits.join(' · ')}`;
+  if (exhausted) bits.push(format("{0} 个没有更多内容", (exhausted)));
+  if (failed) bits.push(format("{0} 个失败", (failed)));
+  return format("检查了 {0} 个来源：{1}", (rows.length), (bits.join(' · ')));
 }
 
 /** 页内持久行只装要处理的东西：失败与取证缺档。全部成功时没有这一行。 */
@@ -660,7 +661,7 @@ export const checkEvidenceGap = (job: CheckJob | null): string =>
 export { localTime };
 
 export const checkedText = (source: FollowSource): string =>
-  (source.last_checked_at ? localTime(source.last_checked_at) : '未检查');
+  (source.last_checked_at ? localTime(source.last_checked_at) : translate('未检查'));
 
 /** 有站点图标的来源。图标由服务端按 `follow_assets.SOURCE_ICON_URLS` 取回并存在本机，
  *  页面只认这份名单：没登记的来源直接不出 `<img>`。 */

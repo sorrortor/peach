@@ -23,19 +23,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class InterfaceLanguagesBrowserTests(unittest.TestCase):
     def test_languages_persist_on_desktop_and_mobile(self):
-        node, chrome = shutil.which('node'), chrome_executable()
-        if not node or not chrome or not (ROOT / 'frontend/node_modules/playwright-core').is_dir():
-            missing_prerequisite('三语浏览器验收需要 Node、Chrome 与前端依赖')
+        node, chrome, ffmpeg = shutil.which('node'), chrome_executable(), shutil.which('ffmpeg')
+        if not node or not chrome or not ffmpeg or not (ROOT / 'frontend/node_modules/playwright-core').is_dir():
+            missing_prerequisite('三语浏览器验收需要 Node、Chrome、FFmpeg 与前端依赖')
         with tempfile.TemporaryDirectory(prefix='peach-languages-') as directory:
             root = Path(directory).resolve()
             data, media = root / 'data', root / 'media'
             (data / 'database').mkdir(parents=True)
             media.mkdir()
+            clip = media / 'Private 中文 ไทย.mp4'
+            subprocess.run([ffmpeg, '-f', 'lavfi', '-i', 'color=c=black:s=320x180:r=12',
+                            '-t', '2', '-an', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-y', str(clip)],
+                           check=True, capture_output=True, timeout=30)
             db = fresh_ledger(data / 'database')
             with sqlite3.connect(db) as connection:
                 connection.execute(
                     'INSERT INTO asset(id,medium,location,path,name,size) VALUES(1,?,?,?,?,?)',
-                    ('video', 'local', r'R:\media\Private 中文 ไทย.mp4', 'Private 中文 ไทย.mp4', 1024))
+                    ('video', 'local', r'R:\media\Private 中文 ไทย.mp4', 'Private 中文 ไทย.mp4', clip.stat().st_size))
             port = free_port()
             settings_file.write(settings_file.PeachConfig(
                 data, data / settings_file.SETTINGS_FILENAME, present=True, data_root_found=True,
@@ -62,7 +66,7 @@ class InterfaceLanguagesBrowserTests(unittest.TestCase):
                     else:
                         self.fail('临时服务未就绪')
                     result = subprocess.run(
-                        e2e_command(node, 1, ('e2e/interface-languages.test.ts',)), cwd=ROOT / 'frontend',
+                        e2e_command(node, 1, ('e2e/interface-languages.test.ts', 'e2e/follow-player-languages.test.ts')), cwd=ROOT / 'frontend',
                         env=dict(os.environ, PEACH_E2E_ORIGIN=origin, PEACH_E2E_CHROME=chrome),
                         capture_output=True, text=True, encoding='utf-8', timeout=300)
                     self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

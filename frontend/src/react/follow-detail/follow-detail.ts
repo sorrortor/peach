@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 关注详情 `/posts/:id` 的数据与判定（ADR-0031）。
  *
  * 这一块是舞台岛（`../stage/`）树里的子组件；舞台本身、进出场、小窗与 Video.js 归舞台岛
@@ -61,7 +62,7 @@ export const FOLLOW_MEDIA_HIDE_URL = '/api/follow/media/hide';
 
 /** 条目已不存在：重试也取不回来，详情给的是「回到关注」而不是重试。 */
 export class FollowItemGone extends Error {
-  constructor() { super('这条关注内容已不存在') }
+  constructor() { super(translate('这条关注内容已不存在')) }
 }
 
 /** 单条取：响应只含这一条所在的组。条目已不存在时服务端回空组，这里报成 `FollowItemGone`。 */
@@ -195,13 +196,13 @@ export function resourceLabel(url: string): string {
     const host = new URL(url).hostname.replace(/^www\./, '');
     return RESOURCE_HOSTS[host] || host;
   } catch {
-    return '外部文件页';
+    return translate("外部文件页");
   }
 }
 
 /** 灯箱角上那一行出处：网盘分组的媒体写网盘，其余写来源站。 */
 export function mediaSourceLabel(media: FollowDetailMedia | null | undefined, item: FollowDetailItem): string {
-  return RESOURCE_PROVIDERS[media?.resource_provider || ''] || item.provider_label || item.provider || '在线图片';
+  return RESOURCE_PROVIDERS[media?.resource_provider || ''] || item.provider_label || item.provider || translate("在线图片");
 }
 
 /** 合集队列一行的行首标记与正文。线程标题不能冒充每条回复的正文，行首说明它与主条目的关系；
@@ -209,8 +210,8 @@ export function mediaSourceLabel(media: FollowDetailMedia | null | undefined, it
 export function collectionCopy(group: FollowGroup, item: FollowDetailItem, mark = ''): { label: string; title: string } {
   let label = mark;
   if (!label && group.is_release) label = item.variant_label || item.variant_kind || '';
-  if (!label) label = item.variant_kind === 'wip' ? 'WIP' : (item.variant_label || item.variant_kind || '视频');
-  const body = group.is_release ? (item.summary || (item.has_media ? '（仅附件）' : '（无正文）')) : item.title;
+  if (!label) label = item.variant_kind === 'wip' ? 'WIP' : (item.variant_label || item.variant_kind || translate("视频"));
+  const body = group.is_release ? (item.summary || (item.has_media ? translate("（仅附件）") : translate("（无正文）"))) : item.title;
   return { label, title: group.is_release && item.author ? `${item.author}：${body}` : body };
 }
 
@@ -278,4 +279,4 @@ export function detailSlides(item: FollowDetailItem, media: DetailMedia): Lightb
 /* ── 写完之后 ── */
 
 /** 状态回执的说法与撤销：保存进数据库的不给撤销，那是另一件事。 */
-export const statusReceipt = (to: string) => (to === 'seen' ? '已标记看过' : '已更新关注状态');
+export const statusReceipt = (to: string) => (to === 'seen' ? translate("已标记看过") : translate("已更新关注状态"));

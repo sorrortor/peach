@@ -1,5 +1,6 @@
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { createV10Player } from '../src/player/v10-player';
+import { saveLanguage, translate } from '../src/i18n';
 
 const engine = () => ({ bandwidthEstimate: 8000000, currentLevel: -1,
   levels: [{ width: 1280, height: 720 }, { width: 1920, height: 1080 }], on: vi.fn() });
@@ -23,6 +24,16 @@ function mounted() {
 }
 
 describe('Video.js 10 播放会话', () => {
+  it.each(['th', 'en', 'zh-CN'])('uses %s for the player and accessible controls', locale => {
+    saveLanguage(locale);
+    const video = document.createElement('video'); document.body.append(video);
+    const player = createV10Player(video, { controls: true });
+    try {
+      expect(player.el().lang).toBe(locale);
+      expect(player.el().querySelector('.vjs-subtitles-control button')?.getAttribute('aria-label')).toBe(translate('开启字幕'));
+      expect(player.el().querySelector('.vjs-loading-spinner')?.getAttribute('aria-label')).toBe(translate('正在缓冲'));
+    } finally { player.dispose(); saveLanguage('zh-CN'); }
+  });
   it('片源交给异步 adapter 后立即播放，原生 play 使用已挂载的片源', async () => {
     const { video, player, media } = mounted();
     Object.defineProperty(media, 'source', { set: (value: { src: string }) => {

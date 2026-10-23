@@ -1,3 +1,4 @@
+import { language } from '../i18n';
 /* 来源视频预览复用 Peach 控件；播放状态只属于当前预览。 */
 import { mountPlayerQualityControl, mountPlayerSeekPreview, mountPlayerSpinner } from './controls';
 import { disposePlayer } from './dispose';
@@ -11,7 +12,7 @@ export function mountPreviewPlayer(video: HTMLVideoElement, source: PlayerSource
   void ensureVideojs().then(factory => {
     if (released) return;
     player = factory(video, {
-      controls: true, preload: 'metadata', autoplay: false, language: 'zh-CN', responsive: true,
+      controls: true, preload: 'metadata', autoplay: false, language: language(), responsive: true,
       userActions: { hotkeys: true },
       controlBar: {
         pictureInPictureToggle: true, currentTimeDisplay: false, timeDivider: false,

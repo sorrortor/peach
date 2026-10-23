@@ -1,3 +1,4 @@
+import { translate, format } from '../../i18n';
 /* 添加关注：把一条链接、一个名字或一个 id 变成已关注的来源。
  *
  * 查找只是列出候选、不写任何东西：发现要联网，结果也可能不止一个，替用户决定「就是
@@ -126,7 +127,7 @@ function SourceFilter(
   const [open, setOpen] = useState(false);
   const rows = (credentials.providers || []).filter((row) => row.followable);
   const shown = rows.filter((row) => !hidden.has(row.provider_label)).length;
-  const label = shown === rows.length ? '全部来源' : `${shown}/${rows.length} 个来源`;
+  const label = shown === rows.length ? translate('全部来源') : format('{0}/{1} 个来源', shown, rows.length);
   const toggle = (provider: string, on: boolean) => {
     const next = new Set(hidden);
     if (on) next.delete(provider); else next.add(provider);
@@ -361,7 +362,7 @@ export function AddSource({ data, credentials, readOnly, toast, openCredentials 
             const next = event.relatedTarget;
             if (!event.currentTarget.contains(next) && !menu.current?.contains(next)) setFocused(false);
           }}>
-          <Input aria-label="来源链接、名字或 id" placeholder={PLACEHOLDER} value={line}
+          <Input aria-label="来源链接、名字或 id" placeholder={translate(PLACEHOLDER)} value={line}
             leadingIcon={RiSearchLine} enterKeyHint="search" isDisabled={readOnly} onChange={setLine}
             onCompositionStart={() => { setComposing(true); setActive(-1) }}
             onCompositionEnd={(event) => { setComposing(false); setLine(event.currentTarget.value) }}
@@ -379,7 +380,7 @@ export function AddSource({ data, credentials, readOnly, toast, openCredentials 
 
       <div aria-live="polite" className="flex flex-col gap-3 empty:hidden">
         {running || resolve.isPending ? <TaskProgress embedded
-          label={job?.message || (job?.total ? `查找中：${job.checked || 0}/${job.total}` : byName ? BY_NAME_HINT : BY_LINK_HINT)}
+          label={job?.message || (job?.total ? format('查找中：{0}/{1}', job.checked || 0, job.total) : translate(byName ? BY_NAME_HINT : BY_LINK_HINT))}
           value={job?.checked} total={job?.total} /> : null}
         {problem ? <Note tone="error" title="这一次没有完成">{problem}</Note> : null}
       </div>

@@ -1,3 +1,4 @@
+import { translate, format } from '../../i18n';
 /* 关注列表：同一份来源集合的两种视图，外加检查更新那一趟后台任务。
  *
  * 两种视图共用一个勾选集合（身份是来源 ID）和一份排序状态。表格视图由
@@ -214,11 +215,11 @@ function AuthorCard(
             : null}
           <Button variant="secondary" size="small" leadingIcon={RiCheckDoubleLine}
             aria-pressed={state.all ? 'true' : state.some ? 'mixed' : 'false'}
-            aria-label={`${state.all ? '取消全选' : '全选'} ${name} 的来源`}
+            aria-label={`${translate(state.all ? '取消全选' : '全选')} ${name} 的来源`}
             onClick={() => onToggleGroup(!state.all)}>{state.all ? '取消全选' : '全选'}</Button>
           <Button variant="secondary" size="small" aria-expanded={open} aria-controls={panel}
             leadingIcon={open ? RiArrowUpSLine : RiArrowDownSLine}
-            aria-label={`${open ? '收起' : '展开'} ${name} 的来源`}
+            aria-label={`${translate(open ? '收起' : '展开')} ${name} 的来源`}
             onClick={() => onOpen(!open)}>{open ? '收起' : '展开'}</Button>
         </span>
       </div>
@@ -316,7 +317,7 @@ export function SourceList(props: SourceListProps) {
       }
       setProblem('');
       const word = result.action === 'remove' ? '删除' : result.action === 'enabled' ? '启用' : '暂停';
-      toast(`已${word} ${result.done.length} 个关注来源`);
+      toast(format('已{0} {1} 个关注来源', translate(word), result.done.length));
     },
     onError: (cause) => setProblem(errorMessage(cause)),
   });
@@ -361,7 +362,7 @@ export function SourceList(props: SourceListProps) {
   /* ── 表格视图：列定义、排序、行选择与分页都交给 TanStack Table ── */
   const columns = useMemo(() => {
     const column = createColumnHelper<typeof sourceTableFeatures, SourceTableRow>();
-    const label = (id: string) => () => COLUMN_LABELS[id] || id;
+    const label = (id: string) => () => translate(COLUMN_LABELS[id] || id);
     return column.columns([
       column.display({
         id: 'select',
@@ -512,7 +513,7 @@ export function SourceList(props: SourceListProps) {
         <span className="contents max-sm:flex max-sm:min-w-0 max-sm:flex-1 max-sm:flex-col">
           <h3 className="mr-auto text-title-2-medium text-text-primary">关注列表</h3>
           <span className="text-body-2-regular text-text-secondary">
-            {`${sources.length.toLocaleString()} 个来源${counts.new ? ` · ${count(counts.new)} 条未看` : ''}`}
+            {`${sources.length.toLocaleString()} 个来源${counts.new ? format(' · {0} 条未看', count(counts.new)) : ''}`}
           </span>
         </span>
         <Button variant="primary" leadingIcon={RiRefreshLine} disabled={readOnly}
@@ -523,10 +524,10 @@ export function SourceList(props: SourceListProps) {
         <span data-follow-toolbar-controls="" className="contents max-sm:flex max-sm:w-full max-sm:items-center max-sm:gap-2">
           <span data-button-group role="group" aria-label="关注列表版式">
             <Button variant="ghost" iconOnly
-              leadingIcon={RiLayoutGridLine} aria-label={LAYOUTS[0][1]} aria-pressed={!asTable}
+              leadingIcon={RiLayoutGridLine} aria-label={translate(LAYOUTS[0][1])} aria-pressed={!asTable}
               onClick={() => onLayout('default')} />
             <Button variant="ghost" iconOnly
-              leadingIcon={RiTableLine} aria-label={LAYOUTS[1][1]} aria-pressed={asTable}
+              leadingIcon={RiTableLine} aria-label={translate(LAYOUTS[1][1])} aria-pressed={asTable}
               onClick={() => onLayout('table')} />
           </span>
           <Select aria-label="关注列表排序" selectedKey={sort}
@@ -535,7 +536,7 @@ export function SourceList(props: SourceListProps) {
               const next = String(key) as SortKey;
               onSort(next, SORT_DEFAULT_DIR[next]);
             }}>
-            {SORT_OPTIONS.map(([key, name]) => <SelectItem key={key} id={key}>{name}</SelectItem>)}
+            {SORT_OPTIONS.map(([key, name]) => <SelectItem key={key} id={key}>{translate(name)}</SelectItem>)}
           </Select>
           {/* 箭头是装饰，方向由无障碍名称说，而且说的是点下去会得到的那一头。 */}
           <Button variant="secondary" iconOnly
@@ -558,7 +559,7 @@ export function SourceList(props: SourceListProps) {
       {/* 这一趟在后台跑，关掉页面还在继续，所以状态留在页面上而不是只让按钮转一下。 */}
       <div aria-live="polite" className="flex flex-col gap-3 empty:hidden">
         {running ? <TaskProgress embedded label={job?.message || (job?.total
-          ? `${job.older ? '抓取历史' : '检查更新'}：已完成 ${job.checked || 0}/${job.total} 个来源`
+          ? `${translate(job.older ? '抓取历史' : '检查更新')}：已完成 ${job.checked || 0}/${job.total} 个来源`
           : '正在准备检查任务')} value={job?.checked} total={job?.total} /> : null}
         {problem ? <Note tone="error" title="操作未完成">{problem}</Note> : null}
         {!running && outcome?.results?.length ? (
@@ -579,7 +580,7 @@ export function SourceList(props: SourceListProps) {
         {evidence ? <Note tone="warning">{`条目已保存，但这次未保存来源的原始响应：${evidence}`}</Note> : null}
       </div>
 
-        <SelectionDock label="关注来源批量操作" visible={chosen.length > 0} count={`已选 ${chosen.length} 个来源`}>
+        <SelectionDock label="关注来源批量操作" visible={chosen.length > 0} count={format('已选 {0} 个来源', chosen.length)}>
           <Button variant="secondary" size="small" disabled={readOnly}
             {...busyProps(rowHandlers.busy)} onClick={() => startChecking(chosen)}>检查所选</Button>
           <Button variant="secondary" size="small" disabled={readOnly} {...busyProps(bulk.isPending)}
@@ -662,7 +663,7 @@ export function SourceList(props: SourceListProps) {
       )}
 
       <DataTableFooter label="关注列表" total={win.total} pagination={{ pageIndex: win.page - 1, pageSize }}
-        unit={asTable ? '个来源' : '位创作者'} pageUnit={asTable ? '条' : '位'}
+        unit={translate(asTable ? '个来源' : '位创作者')} pageUnit={translate(asTable ? '条' : '位')}
         onChange={(next) => { if (next.pageSize !== pageSize) table.setPageSize(next.pageSize); else table.setPageIndex(next.pageIndex); }} />
 
       {counts.new ? (

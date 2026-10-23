@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 关注管理页：加来源、检查更新、移除来源与管理 JAV 订阅源。
  *
  * 来源凭据由 Peach 配置管理，想要清单位于 JAV 分区。
@@ -47,12 +48,12 @@ const isTab = (value: unknown): value is TabKey => TABS.some(([key]) => key === 
 function Reading({ term, figure, unit }: { term: string; figure: number; unit: string }) {
   return (
     <div className={cardClass({ padding: 'none', className: 'flex flex-col gap-3 px-6 py-5 max-sm:gap-2 max-sm:p-4' })}>
-      <span className="text-body-medium text-text-secondary">{term}</span>
+      <span className="text-body-medium text-text-secondary">{translate(term)}</span>
       {/* 六位数起小一号字、七位数起再小一号，六卡并排时读数和单位仍在一行；更长时单位落到下一行，不顶出卡片。 */}
       <b data-follow-reading="" className={`flex min-w-0 flex-wrap items-baseline gap-x-1 tabular-nums text-text-primary ${
         figure >= 1000000 ? 'text-headline-medium' : figure >= 100000 ? 'text-title-3-medium' : 'text-title-1-medium'}`}>
         <span className="min-w-0 wrap-anywhere">{figure.toLocaleString()}</span>
-        <small className="whitespace-nowrap text-body-2-regular text-text-secondary">{` ${unit}`}</small>
+        <small className="whitespace-nowrap text-body-2-regular text-text-secondary">{` ${translate(unit)}`}</small>
       </b>
     </div>
   );
@@ -147,7 +148,7 @@ export function FollowManagePage(props: FollowManageProps) {
         <TabList ref={sectionScroll} aria-label="关注管理区域" data-section-nav data-section-items
           className="flex max-w-full flex-nowrap overflow-x-auto">
           {TABS.map(([key, name]) => (
-            <Tab key={key} id={key} className="cursor-pointer whitespace-nowrap">{name}</Tab>
+            <Tab key={key} id={key} className="cursor-pointer whitespace-nowrap">{translate(name)}</Tab>
           ))}
         </TabList>
 
