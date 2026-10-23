@@ -4,6 +4,7 @@
  * 的东西；下段是同一来源顺带交回来的其它字段，只作判断依据。两段各自铺底色并由一条线
  * 隔开，选哪一段能改数据库就不用猜。 */
 import { useState } from 'react';
+import { translate } from '../../i18n';
 import { useMutation } from '@tanstack/react-query';
 import { Radio, RadioGroup } from 'react-aria-components';
 
@@ -52,7 +53,7 @@ function CandidateBody(
           {candidate.display_value || ''}
         </span>
         {(candidate.warnings || []).map((warning) => (
-          <i key={warning} className="text-body-2-regular text-status-yellow-text">{warning}</i>
+          <i key={warning} className="text-body-2-regular text-status-yellow-text">{translate(warning)}</i>
         ))}
         {selectable ? (
           <span aria-hidden="true" data-candidate-choice
@@ -66,14 +67,14 @@ function CandidateBody(
           {evidence.map(([field, item]) => (
             <div key={field} className="flex min-w-0 flex-wrap gap-x-2">
               <dt className="text-body-2-regular text-text-secondary">
-                {EVIDENCE_LABELS[field] || field}
+                {translate(EVIDENCE_LABELS[field] || field)}
               </dt>
               <dd className="min-w-0 text-body-2-regular break-words text-text-primary">
                 {item.display_value}
               </dd>
               {(item.warnings || []).map((warning) => (
                 <small key={warning} className="w-full text-caption-1-regular text-status-yellow-text">
-                  {warning}
+                  {translate(warning)}
                 </small>
               ))}
             </div>
@@ -105,7 +106,7 @@ export function CandidateChoices(
     );
   }
   return (
-    <RadioGroup aria-label={`${fieldName || '资料'}的来源`} value={value} isDisabled={locked}
+    <RadioGroup aria-label={`${fieldName || translate('资料')}的来源`} value={value} isDisabled={locked}
       onChange={onChange} className="flex flex-col gap-2">
       {candidates.map((candidate) => (
         <Radio key={candidate.candidate_key} value={candidate.candidate_key}

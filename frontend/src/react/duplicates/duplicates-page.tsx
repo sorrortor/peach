@@ -3,6 +3,7 @@
  * 顶上一块汇总、一条批量保留的玻璃条，下面每组一张卡：组头说明判据与可回收多少，行里是
  * 每一份文件。留谁由人点；其余的走 `/api/batch` 的 `dispose` 进回收站，回执上带撤销。 */
 import { useState } from 'react';
+import { translate, format } from '../../i18n';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { confirmModal, MEDIA_SOURCE_ICONS } from '@peach/legacy/ui';
 import { fmtDur, fmtSize, LOC } from '@peach/legacy/core';
@@ -57,7 +58,7 @@ function evidenceFlag(group: DuplicateGroup) {
 /** 一份副本。`prefix` 是组内共有的名字开头，显示时用「…」顶替，整名在 title 里。 */
 function FileRow({ file, prefix, openItem }: { file: DuplicateFile; prefix: string; openItem(id: number): void }) {
   const open = () => openItem(file.id);
-  const location = LOC[file.location] || file.location || file.drive;
+  const location = translate(LOC[file.location] || file.location || file.drive);
   return (
     <div className="duplicate-row items-center gap-3 border-t border-separator-border px-5 py-4 max-compact:p-4">
       {/* 封面格居中用 `inline-grid`：`grid` 与旧样式表同名，不生成这个工具类。 */}
@@ -134,8 +135,8 @@ export function DuplicatesPage({ openItem, toast, failure }: DuplicatesProps) {
     if (!ids.length) return;
     void confirmModal({
       title: '移入回收站',
-      body: `将把 ${ids.length} 个重复文件的馆藏记录移入回收站，每组保留${KEEP_LABELS[keep] ?? KEEP_LABELS.largest}。`
-        + `文件共 ${fmtSize(victimBytes(chosen, ids))}，记录可从回收站还原。`,
+      body: format('将把 {0} 个重复文件的馆藏记录移入回收站，每组保留{1}。', ids.length, translate(KEEP_LABELS[keep] ?? KEEP_LABELS.largest))
+        + format('文件共 {0}，记录可从回收站还原。', fmtSize(victimBytes(chosen, ids))),
       confirmLabel: '移入回收站',
       onConfirm: () => { setPending(key); return dispose.mutateAsync(ids) },
     });
@@ -157,7 +158,7 @@ export function DuplicatesPage({ openItem, toast, failure }: DuplicatesProps) {
             {bulkCloudPreferences(groups, configured).map((location) => (
               <GlassPill key={location} busy={pending === `all:${location}`}
                 onPress={() => run({ groups, keep: location, key: `all:${location}` })}>
-                <SourceLabel source={location} label={`全部优先 ${LOC[location] || location}`} />
+                <SourceLabel source={location} label={`全部优先 ${translate(LOC[location] || location)}`} />
               </GlassPill>
             ))}
           </FilterGlass>
@@ -189,7 +190,7 @@ export function DuplicatesPage({ openItem, toast, failure }: DuplicatesProps) {
                     {mixedCloudPreferences(group.files, configured).map((location) => (
                       <Button key={location} variant="secondary" size="small" {...busy(key(location))}
                         onClick={() => run({ groups: one, keep: location, key: key(location) })}>
-                        <SourceLabel source={location} label={`留 ${LOC[location] || location}`} />
+                        <SourceLabel source={location} label={`留 ${translate(LOC[location] || location)}`} />
                       </Button>
                     ))}
                     <Button variant="danger" size="small" {...busy(key('all'))}

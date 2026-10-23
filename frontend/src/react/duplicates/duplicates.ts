@@ -1,3 +1,4 @@
+import { format } from '../../i18n';
 /* 重复文件的数据契约与折算。
  *
  * 判据是「同番号 + 时长相近 + 分卷标记一致」，不是同番号即重复——合集、分卷和混入的广告
@@ -153,4 +154,4 @@ export async function batchOperate(ids: readonly number[], operation: 'dispose' 
 
 /** 页头说明行与汇总块那一句。 */
 export const duplicatesLede = (data: DuplicatesData, formatSize: (bytes: number) => string) =>
-  `${data.total} 组 · ${data.files} 个文件 · 可回收 ${formatSize(data.reclaimable)}`;
+  format("{0} 组 · {1} 个文件 · 可回收 {2}", (data.total), (data.files), (formatSize(data.reclaimable)));

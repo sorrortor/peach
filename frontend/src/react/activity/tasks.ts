@@ -1,3 +1,4 @@
+import { format, translate, language } from '../../i18n';
 /* 任务中心的数据契约与折算：`/api/tasks` 一次请求供整页三段使用。
  *
  * 分三次取会出现「在跑那段是新的、完成那段是旧的」这种自相矛盾的一屏，所以只有一个
@@ -91,7 +92,7 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 /** 状态的中文名。表里的状态集是封闭的，认不出来只可能是表先改了，那就原样显示。 */
-export const statusLabel = (status: string): string => STATUS_LABELS[status] || status;
+export const statusLabel = (status: string): string => translate(STATUS_LABELS[status] || status);
 
 /* 摘要里的键来自各域自己的状态字典，是英文标识；能认出来的翻成中文，认不出的原样
    显示——瞎猜一个中文名比留着英文键更难查。 */
@@ -151,6 +152,19 @@ export const isRoutine = (run: TaskRunPayload) => run.trigger === 'scheduled'
 
 export const isActive = (run: TaskRunPayload) => run.status === 'pending' || run.status === 'running';
 
+/** 已知调度原因里的触发名属于界面枚举，其余动态数据保持原文。 */
+export function taskMessage(text: string): string {
+  const conflict = /^与第 (\d+) 轮（(.+)触发）冲突，本次跳过$/u.exec(text);
+  return conflict ? format('与第 {0} 轮（{1}触发）冲突，本次跳过', conflict[1], translate(conflict[2]!)) : translate(text);
+}
+
+export function taskProgressLabel(row: TaskRunPayload): string {
+  const label = row.progress_label || '正在进行';
+  const prefix = `${row.task_label}：`;
+  if (language() !== 'zh-CN' && label.startsWith(prefix)) return `${translate(row.task_label)}: ${label.slice(prefix.length)}`;
+  return taskMessage(label);
+}
+
 /** 后继那一行的说明：它在做哪一件（标签去掉与任务名重复的前缀）、做到第几项或结果如何。
  *  标题已经是任务名，这里再写一遍「取新作资料：」读起来就是同一句话说了两次。 */
 export function followupDetail(row: TaskRunPayload): string {
@@ -159,20 +173,20 @@ export function followupDetail(row: TaskRunPayload): string {
   const item = label.startsWith(prefix) ? label.slice(prefix.length) : label === row.task_label ? '' : label;
   const total = row.progress_total || 0;
   const tail = errorHeadline(row.error) || summaryText(row.result_summary)
-    || (isActive(row) && total > 0 ? `${progressText(row.progress_current, total)} 项` : '');
-  return [item, tail].filter(Boolean).join(' · ');
+    || (isActive(row) && total > 0 ? format('{0} 项', progressText(row.progress_current, total)) : '');
+  return [item === label ? taskMessage(item) : item, taskMessage(tail)].filter(Boolean).join(' · ');
 }
 
 /** 秒数说成「几分几秒」。跑了几小时的批处理也要一眼读得出量级：满 48 小时按天说。 */
 export function elapsedText(seconds: number | null | undefined): string {
   if (typeof seconds !== 'number' || !Number.isFinite(seconds) || seconds < 0) return '';
   const whole = Math.floor(seconds);
-  if (whole < 60) return `${whole} 秒`;
+  if (whole < 60) return format("{0} 秒", (whole));
   const minutes = Math.floor(whole / 60);
-  if (minutes < 60) return `${minutes} 分 ${whole % 60} 秒`;
+  if (minutes < 60) return format("{0} 分 {1} 秒", (minutes), (whole % 60));
   const hours = Math.floor(minutes / 60);
-  if (hours < 48) return `${hours} 小时 ${minutes % 60} 分`;
-  return `${Math.floor(hours / 24).toLocaleString()} 天 ${hours % 24} 小时`;
+  if (hours < 48) return format("{0} 小时 {1} 分", (hours), (minutes % 60));
+  return format("{0} 天 {1} 小时", (Math.floor(hours / 24).toLocaleString()), (hours % 24));
 }
 
 /** 进度读数「已做 / 总数」：服务端偶尔报出超过总数的已做数，按总数封顶。 */
@@ -195,7 +209,7 @@ export function momentText(stamp: string | null | undefined): string {
   if (!stamp) return '';
   const moment = new Date(stamp);
   if (Number.isNaN(moment.getTime())) return '';
-  return moment.toLocaleString(undefined,
+  return moment.toLocaleString(language() === 'zh-CN' ? undefined : language(),
     { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
 }
 
@@ -212,6 +226,7 @@ export function summaryText(summary: Record<string, unknown>): string {
     .filter(([key, value]) => !SUMMARY_HIDDEN.has(key)
       && (typeof value === 'number' || typeof value === 'string')
       && String(value) !== '')
-    .map(([key, value]) => `${SUMMARY_LABELS[key] || key} ${typeof value === 'number' ? value.toLocaleString() : value}`)
+    .map(([key, value]) => `${translate(SUMMARY_LABELS[key] || key)} ${typeof value === 'number' ? value.toLocaleString()
+      : typeof value === 'string' && ['operation', 'outcome'].includes(key) ? translate(value) : value}`)
     .join(' · ');
 }

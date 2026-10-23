@@ -12,6 +12,7 @@
  * 「最近完成」末尾的「加载更早」往前接一页，接上的行留在组件里，与轮询那一份按 id 合并：
  * 轮询只管第一页，翻过的那些不会被下一次刷新冲掉。 */
 import { useId, useState } from 'react';
+import { translate, format } from '../../i18n';
 import type { ReactNode } from 'react';
 import { RiArrowDownSLine, RiHistoryLine } from '@remixicon/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -32,7 +33,7 @@ import { DownloadsPanel } from './downloads-panel';
 import { ErrorExcerpt } from './error-excerpt';
 import {
   elapsedText, fetchEarlier, fetchTasks, foldRoutine, followupDetail, groupFollowups, isActive,
-  isRoutine, mergeFinished, momentText, pollInterval, progressText, statusLabel, summaryText, TASKS_KEY, TRIGGER_LABELS, type TaskRunPayload,
+  isRoutine, mergeFinished, momentText, pollInterval, progressText, statusLabel, summaryText, taskMessage, taskProgressLabel, TASKS_KEY, TRIGGER_LABELS, type TaskRunPayload,
 } from './tasks';
 
 /* 状态徽章只有三档颜色：成功是绿、失败是红、被叫停与被打断是黄，其余留中性底。
@@ -59,7 +60,7 @@ function FollowupList({ rows }: { rows: TaskRunPayload[] }) {
           <li key={row.id} data-status={row.status} data-followup-key={row.followup_key}
             className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 border-t border-separator-border px-5 py-2.5">
             <span className="min-w-0 break-words text-caption-1-regular text-text-primary">
-              {row.task_label}
+              {translate(row.task_label)}
             </span>
             <StatusBadge status={row.status} />
             {detail
@@ -88,7 +89,7 @@ function RunCard(
       })}>
       <div className="flex flex-col gap-1.5 px-5 pt-5 pb-4">
         <div className="flex flex-wrap items-center gap-2">
-          <strong className="min-w-0 break-words text-title-1-medium text-text-primary">{run.task_label}</strong>
+          <strong className="min-w-0 break-words text-title-1-medium text-text-primary">{translate(run.task_label)}</strong>
           <StatusBadge status={run.status} />
         </div>
         <p className="text-caption-1-regular text-text-secondary">{meta}</p>
@@ -102,7 +103,7 @@ function RunCard(
       </div> : null}
       {footer
         ? <div className="flex min-h-14 flex-col justify-center rounded-b-2xl border-t border-separator-border bg-card-footer px-5 py-3">
-            <ErrorExcerpt text={footer} className="text-caption-1-regular text-text-secondary" />
+            <ErrorExcerpt text={taskMessage(footer)} className="text-caption-1-regular text-text-secondary" />
           </div>
         : null}
     </li>
@@ -112,9 +113,9 @@ function RunCard(
 function RunningRun({ run, followups }: { run: TaskRunPayload; followups?: TaskRunPayload[] }) {
   const total = run.progress_total || 0;
   const current = run.progress_current || 0;
-  const label = run.progress_label || '正在进行';
+  const label = taskProgressLabel(run);
   const elapsed = elapsedText(run.elapsed_seconds);
-  const meta = [TRIGGER_LABELS[run.trigger] || run.trigger, elapsed && `已跑 ${elapsed}`]
+  const meta = [translate(TRIGGER_LABELS[run.trigger] || run.trigger), elapsed && format('已跑 {0}', elapsed)]
     .filter(Boolean).join(' · ');
   return (
     <RunCard run={run} meta={meta} followups={followups}>
@@ -137,10 +138,10 @@ function SettledRun(
   const elapsed = elapsedText(run.elapsed_seconds);
   const oldest = runs && runs.length > 1 ? runs[runs.length - 1] : undefined;
   const meta = (oldest
-    ? [TRIGGER_LABELS[run.trigger] || run.trigger, `近 ${runs!.length} 轮`,
+    ? [translate(TRIGGER_LABELS[run.trigger] || run.trigger), format('近 {0} 轮', runs!.length),
        `${momentText(oldest.finished_at)} – ${momentText(run.finished_at)}`]
-    : [TRIGGER_LABELS[run.trigger] || run.trigger, momentText(run.finished_at),
-       elapsed && `用时 ${elapsed}`]).filter(Boolean).join(' · ');
+    : [translate(TRIGGER_LABELS[run.trigger] || run.trigger), momentText(run.finished_at),
+       elapsed && format('用时 {0}', elapsed)]).filter(Boolean).join(' · ');
   return (
     <RunCard run={run} meta={meta} footer={run.error} followups={followups}>
       {summary ? <p className="text-caption-1-regular text-text-secondary wrap-anywhere">{summary}</p> : null}
@@ -152,7 +153,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   const id = useId();
   return (
     <section aria-labelledby={id} className="flex min-w-0 flex-col gap-3">
-      <h3 id={id} className="text-title-2-medium text-text-primary">{title}</h3>
+      <h3 id={id} className="text-title-2-medium text-text-primary">{translate(title)}</h3>
       {children}
     </section>
   );

@@ -8,6 +8,7 @@
  * 一条任务都没有时整段不画。失败的任务给中文原因；失败、取消与停滞的可以重新提交，被判
  * 违规的不给（服务端也会拒）。每张卡都能复制磁力：接口失效时退回手动添加。 */
 import { useId, useState } from 'react';
+import { translate, format, language } from '../../i18n';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Chip } from '@/components/base/badges/chip';
@@ -36,10 +37,10 @@ const STATE_COLORS: Record<string, 'lime' | 'rose' | 'yellow'> = {
 };
 
 const taskName = (task: DownloadTask) =>
-  task.title || task.display_name || task.remote_name || task.code || `磁力 ${task.info_hash?.slice(0, 8) ?? task.id}`;
+  task.title || task.display_name || task.remote_name || task.code || format('磁力 {0}', task.info_hash?.slice(0, 8) ?? task.id);
 
 export const failureText = (task: DownloadTask) =>
-  task.failure_label ? [task.failure_label, task.failure_detail].filter(Boolean).join('：') : '';
+  task.failure_label ? [translate(task.failure_label), translate(task.failure_detail || '')].filter(Boolean).join(language() === 'zh-CN' ? '：' : ': ') : '';
 
 export function DownloadsPanel() {
   const id = useId();
@@ -98,10 +99,10 @@ function TaskCard({ task, writable }: { task: DownloadTask; writable: boolean })
       <div className="flex flex-col gap-1.5 px-5 pt-5 pb-4">
         <div className="flex flex-wrap items-center gap-2">
           <strong className="min-w-0 break-words text-title-1-medium text-text-primary">{taskName(task)}</strong>
-          <Chip color={STATE_COLORS[task.state] ?? 'neutral'}>{task.state_label}</Chip>
+          <Chip color={STATE_COLORS[task.state] ?? 'neutral'}>{translate(task.state_label)}</Chip>
           {task.state === 'ingested'
             ? <Chip color={task.postprocess_state === 'complete' ? 'lime'
-              : task.postprocess_state === 'failed' ? 'rose' : 'yellow'}>{task.postprocess_label}</Chip>
+              : task.postprocess_state === 'failed' ? 'rose' : 'yellow'}>{translate(task.postprocess_label)}</Chip>
             : null}
         </div>
         <div className="flex min-w-0 flex-wrap items-center gap-2 text-caption-1-regular text-text-secondary"><SourceLabel source={task.provider} label={task.provider_label} /><span className="break-words">{meta}</span></div>
@@ -128,7 +129,7 @@ function TaskCard({ task, writable }: { task: DownloadTask; writable: boolean })
       </div>
       {reason || task.postprocess_detail
         ? <div className="flex min-h-14 flex-col justify-center rounded-b-2xl border-t border-separator-border bg-card-footer px-5 py-3">
-            <p className="text-caption-1-regular text-text-secondary">{reason || task.postprocess_detail}</p>
+            <p className="text-caption-1-regular text-text-secondary">{reason || translate(task.postprocess_detail || '')}</p>
           </div>
         : null}
     </li>
