@@ -107,7 +107,7 @@ function Outcome(
                     {details.log
                       /* 日志地址使用次级文字色，分隔线沿用错误提示的红色。 */
                       ? <div className="mt-3 border-t border-border-error-default/20 pt-3 text-text-secondary">
-                          <PathLine path={details.log} prefix="完整记录：" className="text-caption-1-regular"
+                          <PathLine path={details.log} prefix={translate('完整记录：')} className="text-caption-1-regular"
                             onRevealed={toast} />
                         </div>
                       : null}
@@ -125,7 +125,7 @@ function Outcome(
             extra={state.issues_log
               /* 中性提示的分隔线跟随次级文字色。 */
               ? <div className="mt-1.5 border-t border-current/20 pt-1.5 text-text-secondary">
-                  <PathLine path={state.issues_log} prefix="完整记录：" className="text-caption-1-regular"
+                  <PathLine path={state.issues_log} prefix={translate('完整记录：')} className="text-caption-1-regular"
                     onRevealed={toast} />
                 </div>
               : null}>

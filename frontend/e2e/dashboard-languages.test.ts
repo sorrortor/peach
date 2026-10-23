@@ -12,12 +12,14 @@ const cleanup: Record<string, unknown> = {
   '/api/ads?limit=1': { pending_total: 5, dismissed_total: 2, counts: { video: 4, url: 1 } },
   '/api/items?state=trash&limit=1': { total: 9, bytes: 3221225472 },
   '/api/sources': { sources: [{ location: 'local', online: true, roots: ['R:\\media'] }, { location: '115', online: false, roots: ['B:\\'] }] },
-  '/api/library-processing': { status: 'idle' },
+  '/api/library-processing': { status: 'failed', job_id: 'synthetic', issue_count: 20, retryable_asset_ids: [1],
+    error: '20 项需要处理，可重试未完成的部分。', issues_log: '/synthetic/issues.jsonl',
+    issue_preview: [{ asset_id: 1, title: PRIVATE, path: '/synthetic/Private 中文 ไทย.mp4', message: '媒体文件不可访问' }] },
   '/api/media-repair': { status: 'complete', library: '', stage: '', checked: 3, total: 3, found: 3, repaired: 2, failed: 1, missing_tool: 1, skipped: 0, message: '' },
   '/api/libraries': { libraries: [] },
   '/api/organize': { status: 'idle', locations: [{ location: 'local', roots: ['R:\\media'] }], templates: { local: { file: '{number}', dir: '' } },
     presets: [{ label: '番号 标题', file: '{number}[ {title}]', dir: '{studio}' }],
-    placeholders: [{ key: 'number', label: '番号' }, { key: 'year', label: '发行年' }], last_batch: '' },
+    placeholders: [{ key: 'number', label: '番号' }, { key: 'title', label: '标题' }, { key: 'year', label: '发行年' }], last_batch: '' },
   '/api/links': { total: 1, entities: 1, by_kind: { official: 1 }, top_hosts: [['example.invalid', 1]] },
   '/api/links/check': { status: 'complete', check_id: 'test', checked: 2, total: 2, gone: [{ id: 1, entity: PRIVATE, link_kind: 'official', label: PRIVATE, url: 'https://example.invalid/file', note: 'HTTP 404' }],
     unclear: [{ id: 2, entity: PRIVATE, link_kind: 'official', label: PRIVATE, url: 'https://example.invalid/retry', note: 'HTTP 403' }], scope: '' },
@@ -113,6 +115,8 @@ describe('统计、口味与数据管理三语界面', () => {
           }
           assert.deepEqual((await layout(page)).offenders, []);
           if (path === '/data-cleanup') {
+            await page.locator('#libraryProcessing summary').click();
+            if (locale !== 'zh-CN') missing[`${locale} processing issues`] = await gaps(page);
             const clean = locale === 'th' ? 'ล้างรายการที่ใช้ไม่ได้' : locale === 'en' ? 'Clean up unavailable items' : '清理失效条目';
             await page.getByRole('button', { name: clean, exact: true }).click();
             await page.locator('dialog[open]').waitFor();
