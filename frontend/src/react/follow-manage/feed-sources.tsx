@@ -9,6 +9,7 @@
  *
  * 勾选和关注列表同一套：勾在行首，点一行的空白处也是选这一行，选中了底部浮出批量操作。 */
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { translate, format } from '../../i18n';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   createColumnHelper, createPaginatedRowModel, createSortedRowModel, flexRender, rowPaginationFeature,
@@ -220,7 +221,7 @@ export function FeedSources({ readOnly, toast }: {
 
   const columns = useMemo(() => {
     const column = createColumnHelper<typeof feedTableFeatures, FeedSource>();
-    const label = (id: string) => () => COLUMN_LABELS[id] || id;
+    const label = (id: string) => () => translate(COLUMN_LABELS[id] || id);
     return column.columns([
       column.display({
         id: 'select',
@@ -256,7 +257,7 @@ export function FeedSources({ readOnly, toast }: {
       column.accessor((row) => row.kind_label, {
         id: 'kind',
         header: label('kind'),
-        cell: (context) => <span className="whitespace-nowrap">{context.getValue()}</span>,
+        cell: (context) => <span className="whitespace-nowrap">{translate(context.getValue())}</span>,
       }),
       column.accessor((row) => row.url, {
         id: 'origin',
@@ -377,7 +378,7 @@ export function FeedSources({ readOnly, toast }: {
         </div>
       ) : null}
 
-        <SelectionDock visible={chosen.length > 0} label="订阅源批量操作" count={`已选 ${chosen.length} 条订阅源`}>
+        <SelectionDock visible={chosen.length > 0} label="订阅源批量操作" count={format('已选 {0} 条订阅源', chosen.length)}>
           <Button variant="secondary" size="small" disabled={readOnly} {...busyProps(bulk.isPending)}
             onClick={() => bulk.mutate({ ids: chosen.map((row) => row.id), action: 'enabled' })}>启用</Button>
           <Button variant="secondary" size="small" disabled={readOnly} {...busyProps(bulk.isPending)}

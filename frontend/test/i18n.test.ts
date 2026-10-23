@@ -2,8 +2,8 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import messages from '../src/i18n/messages.json';
-import { LANGUAGE_KEY, initializeLanguage, language, saveLanguage, translate, format } from '../src/i18n';
-import { localizeJsx, displayMessages, localizedAreas } from '../i18n-plugin';
+import { LANGUAGE_KEY, initializeLanguage, language, saveLanguage, translate, format, markupText } from '../src/i18n';
+import { localizeJsx, localizePlayer, playerDisplayMessages, displayMessages, localizedAreas } from '../i18n-plugin';
 
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); localStorage.clear(); });
 
@@ -41,9 +41,10 @@ describe('界面语言', () => {
   });
 
   it('has both translations for every catalog entry', () => {
-    for (const pair of Object.values(messages)) {
+    for (const [key, pair] of Object.entries(messages)) {
       expect(pair).toHaveLength(2);
       expect(pair.every(value => value.trim().length > 0)).toBe(true);
+      if (key !== '中文') expect(pair.some(value => /\p{Script=Han}/u.test(value)), key).toBe(false);
     }
   });
 
@@ -84,15 +85,39 @@ describe('界面语言', () => {
     const missing: Record<string, string[]> = {};
     for (const entry of readdirSync(root, { recursive: true, withFileTypes: true })) {
       const path = resolve(entry.parentPath, entry.name);
-      if (!entry.isFile() || !path.endsWith('.tsx') || !localizedAreas.test(path)) continue;
+      if (!entry.isFile() || !/\.tsx?$/.test(path) || !localizedAreas.test(path)) continue;
       const gaps = displayMessages(readFileSync(path, 'utf8'), path).filter(key => !Object.hasOwn(messages, key));
       if (gaps.length) missing[path.slice(root.length + 1)] = gaps;
+    }
+    const playerRoot = resolve(root, '../player');
+    for (const entry of readdirSync(playerRoot)) {
+      if (!entry.endsWith('.ts')) continue;
+      const path = resolve(playerRoot, entry);
+      const gaps = playerDisplayMessages(readFileSync(path, 'utf8'), path).filter(key => !Object.hasOwn(messages, key));
+      if (gaps.length) missing[`player/${entry}`] = gaps;
     }
     expect(missing).toEqual({});
     const slots = (text: string) => [...new Set(text.match(/\{\d+\}/g) ?? [])].sort();
     for (const [key, pair] of Object.entries(messages)) {
       for (const value of pair) expect(slots(value), key).toEqual(slots(key));
     }
+  });
+
+  it.each(['en', 'th'])('localizes static player markup in %s while preserving interpolated names and attributes', locale => {
+    saveLanguage(locale);
+    const source = 'const output = `<button title="播放" data-value="播放">播放</button><span title="另见 ${name}">${name}</span><p>字幕</p>`;';
+    const code = localizePlayer(source, 'player.ts')!;
+    const run = new Function('__peachTranslate', '__peachFormat', '__peachMarkup', 'name', code.replace(/^import[^\n]+\n/, '') + '\nreturn output;');
+    const name = '中文 ไทย &lt;private&gt;';
+    const html = run(translate, format, markupText, name);
+    const root = document.createElement('div'); root.innerHTML = html;
+    expect(root.querySelector('button')?.title).toBe(translate('播放'));
+    expect(root.querySelector('button')?.textContent).toBe(translate('播放'));
+    expect(root.querySelector('button')?.dataset.value).toBe('播放');
+    expect(html).toContain(name);
+    expect(root.querySelector('span')?.title).toBe(`${translate('另见')} 中文 ไทย <private>`);
+    expect(root.querySelector('p')?.textContent).toBe(translate('字幕'));
+    expect(markupText('"<&>')).toBe('&quot;&lt;&amp;&gt;');
   });
 
 });

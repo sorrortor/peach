@@ -1,3 +1,4 @@
+import { translate, format } from '../../i18n';
 /* 作品详情 `/assets/:id` 与四种队列（Mix、分卷、版本、播放列表）的数据与判定（ADR-0031）。
  *
  * 这一块是舞台岛（`../stage/`）树里的子组件，舞台本身、进出场、小窗与 Video.js 归舞台岛，
@@ -133,7 +134,7 @@ export async function fetchQueue(ref: QueueRef, helpers: Pick<ItemDetailHelpers,
   const group = await apiGet<GroupPayload>(`/api/${ref.kind}?id=${ref.seedId}`, signal);
   if (group.error || !group.items?.length) throw new Error(group.error || '这一组已不存在');
   return {
-    kind: ref.kind, seedId: ref.seedId!, title: `${ref.kind === 'parts' ? '分卷' : '版本'} · ${group.title || ''}`,
+    kind: ref.kind, seedId: ref.seedId!, title: `${translate(ref.kind === 'parts' ? '分卷' : '版本')} · ${group.title || ''}`,
     items: group.items,
     versionCount: ref.kind === 'editions' ? group.count : undefined,
   };
@@ -372,7 +373,7 @@ export const clampRating = (value: number | null | undefined) => Math.min(Math.m
 export const ratingStars = (value: number | null | undefined) => Math.round(clampRating(value) / RATING_STEP);
 export const ratingText = (value: number | null | undefined) => {
   const stars = ratingStars(value);
-  return stars ? `${stars} 星` : '未评分';
+  return stars ? format("{0} 星", (stars)) : translate("未评分");
 };
 /** 点第 `star` 颗之后要送的值：点的就是当前那一颗是撤销。 */
 export const nextRating = (before: number | null | undefined, star: number) => {
@@ -445,15 +446,15 @@ const QUEUE_LABEL: Record<QueueKind, string> = { mix: 'Mix', parts: '分卷', ed
  *  Mix 种子），不能一起砍。 */
 export function queueCopy(queue: DetailQueue): { title: string; summary: string } {
   const count = (queue.kind === 'editions' ? queue.versionCount ?? queue.items.length : queue.items.length).toLocaleString();
-  const countLabel = queue.kind === 'parts' ? `${count} 卷` : queue.kind === 'editions' ? `${count} 个版本` : `${count} 个视频`;
-  return { title: QUEUE_LABEL[queue.kind], summary: queue.kind === 'editions' ? countLabel : `${queue.title} · ${countLabel}` };
+  const countLabel = queue.kind === 'parts' ? format("{0} 卷", (count)) : queue.kind === 'editions' ? format("{0} 个版本", (count)) : format("{0} 个视频", (count));
+  return { title: translate(QUEUE_LABEL[queue.kind]), summary: queue.kind === 'editions' ? countLabel : `${queue.title} · ${countLabel}` };
 }
 
 /** 同一部片的几卷共用文件名，标题、女优、厂牌逐字相同：详情标题不写卷号的话，在队列里换一卷，
  *  右侧整栏看上去纹丝不动。卷号说的是「第几份文件」而不是版次，用中性灰。数字卷写「第 2 卷」，
  *  字母卷照番号分卷后缀的写法大写成「A 卷」。 */
-export const partLabel = (label = '') => /^\d+$/.test(label) ? `第 ${label} 卷`
-  : /^[a-h]$/i.test(label) ? `${label.toUpperCase()} 卷` : label;
+export const partLabel = (label = '') => /^\d+$/.test(label) ? format("第 {0} 卷", (label))
+  : /^[a-h]$/i.test(label) ? format("{0} 卷", (label.toUpperCase())) : label;
 export const partLabelHtml = (item: DetailItem, queue: DetailQueue | null) =>
   ((queue?.kind === 'parts' || queue?.kind === 'editions') && item.part_label ? `<small class="javedition partlabel">${esc(partLabel(item.part_label))}</small>` : '');
 
@@ -493,8 +494,8 @@ export function realWatched(item: DetailItem): number | null {
 
 /** 反馈键的回执。 */
 export function feedbackReceipt(kind: string, result: { feedback?: string | null; disposal?: string | null }): string {
-  if (kind === 'dislike') return result.feedback === 'dislike' ? '已标记不合口味' : '已取消不合口味';
-  if (kind === 'seen') return result.feedback === 'seen' ? '已标记看过' : '已取消看过';
-  if (kind === 'dispose') return result.disposal === 'trash' ? '已移入回收站' : '已移出回收站';
-  return '已记录一次高潮';
+  if (kind === 'dislike') return translate(result.feedback === 'dislike' ? '已标记不合口味' : '已取消不合口味');
+  if (kind === 'seen') return translate(result.feedback === 'seen' ? '已标记看过' : '已取消看过');
+  if (kind === 'dispose') return translate(result.disposal === 'trash' ? '已移入回收站' : '已移出回收站');
+  return translate('已记录一次高潮');
 }

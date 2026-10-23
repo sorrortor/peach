@@ -1,3 +1,4 @@
+import { translate, markupText } from '../../i18n';
 /* 关注页 `/follow`：页头、创作者与题材两排、两排的筛选玻璃、交集条、卡片列表与底栏（ADR-0031 第 10g 步）。
  *
  * 数据形状、取数键与这一页的判定在 `./follow-feed.ts`，卡片在 `./follow-card.tsx`。换筛选或排序时
@@ -417,7 +418,7 @@ function Glass({ facets, view, total, busy, props, route }: {
             <div ref={mediaRow} role="group" aria-label="媒体类型" data-entity-media="" onPointerLeave={mediaGlide.leave}>
               {([['videos', '视频', facets.mediaCounts.videos, 'play', 'video'],
                 ['images', '图片', facets.mediaCounts.images, 'pics', 'image']] as const).map(([value, text, count, symbol, kind]) => {
-                const title = `${text} ${Math.max(0, count || 0).toLocaleString()}`;
+                const title = `${translate(text)} ${Math.max(0, count || 0).toLocaleString()}`;
                 return (
                   <button key={value} type="button" data-media-view={value} data-media-icon={kind}
                     aria-pressed={view.media === value} aria-label={title} title={title}
@@ -435,7 +436,7 @@ function Glass({ facets, view, total, busy, props, route }: {
               <button key={key} type="button" data-entity-state={key} data-follow-filter={key} data-entity-press=""
                 aria-pressed={view.status === key} onPointerEnter={stateGlide.hover}
                 onClick={() => { if (view.status !== key) route({ status: key }) }}>
-                {label}
+                {translate(label)}
               </button>
             ))}
             {extras ? <Sep /> : null}
@@ -482,12 +483,12 @@ function Glass({ facets, view, total, busy, props, route }: {
             const Arrow = spriteGlyph(view.dir === 'asc' ? 'arrow-up' : 'arrow-down');
             return (
               <button key={key} type="button" data-entity-sort={key} data-follow-sort={key} data-entity-press=""
-                aria-pressed={pressed} aria-label={sortAriaLabel(key, label, view.sort, view.dir) || undefined}
+                aria-pressed={pressed} aria-label={translate(sortAriaLabel(key, label, view.sort, view.dir)) || undefined}
                 onClick={() => {
                   const next = nextSort(key, view.sort, view.dir);
                   if (next) route(next);
                 }}>
-                {label}{pressed ? <Arrow className="size-3.5" /> : null}
+                {translate(label)}{pressed ? <Arrow className="size-3.5" /> : null}
               </button>
             );
           })}
@@ -508,7 +509,7 @@ function Combo({ conditions, onDrop, onClear }: {
       {conditions.length ? (
         <>
           {conditions.map((row) => {
-            const text = `${row.kind === '标签' ? '' : `${row.kind} `}${row.label}`;
+            const text = `${row.kind === '标签' ? '' : `${translate(row.kind)} `}${row.label}`;
             return (
               <span key={`${row.kind}:${row.key}`} data-combo-chip="">
                 {text}
@@ -530,7 +531,7 @@ function BrokenNote({ count, onManage }: { count: number; onManage(): void }) {
     <div data-follow-broken="" onClick={(event) => {
       if ((event.target as HTMLElement).closest('[data-follow-manage]')) onManage();
     }} dangerouslySetInnerHTML={{
-      __html: `<div class="geist-note geist-note-error fwarn" role="alert">${icon('alert')}<span>${count} 个来源上次检查失败，去<button type="button" class="flink" data-follow-manage>管理关注</button>看原因。</span></div>`,
+      __html: `<div class="geist-note geist-note-error fwarn" role="alert">${icon('alert')}<span>${count} ${markupText('个来源上次检查失败，去')} <button type="button" class="flink" data-follow-manage>${markupText('管理关注')}</button> ${markupText('看原因。')}</span></div>`,
     }} />
   );
 }
@@ -601,7 +602,7 @@ function Empty({ data, filtered }: { data: FollowPage; filtered: boolean }) {
         ? emptyStateHtml('rss', '没有符合条件的更新', '切换状态或来源筛选后再试。')
         : emptyStateHtml('rss', '还没有更新', '点「检查更新」去各个来源取一遍；来源有新内容时会集中显示在这里。')
       : emptyStateHtml('rss', '还没有关注任何来源', '添加创作者或订阅来源后，更新会集中显示在这里。',
-        { actions: '<a class="geist-button primary" href="/subscriptions?tab=add">添加关注</a>' });
+        { actions: `<a class="geist-button primary" href="/subscriptions?tab=add">${markupText('添加关注')}</a>` });
   return <div data-follow-empty="" className="contents" dangerouslySetInnerHTML={{ __html: html }} />;
 }
 

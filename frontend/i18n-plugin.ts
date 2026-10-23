@@ -5,7 +5,7 @@ import messages from './src/i18n/messages.json' with { type: 'json' };
 
 const labels = new Set(['label', 'title', 'legend', 'hint', 'description', 'placeholder', 'aria-label', 'alt', 'lede', 'summary', 'term', 'status', 'topLabel', 'bottomLabel', 'busyLabel', 'emptyLabel', 'message']);
 const known = new Set(Object.keys(messages));
-export const localizedAreas = /\/src\/react\/(?:settings|settings-panel|sidebar|catalog-filter|catalog-grid|catalog-folders|library-shortcuts|library-processing|components|manage-header|entity-filter|item-detail|diagnostics|glow-picker|follow-manage(?=\/credentials\.tsx)|pages\/login)\//;
+export const localizedAreas = /\/src\/react\/(?:settings|settings-panel|sidebar|catalog-filter|catalog-grid|catalog-folders|library-shortcuts|library-processing|components|manage-header|entity-filter|item-detail|diagnostics|glow-picker|follow-feed|follow-detail|follow-manage|stage|pages\/login)\//;
 
 /** JSX 的行首缩进不展示，同一行与内联节点之间的空格属于文案。 */
 function jsxText(value: string): string {
@@ -47,7 +47,7 @@ function displayEdits(source: string, id: string) {
   const walk = (node: unknown) => {
     if (!node || typeof node !== 'object') return;
     const item = node as Record<string, any>;
-    if (item.type === 'CallExpression' && ['translate', 'format'].includes(item.callee?.name)
+    if (item.type === 'CallExpression' && ['translate', 'format', 'markupText'].includes(item.callee?.name)
       && typeof item.arguments[0]?.value === 'string' && /\p{Script=Han}/u.test(item.arguments[0].value)) messages.add(item.arguments[0].value);
     let text: string | undefined;
     let target = item;
@@ -104,11 +104,74 @@ export function localizeJsx(source: string, id: string, runtime = '/src/i18n/ind
   return `import {translate as __peachTranslate, format as __peachFormat} from ${JSON.stringify(runtime)};\n${source}`;
 }
 
+/** 播放器自有菜单的静态 HTML；插值、资源地址、属性键与用户字幕名不参与翻译。 */
+function playerDisplay(source: string, id: string) {
+  const catalog = new Set<string>();
+  type Edit = { start: number; end: number; value: string };
+  const apply = (start: number, end: number, edits: Edit[]) => {
+    let text = source.slice(start, end);
+    for (const edit of edits.sort((a, b) => b.start - a.start)) text = text.slice(0, edit.start - start) + edit.value + text.slice(edit.end - start);
+    return text;
+  };
+  const markup = (text: string) => {
+    const parts: string[] = [];
+    let at = 0;
+    const pattern = /\b(?:aria-label|title|label|placeholder|alt)=["']([^"']*\p{Script=Han}[^"']*)(?:["']|$)|(?:^|>)([^<>]*\p{Script=Han}[^<>]*)(?=<|$)/gu;
+    for (const match of text.matchAll(pattern)) {
+      const value = match[1] ?? match[2]!;
+      const key = value.trim();
+      catalog.add(key);
+      if (!known.has(key)) continue;
+      const start = match.index! + match[0].indexOf(value) + value.indexOf(key);
+      parts.push(JSON.stringify(text.slice(at, start)), `__peachMarkup(${JSON.stringify(key)})`);
+      at = start + key.length;
+    }
+    parts.push(JSON.stringify(text.slice(at)));
+    return parts.join(' + ');
+  };
+  const visit = (node: any, parent?: any, field?: string): Edit[] => {
+    if (!node || typeof node !== 'object') return [];
+    if ((parent?.type === 'Property' || parent?.type === 'MemberExpression') && field === 'key' && !parent.computed) return [];
+    const nested: Edit[] = [];
+    for (const [key, child] of Object.entries(node)) {
+      if (Array.isArray(child)) child.forEach(value => nested.push(...visit(value, node, key)));
+      else if (child && typeof child === 'object') nested.push(...visit(child, node, key));
+    }
+    if (node.type === 'Literal' && typeof node.value === 'string' && /\p{Script=Han}/u.test(node.value)) {
+      if (/<[a-z/][^>]*>/i.test(node.value)) return [{ start: node.start, end: node.end, value: `(${markup(node.value)})` }];
+      catalog.add(node.value);
+      if (known.has(node.value)) return [{ start: node.start, end: node.end, value: `__peachTranslate(${JSON.stringify(node.value)})` }];
+    }
+    if (node.type === 'TemplateLiteral' && node.quasis.some((part: any) => /\p{Script=Han}/u.test(part.value.cooked))) {
+      const values = node.expressions.map((expression: any) => `(${apply(expression.start, expression.end, nested.filter(edit => edit.start >= expression.start && edit.end <= expression.end))})`);
+      const key = node.quasis.map((part: any, index: number) => part.value.cooked + (index < values.length ? `{${index}}` : '')).join('');
+      if (/<[a-z/][^>]*>/i.test(key)) {
+        const parts = node.quasis.flatMap((part: any, index: number) => [markup(part.value.cooked), ...(index < values.length ? [values[index]] : [])]);
+        return [{ start: node.start, end: node.end, value: `(${parts.join(' + ')})` }];
+      }
+      catalog.add(key);
+      if (known.has(key)) return [{ start: node.start, end: node.end, value: `__peachFormat(${JSON.stringify(key)}${values.length ? ', ' + values.join(', ') : ''})` }];
+    }
+    return nested;
+  };
+  const ast = parseSync(id, source);
+  if (ast.errors.length) throw new Error(`Unable to parse ${id}: ${ast.errors[0]?.message}`);
+  const edits = visit(ast.program);
+  return { messages: [...catalog], code: edits.length ? apply(0, source.length, edits) : null };
+}
+
+export const playerDisplayMessages = (source: string, id: string) => playerDisplay(source, id).messages;
+export function localizePlayer(source: string, id: string, runtime = '/src/i18n/index.ts'): string | null {
+  const { code } = playerDisplay(source, id);
+  return code ? `import { translate as __peachTranslate, format as __peachFormat, markupText as __peachMarkup } from ${JSON.stringify(runtime)};\n${code}` : null;
+}
+
 export function i18nPlugin(): Plugin {
   const runtime = fileURLToPath(new URL('./src/i18n/index.ts', import.meta.url));
   return { name: 'peach-ui-languages', enforce: 'pre', transform(source, id) {
-    if (!id.endsWith('.tsx') || !localizedAreas.test(id)) return;
-    const code = localizeJsx(source, id, runtime);
+    const player = /\/src\/player\/[^/]+\.ts$/.test(id);
+    if (!player && (!id.endsWith('.tsx') || !localizedAreas.test(id))) return;
+    const code = player ? localizePlayer(source, id, runtime) : localizeJsx(source, id, runtime);
     return code ? { code, map: null } : null;
   } };
 }

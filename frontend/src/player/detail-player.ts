@@ -1,3 +1,4 @@
+import { language } from '../i18n';
 /* 详情播放器：给舞台播放区的 `<video>` 挂 Video.js 与全部 Peach 控件。
  *
  * - `mountDetailPlayer` 挂一个 Video.js 实例：片源解析、时长校正、出错时从分片退回直读、脱盘判定，
@@ -95,7 +96,7 @@ export async function mountDetailPlayer(
     return null;
   }
   const player = videojs(video, {
-    controls: true, preload: 'metadata', language: 'zh-CN', responsive: true,
+    controls: true, preload: 'metadata', language: language(), responsive: true,
     /* 海报与作品当前封面偏好一致，交给原生视频显示。 */
     poster: options.poster || detailPosterUrl(item, host.settings().javImage),
     controlBar: {

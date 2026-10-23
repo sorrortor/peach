@@ -46,6 +46,11 @@ export function format(template: string, ...values: unknown[]): string {
     Number(index) < values.length ? String(values[Number(index)] ?? '') : placeholder);
 }
 
+/** 只用于编译器识别出的静态 HTML 文案；插值数据仍沿用调用处的转义。 */
+export function markupText(text: string): string {
+  return translate(text).replace(/[&<>"']/g, value => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[value]!);
+}
+
 export function saveLanguage(locale: string): boolean {
   if (!LANGUAGES.includes(locale as Language)) return false;
   try { localStorage.setItem(LANGUAGE_KEY, locale); }

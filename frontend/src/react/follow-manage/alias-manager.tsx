@@ -33,8 +33,9 @@ import {
   type AliasGroup, type AliasSuggestion, type FollowSource,
 } from './follow-manage';
 import { AuthorAvatar } from './source-view';
+import { translate, format } from '../../i18n';
 
-const REMOVE_BODY = (alias: string) => `将移除别名「${alias}」，对应来源恢复为独立创作者组。`;
+const REMOVE_BODY = (alias: string) => format('将移除别名「{0}」，对应来源恢复为独立创作者组。', alias);
 const suggestionFeatures = tableFeatures({ rowSelectionFeature, rowSortingFeature, rowPaginationFeature,
   sortedRowModel: createSortedRowModel(), paginatedRowModel: createPaginatedRowModel() });
 const savedFeatures = suggestionFeatures;
@@ -141,7 +142,7 @@ export function AliasManager({ groups, suggestions, sources = [], readOnly, toas
     void confirmModal({
       title: all ? '合并全部创作者别名' : '合并所选创作者别名',
       body: `将合并以下 ${items.length} 组创作者：${items.map(
-        (item) => `「${item.alias}」归入「${item.canonical}」`).join('；')}。`,
+        (item) => format('「{0}」归入「{1}」', item.alias, item.canonical)).join('；')}。`,
       confirmLabel: all ? '合并全部别名' : '合并所选别名',
       onConfirm: () => merge.mutateAsync(items),
     });
@@ -175,16 +176,16 @@ export function AliasManager({ groups, suggestions, sources = [], readOnly, toas
         ),
       }),
       column.accessor('canonical', {
-        header: '规范创作者',
+        header: translate('规范创作者'),
         cell: (context) => <AuthorIdentity sources={handlers.current.sources} name={context.getValue()} />,
       }),
-      column.accessor('alias', { header: '平台别名', cell: (context) => context.getValue() }),
+      column.accessor('alias', { header: translate('平台别名'), cell: (context) => context.getValue() }),
       column.accessor('evidence', {
-        header: '依据',
+        header: translate('依据'),
         cell: (context) => <span className="text-body-2-regular text-text-secondary">{context.getValue()}</span>,
       }),
       column.display({
-        id: 'actions', header: '操作',
+        id: 'actions', header: translate('操作'),
         cell: (context) => (
           <Button variant="secondary" size="small" disabled={handlers.current.readOnly}
             {...busyProps(handlers.current.merging)}
@@ -204,14 +205,14 @@ export function AliasManager({ groups, suggestions, sources = [], readOnly, toas
           isSelected={row.getIsSelected()} onChange={(on) => row.toggleSelected(on)} />
       ) }),
       column.accessor('canonical_name', {
-        id: 'canonical', header: '规范创作者',
+        id: 'canonical', header: translate('规范创作者'),
         cell: (context) => (
           <AuthorIdentity sources={handlers.current.sources} name={context.getValue()}
             canonicalKey={context.row.original.canonical_key} />
         ),
       }),
       column.accessor('aliases', {
-        header: '平台别名',
+        header: translate('平台别名'),
         sortFn: (a, b) => a.original.aliases.map((item) => item.name).join(' ').localeCompare(b.original.aliases.map((item) => item.name).join(' '), 'zh-CN'),
         cell: (context) => (
           <span className="flex flex-wrap items-center gap-1.5">
@@ -289,7 +290,7 @@ export function AliasManager({ groups, suggestions, sources = [], readOnly, toas
               options={[{ id: 'canonical', label: '规范创作者' }, { id: 'alias', label: '平台别名' }, { id: 'evidence', label: '依据' }]}
               onChange={(next) => { setSorting(next); setPagination((now) => ({ ...now, pageIndex: 0 })); }} />
           </div>
-          <SelectionDock label="待合并别名批量操作" visible={chosen.length > 0} count={`已选 ${chosen.length} 组`}>
+          <SelectionDock label="待合并别名批量操作" visible={chosen.length > 0} count={format('已选 {0} 组', chosen.length)}>
             <Button variant="secondary" size="small" disabled={readOnly} {...busy}
               onClick={() => mergeSome(chosen, false)}>{`合并所选（${chosen.length}）`}</Button>
             <Button variant="ghost" size="small" onClick={() => setRowSelection({})}>取消选择</Button>
@@ -331,7 +332,7 @@ export function AliasManager({ groups, suggestions, sources = [], readOnly, toas
             options={[{ id: 'canonical', label: '规范创作者' }, { id: 'aliases', label: '平台别名' }]}
             onChange={(next) => { setSavedSorting(next); setSavedPagination((now) => ({ ...now, pageIndex: 0 })); }} />
         </div>
-        <SelectionDock label="已保存别名批量操作" visible={savedNames.length > 0} count={`已选 ${savedNames.length} 个别名`}>
+        <SelectionDock label="已保存别名批量操作" visible={savedNames.length > 0} count={format('已选 {0} 个别名', savedNames.length)}>
           <Button variant="secondary" size="small" disabled={readOnly} {...busyProps(drop.isPending)}
             onClick={() => void confirmModal({ title: '移除所选创作者别名',
               body: `将移除以下 ${savedNames.length} 个别名，对应来源恢复为独立创作者组。`,

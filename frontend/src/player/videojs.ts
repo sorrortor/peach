@@ -1,6 +1,7 @@
 /* Video.js 10 浏览器模块按需从本地加载，全部相对导入由 vendor 入口固定。 */
 import type { VideojsFactory } from './types';
 import { createV10Player } from './v10-player';
+import { language } from '../i18n';
 
 const VIDEOJS = '/vendor/videojs/10.1.0/';
 const MODULES = [
@@ -14,7 +15,11 @@ let loader: Promise<VideojsFactory> | null = null;
 
 export function ensureVideojs(): Promise<VideojsFactory> {
   loader ??= Promise.all(MODULES.map(name => import(/* @vite-ignore */ `${VIDEOJS}${name}`)))
-    .then(() => createV10Player)
+    .then(async (modules) => {
+      const registry = modules[MODULES.indexOf('i18n.js')];
+      await registry.loadLocale(language());
+      return createV10Player;
+    })
     .catch((error: unknown) => { loader = null; throw error });
   return loader;
 }

@@ -1,3 +1,4 @@
+import { translate, format, markupText } from '../../i18n';
 /* 作品详情（ADR-0031）：舞台里那一整块——播放区、右侧队列、侧栏与下方的「接着看」。
  *
  * 舞台（`<dialog id="stage">`）、它的进出场、小窗与 Video.js 都归舞台岛（`../stage/`），关注详情
@@ -147,9 +148,9 @@ function MediaFrame({ item, gate, helpers, actions, autoplay, onEnded }: {
     enabled: !!item.is_jav && !!item.code && !item.sample_images?.length });
   const samples = item.sample_images?.length ? item.sample_images.map(sample => ({ index: sample.n, source: false }))
     : Array.from({ length: Math.min(30, Math.max(0, source.data?.preview_count || 0)) }, (_, index) => ({ index: index + 1, source: true }));
-  const media = item.is_jav && item.code ? [...(item.has_cover ? [{ index: -1, label: '封面' }] : []),
-    ...samples.map((sample, index) => ({ ...sample, label: `预览 ${index + 1}` })),
-    { index: -2, label: '正片', video: true }] : [];
+  const media = item.is_jav && item.code ? [...(item.has_cover ? [{ index: -1, label: translate('封面') }] : []),
+    ...samples.map((sample, index) => ({ ...sample, label: format('预览 {0}', index + 1) })),
+    { index: -2, label: translate('正片'), video: true }] : [];
   const hasPictures = media.length > 1;
   const selectImage = (index: number) => {
     if (index !== -2) frameRef.current?.querySelector('video')?.pause();
@@ -268,7 +269,7 @@ function Queue({ queue, itemId, helpers, actions }: {
     <MixQueue kind={queue.kind} title={copy.title} summary={copy.summary} onClose={actions.close} actions={head} listRef={listRef}>
       {queue.items.map((row) => {
         const edition = queue.kind === 'editions' && row.edition_label
-          ? <i className={`javedition ${EDITION_TONE[row.edition_label] || 'censored'}`} data-queue-edition="">{row.edition_label}</i> : null;
+          ? <i className={`javedition ${EDITION_TONE[row.edition_label] || 'censored'}`} data-queue-edition="">{translate(row.edition_label)}</i> : null;
         // 已消失的条目照旧列在播放列表里、能移出，但文件不在盘上，这一行不能点开去播放。
         const gone = queue.kind === 'playlist' && isVanished(row);
         return (
@@ -384,7 +385,7 @@ function Side({ item, queue, write, helpers, actions }: {
             <button type="button" data-spec-item="" data-open-region={item.region || ''}
               title={item.region_settled ? '已判定的产地；打开同产地的作品' : '按番号或厂牌推断的产地，批量判定后不再变；打开同产地的作品'}
               onClick={() => actions.openRegion(item.region || '')}>
-              <Glyph name="globe" /><span>{item.region_label}{item.region_settled ? '' : '（推断）'}</span>
+              <Glyph name="globe" /><span>{translate(item.region_label || '')}{item.region_settled ? '' : '（推断）'}</span>
             </button>
           ) : null}
         </div>
@@ -508,7 +509,7 @@ function Rating({ item, write }: { item: DetailItem; write: DetailWrite }) {
             {...write.busyAttrs(`rate:${star}`)} onClick={() => write.rate(star)}><Glyph name="star" /></button>
         ))}
       </div>
-      <span data-rating-value="" aria-live="polite">{ratingText(item.rating)}</span>
+      <span data-rating-value="" aria-live="polite">{translate(ratingText(item.rating))}</span>
     </div>
   );
 }
@@ -526,7 +527,7 @@ function Identity({ item, actions }: { item: DetailItem; helpers: ItemDetailHelp
   };
   const group = (label: string, kind: string, list: DetailEntityRef[], extra: ReactNode = null) => (list.length ? (
     <section key={`${kind}:${label}`} data-id-group={kind}>
-      <h5 data-id-label="">{label}</h5>
+      <h5 data-id-label="">{translate(label)}</h5>
       <div data-id-row="">{list.map((ref, index) => cell(kind, ref, index))}{extra}</div>
     </section>
   ) : null);
@@ -722,7 +723,7 @@ function Preference({ item, open, write }: { item: DetailItem; open: boolean; wr
         <span id="preferenceState" aria-live="polite">{write.preferenceState}</span>
         <button type="button" className="geist-button primary" id="savePreference" data-save-preference="" title="提交喜爱理由" aria-label="提交喜爱理由"
           {...write.busyAttrs('preference')} onClick={() => write.preference({ reason })}
-          dangerouslySetInnerHTML={{ __html: saving ? `${spinnerHtml('正在提交喜爱理由')}<span>提交中…</span>` : '<span>提交</span>' }} />
+          dangerouslySetInnerHTML={{ __html: saving ? `${spinnerHtml('正在提交喜爱理由')}<span>${markupText('提交中…')}</span>` : `<span>${markupText('提交')}</span>` }} />
       </div>
     </div>
   );
@@ -743,7 +744,7 @@ function Related(props: ItemDetailProps & { item: DetailItem }) {
   const [skeleton] = useState(() => helpers.relatedSkeletonHtml());
   return (
     <RelatedSection wireDrag={helpers.wireDrag} busy={result.isPending} empty={result.data?.length === 0}
-      error={result.isError ? `读取接着看失败：${requestErrorMessage(result.error)}` : undefined}
+      error={result.isError ? format('读取接着看失败：{0}', requestErrorMessage(result.error)) : undefined}
       onRetry={() => { void result.refetch() }}>
         {result.data ? (
           <CatalogGridPage mode="items" variant="next" items={result.data} helpers={grid.helpers} actions={grid.actions}
@@ -810,7 +811,7 @@ function useDetailWrite(item: DetailItem, actions: ItemDetailActions, label: (ta
       const before = current().rating || 0;
       const value = nextRating(before, star);
       await sendFeedback('rate', value);
-      actions.toast(value ? `已评 ${ratingStars(value)} 星` : '已取消评分', { undo: async () => { await sendFeedback('rate', before) } });
+      actions.toast(value ? format('已评 {0} 星', ratingStars(value)) : translate('已取消评分'), { undo: async () => { await sendFeedback('rate', before) } });
     }),
 
     feedback: (kind: string) => start(kind, '操作', async () => {
@@ -878,7 +879,7 @@ function useDetailWrite(item: DetailItem, actions: ItemDetailActions, label: (ta
       const result = await post<{ ok?: boolean }>(ITEM_TAG_URL, { operation: 'remove', tag: tag.k });
       if (!result.ok) throw new Error('标签未删除');
       apply((now) => withoutTag(now, tag.k));
-      actions.toast(`已删除标签「${label(tag.k)}」`, {
+      actions.toast(format('已删除标签「{0}」', label(tag.k)), {
         undo: async () => {
           await post(ITEM_TAG_URL, { operation: 'add', tag: tag.k });
           apply((now) => withTag(now, tag));
@@ -894,12 +895,12 @@ function useDetailWrite(item: DetailItem, actions: ItemDetailActions, label: (ta
         if (!result.ok) return;
         const canonical = result.tag || tag;
         if (hasTag(current(), canonical)) {
-          actions.toast(`标签「${label(canonical)}」已存在`);
+          actions.toast(format('标签「{0}」已存在', label(canonical)));
           return;
         }
         apply((now) => withTag(now, { k: canonical, cat: 'general' }));
         rememberTag(canonical);
-        actions.toast(`已添加标签「${label(canonical)}」`, {
+        actions.toast(format('已添加标签「{0}」', label(canonical)), {
           undo: async () => {
             await post(ITEM_TAG_URL, { operation: 'remove', tag: canonical });
             apply((now) => withoutTag(now, canonical));
