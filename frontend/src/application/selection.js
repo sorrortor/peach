@@ -9,6 +9,7 @@ import { batchDockApi, loadBatchDock } from '../react/application-residents';
 import { censorOn, preferencesState } from './preferences.js';
 import { configureHoverPreview, releaseHoverPreviews } from './../card-art/hover';
 import { $, api } from '../core';
+import { translate, format } from '../i18n';
 import { loadingState } from './loading.js';
 import { applicationEffects } from './effects';
 import { confirmModal, formModal, setActionBusy } from '../ui-kit';
@@ -56,14 +57,14 @@ export async function runCatalogBatch(operation,button){
   const labels={like:'喜欢',seen:'标为看过',later:'加入稍后看',dispose:'移入回收站',restore:'还原',delete:'彻底删除'};
   const titles={like:'喜欢所选项目',seen:'标记为已看',later:'加入稍后看',dispose:'移入回收站',restore:'还原所选项目',delete:'永久删除所选项目'};
   const ids=[...selected];if(!ids.length)return;
-  return confirmModal({title:titles[operation],body:`将处理选中的 ${ids.length} 项。${operation==='delete'?'文件和馆藏记录会永久删除，无法恢复。':operation==='dispose'?'馆藏记录可在回收站还原。':''}`,confirmLabel:titles[operation],danger:operation==='delete',onConfirm:async()=>{
+  return confirmModal({title:titles[operation],body:format('将处理选中的 {0} 项。{1}',ids.length,translate(operation==='delete'?'文件和馆藏记录会永久删除，无法恢复。':operation==='dispose'?'馆藏记录可在回收站还原。':'')),confirmLabel:titles[operation],danger:operation==='delete',onConfirm:async()=>{
   setActionBusy(button);
   try{const r=await api('/api/batch',{method:'POST',body:JSON.stringify({ids,operation})});
-    if(r.blocked&&r.blocked.length)throw new Error(`已永久删除 ${r.purged} 项；${r.blocked.length} 项未能删除，仍在回收站：\n`
-      +r.blocked.slice(0,5).map(x=>`${x.path}（${x.reason}）`).join('\n'));
+    if(r.blocked&&r.blocked.length)throw new Error(format('已永久删除 {0} 项；{1} 项未能删除，仍在回收站：\n',r.purged,r.blocked.length)
+      +r.blocked.slice(0,5).map(x=>`${x.path}（${translate(x.reason)}）`).join('\n'));
     setSelectMode(false,true);await reloadAfterWrite();
     const inverse=operation==='dispose'?'restore':operation==='restore'?'dispose':null;
-    receiptsState.actionReceipt(`已${labels[operation]} ${ids.length} 项`,{undo:inverse?async()=>{
+    receiptsState.actionReceipt(format('已{0} {1} 项',translate(labels[operation]),ids.length),{undo:inverse?async()=>{
       if(inverse==='dispose'&&r.restored_reasons){
         for(const reason of [null,'manual','junk','duplicate','missing']){
           const group=ids.filter(id=>r.restored_reasons[id]===reason);

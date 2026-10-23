@@ -1,5 +1,6 @@
 import { initialCatalogFilters, resetCatalogFilters, homeCatalogState, homePath as pathForCatalog, onlineDefaultLoc as defaultLocations, resolveSort } from '../react/catalog-grid/catalog-state';
 import { CatalogController } from '../react/catalog-grid/catalog-controller';
+import { translate, format } from '../i18n';
 /* catalog 域控制器：本域状态与动作，启动由 Application 的生命周期统一安装。 */
 import { censorOn, preferencesState, refreshAll, replaceCatalogAddress, sidebarFacets, wireDrag } from './preferences.js';
 import { nextSortState } from './../sort-preferences';
@@ -351,8 +352,8 @@ export function emptyTrash(){
       const r=await api('/api/trash/empty',{method:'POST'});
       /* 删不掉的文件（占用中、网盘离线）会连同数据库行一起留在回收站，必须说出来，
          否则用户看到条目还在会以为清空又没生效。 */
-      if(r.blocked&&r.blocked.length)throw new Error(`已永久删除 ${r.purged} 项；${r.blocked.length} 项未能删除，仍在回收站：\n`
-        +r.blocked.slice(0,5).map(x=>`${x.path}（${x.reason}）`).join('\n'));
+      if(r.blocked&&r.blocked.length)throw new Error(format('已永久删除 {0} 项；{1} 项未能删除，仍在回收站：\n',r.purged,r.blocked.length)
+        +r.blocked.slice(0,5).map(x=>`${x.path}（${translate(x.reason)}）`).join('\n'));
       receiptsState.actionReceipt(`已永久删除 ${r.purged} 项`);
     }finally{await loadCatalog()}
   }});

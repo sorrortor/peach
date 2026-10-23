@@ -1,3 +1,4 @@
+import { translate, format } from '../../i18n';
 /* 人工复核页的数据契约、分组分页纯函数与写操作。三条端点在 `frontend/src` 里都只在这里
  * 声明一次（`tests/test_frontend_build.py` 盯着）。
  *
@@ -153,12 +154,12 @@ export interface ReviewGroup { key: string; title: string; rows: ReviewRow[] }
 /** 这一批队列能按什么分组。按来源、按字段两档要队列里真有那一项才出现。 */
 export function reviewGroupingOptions(rows: ReviewRow[], metadata: boolean): [ReviewGrouping, string][] {
   const options: [ReviewGrouping, string][] = [
-    ['candidates', metadata ? '按来源数量' : '全部待复核'],
+    ['candidates', metadata ? translate("按来源数量") : translate("全部待复核")],
   ];
   if (rows.some((row) => row.source || row.candidates?.some((candidate) => candidate.source))) {
-    options.push(['source', '按来源']);
+    options.push(['source', translate("按来源")]);
   }
-  if (rows.some((row) => row.field)) options.push(['field', '按字段']);
+  if (rows.some((row) => row.field)) options.push(['field', translate("按字段")]);
   return options;
 }
 
@@ -170,15 +171,15 @@ export function groupReviewRows(rows: ReviewRow[], by: ReviewGrouping): ReviewGr
     let title: string;
     if (by === 'field') {
       key = row.field || '__unspecified_field';
-      title = row.field_label || row.field || '未标注字段';
+      title = translate(row.field_label || row.field || '未标注字段');
     } else if (by === 'source') {
       const sources = [...new Set((row.candidates?.map((candidate) => candidate.source || '')
         || [row.source || '']).filter(Boolean))].sort();
       key = JSON.stringify(sources);
-      title = sources.join(' / ') || '未标注来源';
+      title = sources.join(' / ') || translate("未标注来源");
     } else {
       key = row.candidates ? (row.candidates.length === 1 ? 'single' : 'multiple') : 'pending';
-      title = key === 'single' ? '单一来源' : key === 'multiple' ? '需选择来源' : '待复核';
+      title = key === 'single' ? translate("单一来源") : key === 'multiple' ? translate("需选择来源") : translate("待复核");
     }
     if (!groups.has(key)) groups.set(key, { key, title, rows: [] });
     groups.get(key)!.rows.push(row);
@@ -240,7 +241,7 @@ export function rowSubject(category: ReviewCategory, row: ReviewRow): string {
 }
 
 export const rowFieldName = (category: ReviewCategory, row: ReviewRow): string =>
-  (category === 'metadata_fields' ? String(row.field_label || row.field || '').trim() : '');
+  (category === 'metadata_fields' ? translate(String(row.field_label || row.field || '').trim()) : '');
 
 export function rowTitle(category: ReviewCategory, row: ReviewRow): string {
   const subject = rowSubject(category, row);
@@ -296,7 +297,7 @@ export function decisionPayload(
 }
 
 export const decisionReceipt = (status: DecisionStatus): string =>
-  (status === 'approved' ? '已通过资料' : status === 'rejected' ? '已拒绝资料' : '已跳过资料');
+  (status === 'approved' ? translate("已通过资料") : status === 'rejected' ? translate("已拒绝资料") : translate("已跳过资料"));
 
 /* ── 取数与写操作 ── */
 
@@ -371,7 +372,7 @@ export const reloadReview = (): Promise<void> =>
 export function mirrorText(
   mirror: ReviewMirror | null | undefined, readOnlyMessage: string,
 ): string {
-  if (mirror?.state === 'live') return '正在显示写入端的实时复核队列';
-  if (mirror?.state === 'cached') return `写入端暂时不可达，显示 ${localTime(mirror.fetched_at)} 的缓存`;
+  if (mirror?.state === 'live') return translate("正在显示写入端的实时复核队列");
+  if (mirror?.state === 'cached') return format("写入端暂时不可达，显示 {0} 的缓存", (localTime(mirror.fetched_at)));
   return mirror?.error || readOnlyMessage;
 }

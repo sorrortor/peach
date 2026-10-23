@@ -1,4 +1,5 @@
 import { useSyncExternalStore, type ReactNode } from 'react';
+import { translate } from '../../i18n';
 import { AnimatePresence, motion, useIsPresent } from 'motion/react';
 import { useFocusVisible } from 'react-aria';
 
@@ -24,14 +25,14 @@ function DockSurface({ children, count, label }: Omit<SelectionDockProps, 'visib
   const instant = reduce || isFocusVisible;
   const hidden = { opacity: 0, transform: 'translate(-50%, 8px)' };
   return (
-    <motion.div role="group" aria-label={label} data-selection-dock data-glass-pane=""
+    <motion.div role="group" aria-label={translate(label)} data-selection-dock data-glass-pane=""
       inert={!present} aria-hidden={!present || undefined}
       initial={instant ? false : hidden}
       animate={{ opacity: 1, transform: 'translate(-50%, 0px)' }}
       exit={{ ...hidden, transition: { duration: instant ? 0 : 0.12 } }}
       transition={{ duration: instant ? 0 : 0.16, ease: [0.23, 1, 0.32, 1] }}>
       <span role="status" className="px-2 text-body-2-regular whitespace-nowrap text-text-primary">
-        {count}
+        {translate(count)}
       </span>
       {children}
     </motion.div>

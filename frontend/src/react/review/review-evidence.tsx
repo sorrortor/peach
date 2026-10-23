@@ -3,6 +3,7 @@
  * 看这几帧、然后读这一句，是同一件事的两半，所以它们合成卡片中段那一个框。候选表单和
  * 身份证据不进框：它们每一项自己就是一个框，再套一层就是框中框。 */
 import { useEffect, useState } from 'react';
+import { translate } from '../../i18n';
 import { RiExternalLinkLine, RiPlayLine } from '@remixicon/react';
 import { VisuallyHidden } from 'react-aria-components';
 import { spinnerHtml } from '@peach/legacy/ui';
@@ -121,7 +122,7 @@ export function IdentityEvidence(
   const works = Math.max(0, Number(row.video_count || row.videos || 0));
   return (
     <section className="flex flex-col gap-3">
-      <h5 className="text-body-medium text-text-primary">{`待确认人物：${row.babepedia_name || '未标注'}`}</h5>
+      <h5 className="text-body-medium text-text-primary">{`待确认人物：${row.babepedia_name || translate('未标注')}`}</h5>
       <div className="flex flex-wrap items-center gap-2">
         {profile
           ? <ButtonLink variant="secondary" size="small" trailingIcon={RiExternalLinkLine}
@@ -205,7 +206,7 @@ export function AssetPicker(
                 <CheckboxGlyph size="sm" state={{ isSelected: on, isIndeterminate: false,
                   isFocusVisible: false, isDisabled: locked, isHovered: false }} />
               </span>
-              <VisuallyHidden>{`${on ? '已选' : '未选'} ${asset.name || asset.id}`}</VisuallyHidden>
+              <VisuallyHidden>{`${translate(on ? '已选' : '未选')} ${asset.name || asset.id}`}</VisuallyHidden>
             </button>
           );
         })}

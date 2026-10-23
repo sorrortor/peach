@@ -1,5 +1,6 @@
 /* 搜索只选择候选；真正提交由云下载表单确认。 */
 import { useEffect, useRef, useState } from 'react';
+import { translate } from '../../i18n';
 import { RiSearchLine } from '@remixicon/react';
 import { spinnerHtml } from '@peach/legacy/ui';
 import { Button } from '@/components/base/buttons/button';
@@ -71,7 +72,7 @@ export function ResourceSearch({ initialCode, reason, choose, onSearch, onWork }
   };
   return (
     <section aria-label="查找资源" aria-busy={Boolean(action.busy)} className="flex min-w-0 flex-col gap-4">
-      {reason ? <Help>版本目标：{reason}。可在下方调整搜索优先项；完整度与水印需要逐条复核。</Help> : null}
+      {reason ? <Help>版本目标：{translate(reason)}。可在下方调整搜索优先项；完整度与水印需要逐条复核。</Help> : null}
       <Input label="按番号查找资源" value={code} maxLength={80} placeholder="输入番号，按回车搜索" enterKeyHint="search"
         leadingIcon={action.busy ? SearchSpinner : RiSearchLine}
         isReadOnly={Boolean(action.busy)} aria-busy={Boolean(action.busy)} onChange={setCode} onKeyDown={(event) => {

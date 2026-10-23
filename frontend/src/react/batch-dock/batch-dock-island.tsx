@@ -11,6 +11,7 @@
  * `batch-dock.css`；BoardUI `Button` 的 medium 档是 20px 字形、8px 内边距，对不上。危险键挂
  * `data-danger`，红色读 `../styles.css` 里全站那一份危险键规则。 */
 import { useSyncExternalStore } from 'react';
+import { translate } from '../../i18n';
 import { flushSync } from 'react-dom';
 
 import { SelectionDock } from '../components/selection-dock';
@@ -56,7 +57,7 @@ function BatchDock({ host: at, props: view }: { host: BatchDockHost; props: Batc
             data-batch-action={action.operation} data-danger={action.danger ? '' : undefined}
             onClick={(event) => at.run(action.group, action.operation, event.currentTarget)}>
             <svg aria-hidden viewBox="0 0 24 24"><use href={`#i-${action.glyph}`} /></svg>
-            {action.label}
+            {translate(action.label)}
           </button>
         ))}
       </SelectionDock>

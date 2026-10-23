@@ -10,6 +10,7 @@
  *   哪二十行随每一次判定而变，写进地址栏分享出去只会指向另一批东西。换分类、换分组、
  *   换筛选都回第 1 页，也正说明页码依附于此刻这一屏的看法，不是这一页的身份。 */
 import { useEffect, useRef, useState } from 'react';
+import { translate, format } from '../../i18n';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { RiCheckboxCircleLine } from '@remixicon/react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-aria-components';
@@ -162,7 +163,7 @@ export function ReviewPage(props: ReviewProps) {
       const failures: [string, string][] = [];
       for (const [at, row] of rows.entries()) {
         if (!alive.current) break;
-        setFeedback(`正在处理 ${at} / ${rows.length}`);
+        setFeedback(format('正在处理 {0} / {1}', at, rows.length));
         try {
           const result = await submitDecision(decisionPayload(category, currentReviewRow(category, row), status, choiceOf(row)));
           if (!result.ok) throw new Error(result.error || '服务端未采用该项');
@@ -178,8 +179,8 @@ export function ReviewPage(props: ReviewProps) {
       forget(done);
       failures.forEach(([key, message]) => fail(key, message));
       setFeedback('');
-      toast(`已${status === 'approved' ? '通过' : '拒绝'} ${done.length} 项`
-        + (failures.length ? `，${failures.length} 项未完成` : ''));
+      toast(format('已{0} {1} 项', translate(status === 'approved' ? '通过' : '拒绝'), done.length)
+        + (failures.length ? format('，{0} 项未完成', failures.length) : ''));
     },
     onError: (cause) => { setFeedback(errorMessage(cause)) },
   });
@@ -254,7 +255,7 @@ export function ReviewPage(props: ReviewProps) {
               const count = Number(data.counts[key] || 0);
               return (
                 <Tab key={key} id={key} className={TAB_CLASS}>
-                  {REVIEW_LABELS[key]}
+                  {translate(REVIEW_LABELS[key])}
                   {/* 计数走独立徽标，为 0 时整枚去掉，不留一个「0」占位。 */}
                   {count
                     ? <span className="tabular-nums text-caption-1-medium text-text-secondary">

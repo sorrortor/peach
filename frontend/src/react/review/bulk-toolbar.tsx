@@ -4,6 +4,7 @@
  * 分组方式和筛选项按**整条队列**算，卡片只画当前这一页：筛选里的计数说的是队列，不是
  * 这一屏。筛选条高度保持不变，勾选项目时不会把下滑后吸顶的内容往下推。 */
 import { RiCheckDoubleLine } from '@remixicon/react';
+import { translate } from '../../i18n';
 
 import { Button } from '@/components/base/buttons/button';
 import { Select, SelectItem } from '@/components/base/select/select';
@@ -82,7 +83,7 @@ export function BulkToolbar(props: BulkToolbarProps) {
             <Select aria-label="统一选择来源" size="sm" selectedKey=""
               isDisabled={busy || !sources.length}
               onSelectionChange={(key) => { if (key !== null && key !== '') onUnifySource(String(key)) }}>
-              <SelectItem id="">{sourceLabel}</SelectItem>
+              <SelectItem id="">{translate(sourceLabel)}</SelectItem>
               {sources.map((source) => <SelectItem key={source} id={source}>{source}</SelectItem>)}
             </Select>
           ) : null}
@@ -93,7 +94,7 @@ export function BulkToolbar(props: BulkToolbarProps) {
           <Button variant="ghost" size="small" disabled={busy}
             onClick={() => onSelected(new Set())}>取消选择</Button>
           {feedback
-            ? <p role="status" className="w-full text-body-2-regular text-text-secondary">{feedback}</p>
+            ? <p role="status" className="w-full text-body-2-regular text-text-secondary">{translate(feedback)}</p>
             : null}
         </SelectionDock>
     </>

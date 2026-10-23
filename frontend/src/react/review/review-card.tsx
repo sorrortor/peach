@@ -3,6 +3,7 @@
  * 主体动作在最右——一行里从左到右是「拒绝、跳过、通过」，读到最后一枚才是这张卡真正要人
  * 做的判断。Geist 的弹层与 Fieldset 操作条都是这个方向。 */
 import { useRef } from 'react';
+import { translate } from '../../i18n';
 
 import { avatarInner } from '@peach/card-art';
 
@@ -82,7 +83,7 @@ export function ReviewCard(props: ReviewCardProps) {
   const title = rowTitle(category, row);
   const fieldName = rowFieldName(category, row);
   const subject = rowSubject(category, row);
-  const evidence = rowEvidence(row);
+  const evidence = translate(rowEvidence(row));
   const tags = rowTags(row);
   const approvable = canApprove(category, row);
   const comparison = row.comparison_assets || [];
@@ -225,7 +226,7 @@ export function ReviewCard(props: ReviewCardProps) {
           {approvable ? '通过' : '不可通过'}
         </Button>
         {problem
-          ? <p role="status" className="w-full text-body-2-regular text-text-error-primary">{problem}</p>
+          ? <p role="status" className="w-full text-body-2-regular text-text-error-primary">{translate(problem)}</p>
           : null}
       </footer>
     </section>
