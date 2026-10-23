@@ -7,6 +7,8 @@
  * 当前在哪个管理区、菜单里列哪几项、回收站读数由壳算好推进来：路由表、`/healthz` 的
  * `configurable` 与目录计数都还在壳里。 */
 
+import { translate, format } from './i18n';
+
 /** `[键, 名称, 字形]`，同壳的 `MANAGE_SECTIONS`。 */
 export type ManageEntry = readonly [key: string, label: string, glyph: string];
 
@@ -64,7 +66,7 @@ export interface ManageHeaderView {
 }
 
 export const trashLedeText = ({ total, shown }: TrashCount) =>
-  `${total.toLocaleString()} 个符合 · 显示 ${shown.toLocaleString()}`;
+  format('{0} 个符合 · 显示 {1}', total.toLocaleString(), shown.toLocaleString());
 
 /** 页头这一刻画什么；不在管理区时是 null。 */
 export function manageHeaderView(props: ManageHeaderProps): ManageHeaderView | null {
@@ -72,9 +74,9 @@ export function manageHeaderView(props: ManageHeaderProps): ManageHeaderView | n
   if (!entry) return null;
   const crumb = MANAGE_CRUMB_PAGES[props.path] ?? '';
   return {
-    title: (props.section === 'cleanup' && crumb) || entry[1],
+    title: translate((props.section === 'cleanup' && crumb) || entry[1]),
     pressed: pressedManageKey(props),
-    crumb,
+    crumb: translate(crumb),
     compact: COMPACT_TITLE_PATHS.has(props.path) || props.section === 'configuration',
     lede: props.section !== 'trash' ? { kind: 'none' }
       : props.trash ? { kind: 'count', text: trashLedeText(props.trash), total: props.trash.total }
@@ -98,19 +100,19 @@ export function manageHeaderSkeletonHtml(props: ManageHeaderProps): string {
   const menu = props.menu.map(([key, label, mark]) => {
     const on = key === view.pressed;
     return `<button type="button" data-manage="${escape(key)}" aria-pressed="${on}"${on ? ' aria-current="page"' : ''}>`
-      + `${glyph(mark)}<span>${escape(label)}</span></button>`;
+      + `${glyph(mark)}<span>${escape(translate(label))}</span></button>`;
   }).join('');
   const crumb = view.crumb
-    ? `<nav data-manage-crumb="" aria-label="Breadcrumb"><ol><li><a href="/data-cleanup">数据管理</a>${glyph('chevron-right')}</li>`
+    ? `<nav data-manage-crumb="" aria-label="Breadcrumb"><ol><li><a href="/data-cleanup">${escape(translate('数据管理'))}</a>${glyph('chevron-right')}</li>`
       + `<li aria-current="true"><span>${escape(view.crumb)}</span></li></ol></nav>`
     : '';
   const lede = view.lede.kind === 'none' ? ''
     : `<p class="mono" data-manage-lede="">${view.lede.kind === 'skeleton' ? TRASH_LEDE_SKELETON_HTML
-      : `<span data-lede-text="">${escape(view.lede.text)}</span>${view.lede.total ? EMPTY_TRASH_HTML : ''}`}</p>`;
-  return `<nav data-manage-bar="" aria-label="管理"><div data-manage-menu="">${menu}</div></nav>`
+      : `<span data-lede-text="">${escape(view.lede.text)}</span>${view.lede.total ? emptyTrashHtml() : ''}`}</p>`;
+  return `<nav data-manage-bar="" aria-label="${escape(translate('管理'))}"><div data-manage-menu="">${menu}</div></nav>`
     + crumb
     + `<h2 data-manage-title=""${view.compact ? ' data-compact=""' : ''}>${escape(view.title)}</h2>`
     + lede;
 }
 
-const EMPTY_TRASH_HTML = '<button type="button" data-empty-trash="" title="永久删除回收站内容">清空回收站</button>';
+const emptyTrashHtml = () => `<button type="button" data-empty-trash="" title="${escape(translate('永久删除回收站内容'))}">${escape(translate('清空回收站'))}</button>`;

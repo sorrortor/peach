@@ -104,7 +104,29 @@ const SUMMARY_LABELS: Record<string, string> = {
   followups: '派出后继', followups_duplicate: '已在排队', followups_truncated: '超上限未派',
   followups_depth_exceeded: '超深度未派', outcome: '结果', name: '档案名称',
   matched: '图库命中', size: '尺寸', source: '来源', cover_network: '封面连不上图片主机',
+  library: '媒体库', stage: '阶段', error: '错误', requested_stage: '请求阶段', speed_mode: '处理速度',
+  eta_seconds_min: '最短预计秒数', eta_seconds_max: '最长预计秒数', eta_kind: '估计方式',
+  eta_scope: '估计范围', eta_basis: '估计依据', estimate_file_count: '预计文件数', estimate_bytes: '预计字节数',
+  scanned_bytes: '已扫描字节数', probed: '已探测', found: '发现', repaired: '已修复', failed: '失败',
+  missing_tool: '缺少工具', skipped: '已跳过', previews: '预览', paused_count: '暂停项',
+  auto_applied: '自动采用', auto_rejected: '自动拒绝', entity_watermark: '实体进度标记',
+  performer_aliases: '演员别名', performer_avatars: '演员头像',
+  performer_profile_conflicts: '演员资料冲突', performer_profile_failed: '演员资料失败',
 };
+
+const SUMMARY_VALUES: Record<string, Record<string, string>> = {
+  requested_stage: { all: '扫描与采集', scan: '扫描文件', collect: '补全资料', metadata: '同步已入库影片', previews: '生成视频预览' },
+  speed_mode: { low: '低占用', standard: '标准', high: '全速' },
+  eta_kind: { estimating: '估算中', historical: '历史估计', measured: '实测估计' },
+};
+const SUMMARY_TEXT_VALUES = new Set(['operation', 'outcome', 'stage', 'error', 'eta_scope', 'eta_basis']);
+
+/** 只翻译结果字典中的产品枚举，库名、档案名与未知数据值保留原文。 */
+function summaryValue(key: string, value: string): string {
+  if (SUMMARY_TEXT_VALUES.has(key)) return translate(value);
+  const label = SUMMARY_VALUES[key]?.[value];
+  return language() !== 'zh-CN' && label ? translate(label) : value;
+}
 
 /** 把一批任务按 `parent_run_id` 归到各自的父任务下。没有父的那些留在外面。 */
 export function groupFollowups(rows: TaskRunPayload[]): Map<number, TaskRunPayload[]> {
@@ -227,6 +249,6 @@ export function summaryText(summary: Record<string, unknown>): string {
       && (typeof value === 'number' || typeof value === 'string')
       && String(value) !== '')
     .map(([key, value]) => `${translate(SUMMARY_LABELS[key] || key)} ${typeof value === 'number' ? value.toLocaleString()
-      : typeof value === 'string' && ['operation', 'outcome'].includes(key) ? translate(value) : value}`)
+      : typeof value === 'string' ? summaryValue(key, value) : value}`)
     .join(' · ');
 }
