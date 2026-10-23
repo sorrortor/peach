@@ -6,6 +6,8 @@
  * 原因由 `role="alert"` 播报，焦点落在框里。改了框里的内容就撤掉这条原因：BoardUI 的 Input 走原生
  * 校验，标着错误时表单交不出去。 */
 import { useState } from 'react';
+import { translate } from '../../../i18n';
+import { LanguagePicker } from '../../components/language-picker';
 
 import { Button } from '@/components/base/buttons/button';
 import { Checkbox } from '@/components/base/checkbox/checkbox';
@@ -25,11 +27,12 @@ export function LoginPage({ data }: { data: PageData }) {
         <Input id="login-token" label="访问密码" name="token" type="password" maxLength={256}
           autoComplete="current-password" autoFocus isRequired
           isInvalid={reason ? true : undefined} onChange={() => setReason('')}
-          hint={reason ? <span role="alert">{reason}</span> : undefined} />
+          hint={reason ? <span role="alert">{translate(reason)}</span> : undefined} />
         <input type="hidden" name="next" value={data.next || '/'} />
         <Checkbox name="days" value="30" defaultSelected>保持登录</Checkbox>
         <Button type="submit" className="w-full">登录</Button>
       </form>
+      <LanguagePicker />
     </AuthCard>
   );
 }

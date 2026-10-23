@@ -9,6 +9,7 @@
  * 那一格用 `dangerouslySetInnerHTML`，React 不拥有里面的节点。 */
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Radio, RadioGroup } from 'react-aria-components';
+import { translate } from '../../i18n';
 import { icon } from '@peach/legacy/core';
 
 import { FilterGlassRows, FilterIconButton, FilterPill } from '../components/filter-glass';
@@ -93,7 +94,7 @@ export function EntityFilterPage(props: EntityFilterProps) {
                     if (stateNow === option.k) return;
                     if (online) actions.onlineStatus(option.k); else actions.setState(option.k);
                   }}>
-                  {option.label}
+                  {translate(option.label)}
                 </button>
               ))}
               {!online || online.providers.length || online.tags.length ? <Sep /> : null}
@@ -293,7 +294,7 @@ export function SortKeys({ sorts, onSort }: { sorts: readonly EntitySortKey[]; o
         return (
           <button key={sort.key} type="button" data-entity-sort={sort.key} data-entity-press=""
             aria-pressed={sort.pressed} aria-label={sort.ariaLabel || undefined} onClick={() => onSort(sort.key)}>
-            {sort.label}{sort.pressed && sort.dir ? <Arrow className="size-3.5" /> : null}
+            {translate(sort.label)}{sort.pressed && sort.dir ? <Arrow className="size-3.5" /> : null}
           </button>
         );
       })}

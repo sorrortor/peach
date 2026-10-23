@@ -12,6 +12,7 @@ import { Checkbox } from '@/components/base/checkbox/checkbox';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@/components/base/table/table';
 import { ChevronSortDown } from '@/components/foundations/icons/chevrons';
 import { apiGet } from '../../api';
+import { translate } from '../../i18n';
 import { ArtSlot } from '../components/art-slot';
 import { DataTableFrame } from '../components/data-table-frame';
 import { DataTableFooter, DataTableSort } from '../components/table-controls';
@@ -90,13 +91,13 @@ export function CatalogListPage(props: CatalogGridProps) {
       cell: ({ row }) => <Checkbox slot={null} aria-label={`选择 ${props.helpers.displayName(row.original, row.original.name || '')}`}
         isDisabled={result.isPlaceholderData}
         isSelected={row.getIsSelected()} onChange={on => row.toggleSelected(on)} /> }),
-      helper.accessor(item => item.name || '', { id: 'name', header: '名称', enableSorting: true,
+      helper.accessor(item => item.name || '', { id: 'name', header: translate('名称'), enableSorting: true,
         cell: ({ row }) => <ListIdentity item={row.original} props={props} disabled={result.isPlaceholderData} /> }),
-      helper.accessor(item => item.duration, { id: 'dur', header: '时长', enableSorting: true,
+      helper.accessor(item => item.duration, { id: 'dur', header: translate('时长'), enableSorting: true,
         cell: ({ row }) => fmtDur(row.original.duration) || '—' }),
-      helper.accessor(item => item.size, { id: 'size', header: '体积', enableSorting: true,
+      helper.accessor(item => item.size, { id: 'size', header: translate('体积'), enableSorting: true,
         cell: ({ row }) => row.original.size == null ? '—' : fmtSize(row.original.size) }),
-      helper.accessor(item => item.play_count, { id: 'plays', header: '观看次数', enableSorting: true,
+      helper.accessor(item => item.play_count, { id: 'plays', header: translate('观看次数'), enableSorting: true,
         cell: ({ row }) => Number(row.original.play_count || 0).toLocaleString() }),
     ]);
   }, [props.helpers, props.actions, props.layout, props.selectMode, result.isPlaceholderData]);
@@ -167,7 +168,7 @@ function ListIdentity({ item, props, disabled }: { item: MediaItem; props: Catal
       <span data-list-picture="">{artwork.html
         ? <ArtSlot artwork={artwork} relayout={root => relayoutCovers(root, 'small')} /> : <span>无预览</span>}</span>
       <span data-list-text=""><span data-list-name="" title={name}>{name}</span>
-        <span data-list-byline="">{who || '未归属'}<span data-list-mobile-metrics="">{fmtDur(item.duration)} · {fmtSize(item.size)}</span></span>
+        <span data-list-byline="">{who || translate('未归属')}<span data-list-mobile-metrics="">{fmtDur(item.duration)} · {fmtSize(item.size)}</span></span>
       </span>
     </button>
   </div>;

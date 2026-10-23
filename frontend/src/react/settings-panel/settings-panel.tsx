@@ -17,6 +17,8 @@ import {
   type KeyboardEvent, type ReactNode,
 } from 'react';
 import { flushSync } from 'react-dom';
+import { translate } from '../../i18n';
+import { LanguagePicker } from '../components/language-picker';
 import { ButtonLink } from '@/components/base/buttons/button';
 import {
   attachOverlayScrollbar, closeAnchoredMenu, iconSwapHtml, moveGlidePane, revealTexts,
@@ -55,7 +57,7 @@ const FEED_COMPILATIONS = [
 ] as const;
 type CompilationKey = typeof FEED_COMPILATIONS[number][1];
 
-const FOCUSABLE = 'button:not([disabled]),input:not([disabled]),textarea:not([disabled]),a[href]';
+const FOCUSABLE = 'button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href]';
 
 interface View { open: boolean; closing: boolean; epoch: number; tab: number; configurable: boolean | null }
 
@@ -231,7 +233,7 @@ function SettingsNav({ tab, epoch, configurable, openConfiguration, onSelect }: 
           ref={(node) => { buttons.current[index] = node }}
           onClick={() => onSelect(index)} onKeyDown={(event) => keys(event, index)}
           onPointerEnter={(event) => { if (event.pointerType !== 'touch') place(event.currentTarget, true) }}>
-          {icon === 'jav' ? <Icon name={icon} /> : <RemixIcon name={icon} />}{title}
+          {icon === 'jav' ? <Icon name={icon} /> : <RemixIcon name={icon} />}{translate(title)}
         </button>
       ))}
       <div data-settings-service="" role="presentation">
@@ -247,7 +249,7 @@ function SettingsNav({ tab, epoch, configurable, openConfiguration, onSelect }: 
 function Group({ index, tab, children }: { index: number; tab: number; children: ReactNode }) {
   return (
     <section data-setting-group="" id={groupId(index)} role="tabpanel" aria-labelledby={tabId(index)} hidden={index !== tab}>
-      <h3>{SECTIONS[index][0]}</h3>
+      <h3>{translate(SECTIONS[index][0])}</h3>
       {children}
     </section>
   );
@@ -331,13 +333,14 @@ function SettingsPanel({ host: current, view: shown }: { host: SettingsPanelHost
       onClick={(event) => { if (event.target === event.currentTarget) close() }}>
       <div data-settings-card="" ref={card}>
         <div data-settings-head="" ref={head}>
-          <h2 id="settingsTitle">{SECTIONS[shown.tab][0]}</h2>
+          <h2 id="settingsTitle">{translate(SECTIONS[shown.tab][0])}</h2>
             <SettingsDialogClose id="settingsClose" label="关闭设置" onPress={() => close()} />
         </div>
         <SettingsNav tab={shown.tab} epoch={epoch} configurable={shown.configurable} onSelect={select}
           openConfiguration={() => { close(false); current.openConfiguration() }} />
         <div data-settings-scroll="" ref={scroll}>
           <Group index={0} tab={shown.tab}>
+            <Row title="语言"><LanguagePicker hideLabel /></Row>
             <Row title="主题">
               <IconSwitch id="themeSetting" name="theme" legend="主题" options={current.themeOptions} value={settings.theme}
                 attr="data-theme-choice" variant="themeswitch" epoch={epoch}

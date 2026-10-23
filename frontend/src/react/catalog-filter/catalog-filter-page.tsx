@@ -9,6 +9,7 @@
  * 详情浮窗打开期间壳不推任何东西，关掉回来还是同一批节点（`buildBars` 那段注释讲了为什么）。 */
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { createPortal } from 'react-dom';
+import { translate } from '../../i18n';
 import { fitSkeleton, popBadges, popCount } from '@peach/legacy/ui';
 
 import { FilterGlassRows, FilterPill } from '../components/filter-glass';
@@ -95,7 +96,7 @@ function Glass(props: CatalogFilterProps) {
               <a key={view.k} href={view.href} data-catalog-view={view.k} data-entity-press=""
                 aria-pressed={props.state === view.k} onPointerEnter={glide.hover}
                 onClick={(event) => { event.preventDefault(); actions.setView(view.k) }}>
-                {view.label}
+                {translate(view.label)}
               </a>
             ))}
             <span data-entity-sep="" aria-hidden="true" />

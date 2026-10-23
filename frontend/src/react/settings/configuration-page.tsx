@@ -21,6 +21,7 @@ import { MediaProcessingSettings } from './media-processing-settings';
 import { NetworkSettings } from './network-settings';
 import { SourceSettings } from './source-settings';
 import { groupRoot } from './configuration-panel';
+import { translate } from '../../i18n';
 
 export function ConfigurationPage({ receipt, reopenTutorial, section = '', diagnostics }: ConfigurationProps & { diagnostics?: ReactElement }) {
   const config = useQuery({
@@ -120,13 +121,13 @@ function ConfigurationGroups(
           <button key={title} ref={(node) => { buttons.current[i] = node }} type="button" role="tab"
             id={`${prefix}-tab-${i}`} aria-controls={`${prefix}-panel-${i}-0`} aria-selected={i === at}
             tabIndex={i === at ? 0 : -1} onClick={() => choose(title)} onKeyDown={(event) => move(event, i)}>
-            {title}
+            {translate(title)}
           </button>
         ))}
       </div>
       {groups.map(({ title, body }, i) => (
         <Fragment key={title}>
-          <h2 className="ui-configgroup">{title}</h2>
+          <h2 className="ui-configgroup">{translate(title)}</h2>
           {body({ index: i, id: `${prefix}-panel-${i}-0`, labelledBy: `${prefix}-tab-${i}`, active: i === at })}
         </Fragment>
       ))}

@@ -1,5 +1,6 @@
 /* 「应用与维护」中的开机自启、桌面快捷方式与版本更新。 */
 import { useState, type FormEvent } from 'react';
+import { LanguagePicker } from '../components/language-picker';
 
 import { SettingsRow } from '@/components/application/settings/settings-rows';
 import { Button } from '@/components/base/buttons/button';
@@ -18,6 +19,7 @@ import { busyProps, useAction } from './use-action';
 export function GeneralSettings({ data, receipt, panel }: ConfigurationGroupProps) {
   return (
     <div {...groupRoot(panel)}>
+      <Section title="语言"><LanguagePicker hideLabel /></Section>
       {data.remote_reporting || data.library_sharing ? <Section title="数据上传">
         {data.remote_reporting ? <RemoteReportingSettings initial={data.remote_reporting} receipt={receipt} /> : null}
         {data.library_sharing ? <div className="border-t border-separator-border">
