@@ -11,6 +11,10 @@ const run = (id: number, patch: Record<string, unknown> = {}) => ({ id, task_key
   result_summary: {}, error: '', parent_run_id: null, root_run_id: null, followup_key: '', followup_depth: 0, ...patch });
 const tasks = { available: true, running: [run(1)], skipped: [run(2, { status: 'cancelled', error: '与第 1 轮（手动触发）冲突，本次跳过' })],
   finished: [run(3, { status: 'succeeded', finished_at: '2026-10-23T00:01:00Z', result_summary: { checked: 3, operation: '扫描文件', name: PRIVATE } }),
+    run(5, { status: 'failed', finished_at: '2026-10-23T00:02:00Z', result_summary: {
+      library: PRIVATE, stage: '处理结束', error: '20 项需要处理，可重试未完成的部分。', requested_stage: 'metadata',
+      speed_mode: 'standard', eta_kind: 'estimating', eta_scope: '整趟任务', eta_basis: '汇总当前阶段与所有待执行阶段的剩余耗时',
+      probed: 20, auto_applied: 0, performer_profile_conflicts: 0, performer_profile_failed: 0 }, error: '媒体文件不可访问' }),
     run(4, { task_label: '补全资料图片', task_key: 'entity-avatar', status: 'succeeded', parent_run_id: 3, root_run_id: 3,
       followup_key: 'entity-avatar:1', progress_label: `补全资料图片：${PRIVATE}`, result_summary: { written: 2 } })], finished_has_more: false };
 const metadata = { item_key: 'row:1', field: 'title', field_label: '标题', query: PRIVATE, current_value: PRIVATE,
@@ -32,7 +36,7 @@ const downloads = { available: true, providers: [], tasks: [{ id: 'test', title:
   source_uri: 'magnet:?xt=urn:btih:synthetic', cancellable: false, resubmittable: false, postprocess_retryable: true }] };
 
 async function gaps(page: Page) {
-  return page.locator('#stats,#grid,[data-batch-dock],dialog[open],[role="dialog"]').evaluateAll(roots => {
+  return page.locator('#stats,#grid,[data-manage-header],[data-batch-dock],dialog[open],[role="dialog"]').evaluateAll(roots => {
     const missing = new Set<string>();
     for (const root of roots) for (const node of [root, ...root.querySelectorAll('*')]) {
       if (!node.getClientRects().length || node.tagName === 'OPTION') continue;

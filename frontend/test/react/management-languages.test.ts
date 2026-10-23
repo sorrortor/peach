@@ -4,19 +4,25 @@ import { saveLanguage, translate } from '../../src/i18n';
 import { elapsedText, statusLabel, summaryText, taskMessage, taskProgressLabel, type TaskRunPayload } from '../../src/react/activity/tasks';
 import { decisionPayload, defaultChoice, groupReviewRows, rowTitle, type ReviewRow } from '../../src/react/review/review';
 import { duplicateVictims, type DuplicateGroup } from '../../src/react/duplicates/duplicates';
+import { manageHeaderView, trashLedeText } from '../../src/manage-header';
 
 afterEach(() => { saveLanguage('zh-CN'); localStorage.clear() });
 for (const locale of ['th', 'en'] as const) it(`${locale}: 任务状态、耗时与调度原因翻译，数据名称不变`, () => {
   saveLanguage(locale);
   for (const text of [elapsedText(75), elapsedText(73 * 3600), statusLabel('interrupted'),
     taskMessage('与第 12 轮（手动触发）冲突，本次跳过'),
-    summaryText({ checked: 3, operation: '扫描文件' }), translate('文件和馆藏记录会永久删除，无法恢复。')]) {
+    summaryText({ checked: 3, operation: '扫描文件', stage: '处理结束', error: '20 项需要处理，可重试未完成的部分。',
+      requested_stage: 'metadata', speed_mode: 'standard', eta_kind: 'estimating', eta_scope: '整趟任务',
+      eta_basis: '汇总当前阶段与所有待执行阶段的剩余耗时', probed: 20 }),
+    trashLedeText({ total: 1, shown: 1 }), translate('文件和馆藏记录会永久删除，无法恢复。')]) {
     expect(text).not.toMatch(/\p{Script=Han}/u);
   }
   expect(summaryText({ name: '保存', private: 'Private 中文 ไทย' })).toContain('保存');
   expect(taskProgressLabel({ task_label: '扫描与采集', progress_label: '扫描与采集：Private 中文 ไทย' } as TaskRunPayload))
     .toContain('Private 中文 ไทย');
   expect(statusLabel('unknown')).toBe('unknown');
+  expect(manageHeaderView({ section: 'cleanup', path: '/review', sections: [['cleanup', '数据管理', 'database']], menu: [], trash: null })?.crumb)
+    .not.toMatch(/\p{Script=Han}/u);
 });
 
 for (const locale of ['zh-CN', 'th', 'en'] as const) it(`${locale}: 显示字段名不改复核参数或重复文件保留结果`, () => {
