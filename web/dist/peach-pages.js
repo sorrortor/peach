@@ -360,7 +360,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	界面音效: ["Interface sounds", "เสียงหน้าจอ"],
 	侧栏光晕: ["Sidebar glow", "แสงแถบด้านข้าง"],
 	导航入口与顺序: ["Navigation and order", "รายการและลำดับเมนู"],
-	配色: ["Colors", "สี"],
+	配色: ["Palette", "ชุดสี"],
 	颜色: ["Color", "สี"],
 	强度: ["Intensity", "ความเข้ม"],
 	颗粒: ["Grain", "เกรน"],
@@ -1167,7 +1167,25 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 	重试未完成项: ["Retry unfinished items", "ลองรายการที่ยังไม่เสร็จอีกครั้ง"],
 	来源和凭证: ["Sources and credentials", "แหล่งข้อมูลและข้อมูลเข้าสู่ระบบ"],
 	复核资料: ["Review metadata", "ตรวจสอบข้อมูล"],
-	"当前：密集": ["Current: compact", "ปัจจุบัน: แบบกระชับ"]
+	"当前：密集": ["Current: compact", "ปัจจุบัน: แบบกระชับ"],
+	"Peach 首页": ["Peach home", "หน้าแรก Peach"],
+	明暗主题: ["Light and dark themes", "ธีมสว่างและมืด"],
+	关闭提示: ["Close notification", "ปิดการแจ้งเตือน"],
+	关闭任务提示: ["Close task notification", "ปิดการแจ้งเตือนงาน"],
+	通知: ["Notifications", "การแจ้งเตือน"],
+	光晕: ["Glow", "แสง"],
+	重置: ["Reset", "รีเซ็ต"],
+	强调色: ["Accent color", "สีเน้น"],
+	详细设置: ["Detailed settings", "ตั้งค่าเพิ่มเติม"],
+	光鸭云盘: ["Guangya Cloud", "Guangya Cloud"],
+	其他已挂载网盘: ["Other mounted cloud drive", "ไดรฟ์คลาวด์อื่นที่เมานต์แล้ว"],
+	未判定: ["Undetermined", "ยังไม่ระบุ"],
+	日本: ["Japan", "ญี่ปุ่น"],
+	韩国: ["Korea", "เกาหลี"],
+	国产: ["Chinese-language", "ภาษาจีน"],
+	欧美: ["Western", "ตะวันตก"],
+	横屏: ["Landscape", "แนวนอน"],
+	方形: ["Square", "สี่เหลี่ยมจัตุรัส"]
 }, u = [
 	"zh-CN",
 	"en",
@@ -22130,8 +22148,8 @@ function Ng({ index: e, value: t, onChange: n, options: r = Eg }) {
 		},
 		children: r.map(([e, t]) => /* @__PURE__ */ (0, z.jsxs)(wg, {
 			id: e,
-			textValue: t,
-			children: [/* @__PURE__ */ (0, z.jsx)(Im, { mark: Dg(e) }), t]
+			textValue: g(t),
+			children: [/* @__PURE__ */ (0, z.jsx)(Im, { mark: Dg(e) }), g(t)]
 		}, e))
 	});
 }

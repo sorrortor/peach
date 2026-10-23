@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 媒体目录的行：配置页「这台电脑」与首启页共用。
  *
  * 一行是一块描边卡：路径框、「选择文件夹」、多行时的移除键，下面一排放这一行的其余字段
@@ -180,7 +181,7 @@ export function SourceSelect({ index, value, onChange, options = MEDIA_SOURCES }
     <Select className="w-full @lg:w-60" aria-label={`媒体来源 ${index + 1}`} selectedKey={value}
       onSelectionChange={(key) => { if (key !== null) onChange(String(key)); }}>
       {options.map(([kind, name]) => (
-        <SelectItem key={kind} id={kind} textValue={name}><SourceMark mark={sourceMark(kind)} />{name}</SelectItem>
+        <SelectItem key={kind} id={kind} textValue={translate(name)}><SourceMark mark={sourceMark(kind)} />{translate(name)}</SelectItem>
       ))}
     </Select>
   );

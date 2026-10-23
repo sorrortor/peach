@@ -1,3 +1,4 @@
+import { translate } from '../i18n';
 /* 全站 Toast：Sonner 的栈，挂在 `#toasts`（body 直下，遗留层整页重画冲不掉）。
  *
  * 遗留壳的 `toast()` 与各 island 拿到的 `toast` prop 最后都落到 `showToast`。堆叠、悬停展开、
@@ -40,13 +41,13 @@ export const mountToaster: typeof Bundle.mountToaster = (host, icons) => {
       style={{ ...FRAME, '--width': 'min(560px, calc(100vw - 48px))' } as CSSProperties}
       offset={{ right: 24, bottom: 'calc(var(--toast-bottom, 24px) + var(--processing-toast-space, 0px))' }}
       mobileOffset={{ right: 16, left: 16, bottom: 'calc(var(--toast-bottom, 16px) + var(--processing-toast-space, 0px))' }}
-      toastOptions={{ closeButtonAriaLabel: '关闭提示' }} containerAriaLabel="通知"
+      toastOptions={{ closeButtonAriaLabel: translate('关闭提示') }} containerAriaLabel={translate('通知')}
       icons={{ success: glyph(icons.success, true), error: glyph(icons.error, false) }} />
       <Toaster id="processing" position="bottom-right" gap={8} expand
         style={{ ...FRAME, '--width': 'min(400px, calc(100vw - 32px))' } as CSSProperties}
         offset={{ right: 24, bottom: 'var(--toast-bottom, 24px)' }}
         mobileOffset={{ right: 16, left: 16, bottom: 'var(--toast-bottom, 16px)' }}
-        toastOptions={{ closeButtonAriaLabel: '关闭任务提示' }} containerAriaLabel="后台任务" />
+        toastOptions={{ closeButtonAriaLabel: translate('关闭任务提示') }} containerAriaLabel={translate('后台任务')} />
     </Providers>,
   );
 };
