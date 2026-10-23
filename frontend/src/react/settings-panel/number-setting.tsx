@@ -1,4 +1,4 @@
-import { translate } from '../../i18n';
+import { translate, format } from '../../i18n';
 /* 带单位、可选开关与字段错误反馈的数值设置。
  *
  * 可选的那几项（悬停放大、相关推荐、搜索记录、关注自动更新）前面有一枚开关：关掉就是 0，
@@ -65,7 +65,7 @@ export function NumberSetting({ id, label, value, disabled = false, onApply }: {
     if (!node) return;
     if (!node.value || !node.checkValidity()) {
       node.setAttribute('aria-invalid', 'true');
-      setError(`请输入 ${min}–${max} 的整数（${unit}）`);
+      setError(format('请输入 {0}–{1} 的整数（{2}）', min, max, translate(unit)));
       return;
     }
     node.removeAttribute('aria-invalid');

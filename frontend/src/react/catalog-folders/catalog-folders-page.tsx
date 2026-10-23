@@ -1,4 +1,5 @@
 import { useContext, useDeferredValue, useEffect, useLayoutEffect, useState } from 'react';
+import { translate } from '../../i18n';
 import { createPortal } from 'react-dom';
 import { useInRouterContext, useLocation } from 'react-router';
 import { useQueries, useQuery } from '@tanstack/react-query';
@@ -126,7 +127,7 @@ function FolderTree({ scope, selected, current, go }: {
   const render = (node: MediaFolder) => {
     const loaded = childMap.get(node.id);
     return <TreeViewItem key={node.id} id={node.id} label={node.name} icon={RiFolder3Line} expandedIcon={RiFolderOpenLine}
-      trailingContent={node.parent ? undefined : node.location === 'local' ? '本地' : node.location}>
+      trailingContent={node.parent ? undefined : node.location === 'local' ? translate('本地') : node.location}>
       {node.has_children ? loaded ? loaded.map(render)
         : <TreeViewItem id={`${node.id}:loading`} label="正在读取文件夹" isDisabled /> : null}
     </TreeViewItem>;

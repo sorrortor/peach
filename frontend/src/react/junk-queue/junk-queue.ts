@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 垃圾文件队列（`CATALOG_ROUTES['/junk-files']`）的数据与对外契约。
  *
  * 队列一次取 200 条（`/api/ads?limit=200&status=…[&kind=…]`，`src/peach/web_batch.py` 的 `q_ads`
@@ -38,16 +39,16 @@ export type JunkOperation = 'dismiss-junk' | 'reconsider-junk' | 'dispose';
 
 /** 卡片上的类型名与字形。网址那一类在卡上写全称。 */
 export const JUNK_KIND_META: Record<string, readonly [string, string]> = {
-  video: ['视频', 'play'], image: ['图片', 'pics'], archive: ['压缩包', 'file-archive'],
-  audio: ['音频', 'file-audio'], url: ['网址快捷方式', 'globe'], other: ['其它文件', 'hard-drive'],
+  video: [translate("视频"), 'play'], image: [translate("图片"), 'pics'], archive: [translate("压缩包"), 'file-archive'],
+  audio: [translate("音频"), 'file-audio'], url: [translate("网址快捷方式"), 'globe'], other: [translate("其它文件"), 'hard-drive'],
 };
 export const junkKindMeta = (item: JunkItem) => JUNK_KIND_META[item.junk_kind || 'other'] || JUNK_KIND_META.other!;
 
 /** 中间那颗判断键：待判断视图里是「不是垃圾」，已排除视图里是「重新判断」。 */
 export function junkDecision(view: JunkView): { operation: JunkOperation; label: string; glyph: string } {
   return view === 'dismissed'
-    ? { operation: 'reconsider-junk', label: '重新判断', glyph: 'rotate-ccw' }
-    : { operation: 'dismiss-junk', label: '不是垃圾', glyph: 'check' };
+    ? { operation: 'reconsider-junk', label: translate("重新判断"), glyph: 'rotate-ccw' }
+    : { operation: 'dismiss-junk', label: translate("不是垃圾"), glyph: 'check' };
 }
 
 /** 分类条上一项的计数：「全部」读这一视图的合计，其余读各类。 */

@@ -1,3 +1,4 @@
+import { translate } from '../../../i18n';
 /* 首启页的三条请求：取题目、提交、让这台电脑弹文件夹对话框。
  *
  * 页面包不带主界面的请求封装与 Query 缓存，这里直接用 `fetch`。形态见 `docs/OPERATIONS.md`
@@ -81,7 +82,7 @@ async function request<T>(url: string, init: RequestInit, fallback: string): Pro
     });
   } catch (cause) {
     if (init.signal?.aborted) throw cause;
-    throw new SetupRequestError(0, '连接不到 Peach，请确认它仍在运行后重试');
+    throw new SetupRequestError(0, translate("连接不到 Peach，请确认它仍在运行后重试"));
   }
   const body = await response.json().catch(() => null) as { error?: string; errors?: SetupErrors } | null;
   if (!response.ok) throw new SetupRequestError(response.status, body?.error || fallback, body?.errors);
@@ -89,16 +90,16 @@ async function request<T>(url: string, init: RequestInit, fallback: string): Pro
 }
 
 export const fetchQuestions = (signal?: AbortSignal) =>
-  request<SetupQuestions>(SETUP_QUESTIONS_URL, { signal }, '没能读取设置题目');
+  request<SetupQuestions>(SETUP_QUESTIONS_URL, { signal }, translate("没能读取设置题目"));
 
 export const submitSetup = (submission: SetupSubmission) =>
-  request<SetupDone>(SETUP_URL, { method: 'POST', body: JSON.stringify(submission) }, '没能完成设置');
+  request<SetupDone>(SETUP_URL, { method: 'POST', body: JSON.stringify(submission) }, translate("没能完成设置"));
 
 export const restoreSetup = (dataRoot: string) =>
-  request<SetupDone>(`${SETUP_URL}/restore`, { method: 'POST', body: JSON.stringify({ data_root: dataRoot }) }, '没能使用此数据目录');
+  request<SetupDone>(`${SETUP_URL}/restore`, { method: 'POST', body: JSON.stringify({ data_root: dataRoot }) }, translate("没能使用此数据目录"));
 
 export const pickFolder = async (initial: string) =>
   (await request<{ path: string | null }>(PICK_FOLDER_URL,
-    { method: 'POST', body: JSON.stringify({ initial }) }, '没能打开文件夹对话框')).path;
+    { method: 'POST', body: JSON.stringify({ initial }) }, translate("没能打开文件夹对话框"))).path;
 
-export const describeFailure = (cause: unknown) => (cause instanceof Error && cause.message) || '请求失败，请重试';
+export const describeFailure = (cause: unknown) => (cause instanceof Error && cause.message) || translate("请求失败，请重试");

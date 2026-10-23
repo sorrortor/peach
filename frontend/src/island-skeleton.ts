@@ -6,6 +6,7 @@
  * icon / label 四张表），悬停、按下、焦点环留给接管后的真按键。 */
 
 import { esc } from '@peach/legacy/core';
+import { translate } from './i18n';
 
 type Variant = 'primary' | 'secondary' | 'ghost';
 type Size = 'medium' | 'small';
@@ -39,6 +40,7 @@ export function islandShortcutsEntry(): string {
 
 /** 与 Board Input 的中号外框、前缀和正文使用相同几何。 */
 export function islandSearchInput(placeholder: string, value = '', label = placeholder): string {
+  placeholder = translate(placeholder); label = translate(label);
   return `<div data-input-size="medium" class="group flex h-max w-full flex-col items-start gap-1"><div data-rac class="relative flex w-full items-center rounded-2lg bg-background-tertiary-default text-foreground-icon-tertiary ring-2 ring-inset ring-transparent p-2"><div class="flex w-full items-center gap-2 min-w-0"><div class="flex flex-1 items-center gap-0.5 min-w-0">${islandGlyph('search', 'size-5 shrink-0')}<input type="search" enterkeyhint="search" readonly tabindex="-1" aria-label="${esc(label)}" value="${esc(value)}" placeholder="${esc(placeholder)}" class="min-w-0 flex-1 bg-transparent border-0 outline-none p-0 m-0 font-sans text-body-regular text-text-primary pl-1 placeholder:text-text-tertiary"></div></div></div></div>`;
 }
 
@@ -57,6 +59,7 @@ export interface IslandButton {
 export function islandButton(
   { variant = 'primary', size = 'medium', glyph, label, attrs = '', compact = false }: IslandButton,
 ): string {
+  label = label === undefined ? label : translate(label);
   const shape = label ? SIZE[size] : ICON_ONLY[size];
   const icon = glyph ? islandGlyph(glyph, ICON[size]) : '';
   const text = label ? `<span class="${LABEL[size]}"${compact ? ' data-compact-label' : ''}>${label}</span>` : '';
@@ -75,6 +78,7 @@ const SELECT: Record<SelectSize, { box: string; value: string; chevron: string }
 export function islandSelect(
   label: string, { size = 'md', className = '', attrs = '' }: { size?: SelectSize; className?: string; attrs?: string } = {},
 ): string {
+  label = translate(label);
   const shape = SELECT[size];
   return `<div class="group flex flex-col${className ? ` ${className}` : ''}"><button type="button" aria-haspopup="listbox"${attrs ? ` ${attrs}` : ''} class="flex w-full items-center justify-between rounded-2lg border border-border-button-default bg-background-primary-default shadow-xs text-text-primary ${shape.box}"><span class="flex min-w-0 items-center truncate ${shape.value}">${label}</span>${islandGlyph('chevron-down', `shrink-0 text-text-secondary ${shape.chevron}`)}</button></div>`;
 }
@@ -89,6 +93,7 @@ const SUMMARY_PENDING = 'relative inline-block h-8 w-24 rounded-2lg align-middle
 
 /** `CollectionSummary` 带 `flush`、等数据时的那一版：名目此刻就有，大数那一格是微光占位。 */
 export function islandSummary(label: string): string {
+  label = translate(label);
   return `<div data-collection-summary="" class="${SUMMARY_CLASS}"><div class="${SUMMARY_TERMS}">`
     + `<span class="${SUMMARY_LABEL}">${label}</span>`
     + `<strong class="${SUMMARY_FIGURE}"><span data-skeleton="count" aria-hidden="true" class="${SUMMARY_PENDING}"></span></strong>`

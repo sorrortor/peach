@@ -1,3 +1,4 @@
+import { format, translate } from '../../i18n';
 /* 顶栏搜索的下拉栏与键盘（`search` 岛）。
  *
  * 状态放在一个随组件活着的可变仓里，输入框上的原生事件改它再重画：`#q` 是壳的节点，事件只能用
@@ -114,7 +115,7 @@ export function SearchPage(props: SearchProps) {
   );
   const section = (group: MenuSection) => (
     <section key={group.kind ?? group.label} data-search-group="" data-kind={group.kind}>
-      <h3>{group.label}{group.href ? (
+      <h3>{translate(group.label)}{group.href ? (
         <a href={group.href} onMouseDown={keep} onClick={event => {
           if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
           event.preventDefault(); op.openPath(group.href!);
@@ -168,14 +169,14 @@ function createOps(props: () => SearchProps, s: Store, menu: () => HTMLElement |
     s.pool = [];
     const field = input();
     field.dataset.suggestion = '';
-    field.placeholder = '搜索馆藏';
+    field.placeholder = translate("搜索馆藏");
     try {
       const names = await props().helpers.pool();
       if (request !== s.poolRequest) return;
       s.pool = names;
       const pick = names[Math.floor(Math.random() * names.length)] || '';
       field.dataset.suggestion = pick;
-      field.placeholder = pick || '搜索馆藏';
+      field.placeholder = pick || translate("搜索馆藏");
     } catch {
       // 推荐不可用时仍可直接输入搜索。
     }
@@ -429,7 +430,7 @@ function Row({ entry, active, helpers, onPick, onPeek, onRemove }: {
   if (kind === 'performer' || kind === 'creator' || kind === 'author') {
     // 一行里摆得下几部近作就摆几部；窄下拉整排收起，数据照给。
     const works = item.works ?? [];
-    const sub = item.subtitle || [`${(item.n ?? 0).toLocaleString()} 个视频`, item.agency].filter(Boolean).join(' · ');
+    const sub = item.subtitle || [format("{0} 个视频", ((item.n ?? 0).toLocaleString())), item.agency].filter(Boolean).join(' · ');
     return (
       <div data-search-option="person" data-open-entity={opens} {...shared} onMouseDown={keep}>
         <Face item={item} kind={kind} />

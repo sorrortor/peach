@@ -1,3 +1,4 @@
+import { format, translate } from '../../../i18n';
 /* 首次设置表单。题目、默认值、显隐与随平台变化的文案来自 `GET /api/setup/questions`；
  * 分组标题、按钮与「完成设置后」那一组是页面骨架，写在这里。
  *
@@ -38,9 +39,9 @@ function folderErrors(value: SetupErrors[string], count: number): { rows: string
 }
 
 function scanLabel(paths: string[]): string {
-  if (!paths.length) return '完成设置后扫描并补全资料';
-  if (paths.length === 1) return `完成设置后扫描并补全资料：${paths[0]}`;
-  return `完成设置后扫描这 ${paths.length} 个文件夹并补全资料`;
+  if (!paths.length) return translate("完成设置后扫描并补全资料");
+  if (paths.length === 1) return format("完成设置后扫描并补全资料：{0}", (paths[0]));
+  return format("完成设置后扫描这 {0} 个文件夹并补全资料", (paths.length));
 }
 
 const text = (value: SetupErrors[string]) => (Array.isArray(value) ? value.filter(Boolean).join(' ') : value ?? '');
@@ -48,7 +49,7 @@ const text = (value: SetupErrors[string]) => (Array.isArray(value) ? value.filte
 export function SetupForm({ setup, onDone }: { setup: SetupQuestions; onDone: (done: SetupDone) => void }) {
   const media = setup.questions.find((question) => question.input === 'folders');
   const others = setup.questions.filter((question) => question.input !== 'folders');
-  const sources = setup.media_sources.map(({ value, label }) => [value, label] as const);
+  const sources = setup.media_sources.map(({ value, label }) => [value, translate(label)] as const);
   const blank = (path = ''): SetupFolder => ({ path, location: setup.media_source_default, root: '', cost: setup.media_source_default === 'local' ? 'free' : '' });
   const folders = useFolderRows<SetupFolder>({
     initial: () => [blank(media?.default ?? '')], blank: () => blank(), pickFolder, describe: describeFailure,
@@ -81,7 +82,7 @@ export function SetupForm({ setup, onDone }: { setup: SetupQuestions; onDone: (d
   // `aria-describedby` 挂在框上，文字在页面上只有这一份。`key` 跟着提交轮次换，同一句错误
   // 再提交一次也会重新播报。
   const announce = (message: string | undefined) =>
-    message ? <span key={errorRound} role="alert">{message}</span> : undefined;
+    message ? <span key={errorRound} role="alert">{translate(message)}</span> : undefined;
 
   const visible = (question: SetupQuestion) =>
     !question.visible_when || Object.entries(question.visible_when).every(([key, value]) => values[key] === value);
@@ -127,16 +128,16 @@ export function SetupForm({ setup, onDone }: { setup: SetupQuestions; onDone: (d
 
   const field = (question: SetupQuestion) => {
     const error = text(errors[question.key]);
-    const help = question.help.join('');
+    const help = question.help.map(line => translate(line)).join('');
     if (question.input === 'choice') {
       const labelId = `setup-${question.key}-label`;
       return (
         <div key={question.key} className="flex flex-col gap-1.5">
-          <Label id={labelId} elementType="span">{question.label}</Label>
+          <Label id={labelId} elementType="span">{translate(question.label)}</Label>
           <SegmentedRadioGroup aria-labelledby={labelId} orientation="horizontal" className={SEGMENTED_TRACK}
             value={values[question.key] ?? question.default} onChange={(value) => setValue(question.key, value)}>
             {(question.options ?? []).map((option) => (
-              <Radio key={option.value} value={option.value} className={SEGMENT}>{option.label}</Radio>
+              <Radio key={option.value} value={option.value} className={SEGMENT}>{translate(option.label)}</Radio>
             ))}
           </SegmentedRadioGroup>
           {help ? <Help>{help}</Help> : null}
@@ -146,7 +147,7 @@ export function SetupForm({ setup, onDone }: { setup: SetupQuestions; onDone: (d
     }
     const Suffix = () => <span className="shrink-0 pr-1 text-body-regular text-text-secondary">{question.suffix}</span>;
     return (
-      <Input key={question.key} id={`f-${question.key}`} label={question.label} isRequired={question.required}
+      <Input key={question.key} id={`f-${question.key}`} label={translate(question.label)} isRequired={question.required}
         inputMode={question.input === 'number' ? 'numeric' : undefined} autoComplete="off" spellCheck="false"
         value={values[question.key] ?? ''} onChange={(value) => setValue(question.key, value)}
         leadingAddon={question.prefix
@@ -165,12 +166,12 @@ export function SetupForm({ setup, onDone }: { setup: SetupQuestions; onDone: (d
       {media ? (
         <CardGroup first labelledBy="setup-media-title">
           <GroupTitle id="setup-media-title">
-            {media.label}<span aria-hidden className="ml-0.5 text-text-error-primary">*</span>
+            {translate(media.label)}<span aria-hidden className="ml-0.5 text-text-error-primary">*</span>
           </GroupTitle>
           {tableError ? <ErrorText key={errorRound}>{tableError}</ErrorText> : null}
           <div role="group" aria-labelledby="setup-media-title" className="flex flex-col gap-3">
             {folders.rows.map((row, index) => (
-              <FolderRow key={index} label={`${media.label} ${index + 1}`} path={row.path}
+              <FolderRow key={index} label={`${translate(media.label)} ${index + 1}`} path={row.path}
                 onPath={(path) => folders.edit(index, { path })} error={announce(folders.errors[index])}
                 inputRef={folders.inputRef(index)} picking={folders.picking === index}
                 onPick={() => void folders.pick(index)}
@@ -189,10 +190,10 @@ export function SetupForm({ setup, onDone }: { setup: SetupQuestions; onDone: (d
           {cloud ? (
             <>
               <MediaReadPolicyHelp />
-              <Help>{setup.cloud.help}<ExternalLink href={setup.cloud.link.url}>{setup.cloud.link.label}</ExternalLink></Help>
+              <Help>{translate(setup.cloud.help)}<ExternalLink href={setup.cloud.link.url}>{translate(setup.cloud.link.label)}</ExternalLink></Help>
               {setup.cloud.dependencies.map((dependency) => (
                 <Help key={dependency.name}>
-                  {dependency.message}<ExternalLink href={dependency.download_url}>{dependency.download_label}</ExternalLink>
+                  {translate(dependency.message)}<ExternalLink href={dependency.download_url}>{translate(dependency.download_label)}</ExternalLink>
                 </Help>
               ))}
             </>

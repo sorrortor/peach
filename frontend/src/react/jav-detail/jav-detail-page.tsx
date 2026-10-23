@@ -1,3 +1,4 @@
+import { translate, format } from '../../i18n';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useInfiniteQuery, useQuery, useQueryClient, type InfiniteData } from '@tanstack/react-query';
 import { RiChat3Line, RiExternalLinkLine } from '@remixicon/react';
@@ -47,8 +48,8 @@ function Work({ code, item, actions, readOnly, retry, retrying }: JavDetailProps
   useEffect(() => { actions.canonicalCode?.(item.code) }, [actions, item.code]);
   useEffect(() => { if (item.state === 'ready') void queryClient.invalidateQueries({ queryKey: ['jav-discoveries', 'external'] }) }, [item.code, item.state]);
   const [preview, setPreview] = useState(-1);
-  const media = [{ index: -1, label: '封面' }, ...Array.from({ length: item.preview_count }, (_, index) => ({ index, label: `预览 ${index + 1}` })),
-    ...(item.preview_video_url ? [{ index: -2, label: '视频预览', video: true }] : [])];
+  const media = [{ index: -1, label: translate("封面") }, ...Array.from({ length: item.preview_count }, (_, index) => ({ index, label: format("预览 {0}", (index + 1)) })),
+    ...(item.preview_video_url ? [{ index: -2, label: translate("视频预览"), video: true }] : [])];
   const [download, setDownload] = useState<DownloadPrefill | null>(null);
   const [wantId, setWantId] = useState(item.want_id);
   const want = useAction();
@@ -58,7 +59,7 @@ function Work({ code, item, actions, readOnly, retry, retrying }: JavDetailProps
   }, id => {
     setWantId(id);
     queryClient.setQueryData<JavDetail>(javDetailKey(code), current => current ? { ...current, wanted: !!id, want_id: id } : current);
-    actions.receipt(id ? '已加入想要' : '已取消想要');
+    actions.receipt(id ? translate("已加入想要") : translate("已取消想要"));
     void invalidateWants();
     void queryClient.invalidateQueries({ queryKey: ['feed-new'] });
     void queryClient.invalidateQueries({ queryKey: ['jav-discoveries'] });
@@ -157,7 +158,7 @@ function PreviewVideo({ src }: { src: string }) {
     video.className = 'video-js vjs-big-play-centered';
     video.controls = true;
     video.setAttribute('playsinline', '');
-    video.setAttribute('aria-label', '视频预览');
+    video.setAttribute('aria-label', translate("视频预览"));
     node.append(video);
     return mountPreviewPlayer(video, { src, type: /\.m3u8(?:\?|$)/i.test(src) ? 'application/x-mpegURL' : 'video/mp4' }, () => setFailed(true));
   }, [src, attempt]);
@@ -179,7 +180,7 @@ function Reviews({ code, count, released }: { code: string; count: number; relea
       rememberReviews(code, page);
       if (!page.ok || page.cache_stale) {
         const previous = client.getQueryData<InfiniteData<JavReviews>>(['jav-reviews', code])?.pages.find(row => row.page === pageParam);
-        if (previous?.ok) return { ...previous, cache_stale: true, message: page.message || '评论未取得，请稍后重试' };
+        if (previous?.ok) return { ...previous, cache_stale: true, message: page.message || translate("评论未取得，请稍后重试") };
       }
       return page;
     }, getNextPageParam: nextReviewPage });

@@ -1,4 +1,4 @@
-import { translate } from '../i18n';
+import { translate, format } from '../i18n';
 /* receipts 域控制器：本域状态与动作，启动由 Application 的生命周期统一安装。 */
 import { $, esc, icon, newSeed, seededRank } from '../core';
 import { playUiSound } from '../ui-kit/sounds';
@@ -41,13 +41,13 @@ receiptsState.actionReceipt = (message,{undo=null,timeout=undo?8000:6000}={})=>{
     timeout,
     action:undo?{label:'撤销',run:async()=>{
       try{await undo();item.replaceMessage({text:'已撤销'})}
-      catch(error){item.replaceMessage({text:`撤销失败：${error.message||'请重试'}`},{warn:true})}
+      catch(error){item.replaceMessage({text:format('撤销失败：{0}',translate(error.message||'请重试'))},{warn:true})}
     }}:null,
   });
   return item;
 };
 receiptsState.actionFailure = (message,error)=>receiptsState.toast(
-  {text:`${message}失败：${error?.message||'请重试'}`},{warn:true});
+  {text:format('{0}失败：{1}',translate(message),translate(error?.message||'请重试'))},{warn:true});
 receiptsState.rollSeed = ()=>newSeed();
 receiptsState.seededSample = (rows,count,seed,key=row=>row.k)=>{
   if(rows.length<=count)return rows;

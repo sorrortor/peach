@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/base/buttons/button';
 
 import { Note } from '../../components/note';
+import { LanguagePicker } from '../../components/language-picker';
 import { AuthCard } from '../auth-card';
 import { describeFailure, fetchQuestions, SetupRequestError, type SetupDone, type SetupQuestions } from './setup-api';
 import { SetupDoneView } from './setup-done';
@@ -56,6 +57,7 @@ export function SetupPage() {
           ? <SetupRestore onDone={(done) => setView({ kind: 'done', done })} />
           : <SetupForm setup={view.setup} onDone={(done) => setView({ kind: 'done', done })} />}
       </> : null}
+      <LanguagePicker />
     </AuthCard>
   );
 }
