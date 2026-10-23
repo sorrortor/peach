@@ -59,6 +59,8 @@ export function initializeLanguage(): void {
   document.documentElement.lang = currentLanguage;
   document.documentElement.setAttribute('translate', 'no');
   document.title = translate(document.title);
+  const skipLink = document.querySelector('a[href="#main"]');
+  if (skipLink?.textContent) skipLink.textContent = translate(skipLink.textContent);
   const heading = document.querySelector('#catalogPageHeading [data-page-title]');
   if (heading?.textContent) heading.textContent = translate(heading.textContent);
   // 启动时壳的静态控件还未交给 React；只处理展示属性，不改输入值或节点结构。

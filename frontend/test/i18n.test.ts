@@ -23,10 +23,12 @@ describe('界面语言', () => {
   it('localizes labels and document semantics without network access', () => {
     saveLanguage('th');
     document.title = '登录 Peach';
+    document.body.innerHTML = '<a href="#main">跳到正文</a>';
     initializeLanguage();
     expect(document.documentElement.lang).toBe('th');
     expect(document.documentElement.getAttribute('translate')).toBe('no');
     expect(document.title).toBe('เข้าสู่ระบบ Peach');
+    expect(document.querySelector('a[href="#main"]')?.textContent).toBe('ข้ามไปเนื้อหา');
     expect(translate('保存配置')).toBe('บันทึกการตั้งค่า');
     expect(translate('保存配置', 'en')).toBe('Save settings');
     expect(translate('保存配置', 'zh-CN')).toBe('保存配置');
