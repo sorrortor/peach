@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 访问密码与确认两框：配置页「访问密码」与首启页共用。
  *
  * 两框都是 BoardUI `Input`，`id` 固定为 `access-password`、`access-confirm`，浏览器的密码管理器按
@@ -25,11 +26,11 @@ export function PasswordPair({
 }) {
   return (
     <>
-      <Input id="access-password" type="password" label={label}
+      <Input id="access-password" type="password" label={translate(label)}
         autoComplete="new-password" maxLength={256} value={password} onChange={onPassword}
         isDisabled={disabled} isRequired={!disabled} validationBehavior="aria"
         isInvalid={!disabled && Boolean(passwordError)}
-        hint={disabled ? passwordHint : passwordError || passwordHint} />
+        hint={disabled ? (passwordHint ? translate(passwordHint) : undefined) : typeof (passwordError || passwordHint) === 'string' ? translate((passwordError || passwordHint) as string) : passwordError || passwordHint} />
       <Input id="access-confirm" type="password" label="确认访问密码" autoComplete="new-password" maxLength={256}
         value={confirmation} onChange={onConfirmation} isDisabled={disabled} isRequired={!disabled} validationBehavior="aria"
         isInvalid={!disabled && (Boolean(confirmationError) || confirmationInvalid)}

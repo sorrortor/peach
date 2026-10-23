@@ -1,3 +1,4 @@
+import { translate } from '../i18n';
 /* 骨架：整块占位、索引占位、配置页占位，落进 DOM 后按实际尺寸补齐，过了显示门槛才露面，
    到货时把占位换成真内容。由共享源码直接引用，随 `peach-app.js` 发出。 */
 import { esc } from '../core';
@@ -41,6 +42,7 @@ export function configurationSkeletonHtml():string{
    `cardRatio` 是卡片封面的宽高比，交给调用方按真卡的版式给：大图版式的正封是竖的，
    骨架照 16:9 铺的话，内容一到整屏卡片都要被拉高一截。 */
 export function skeletonHtml(label='正在读取内容',{className='',variant='panel',count=6,fill=true,gridClass='',gridSize='',cardRatio=0}={}):string{
+  label=translate(label);
   const kind=new Set(['panel','cards','dashboard']).has(variant)?variant:'panel';
   const body=kind==='cards'
     ?Array.from({length:Math.max(1,count)},

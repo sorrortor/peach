@@ -49,7 +49,7 @@ const DISPOSAL_LABELS = { manual: '手动', junk: '垃圾', duplicate: '重复',
 
 function DisposalReason({ item }: { item: MediaItem }) {
   if (item.disposal !== 'trash') return null;
-  const label = (item.disposal_reason && DISPOSAL_LABELS[item.disposal_reason]) || '原因未记录';
+  const label = translate((item.disposal_reason && DISPOSAL_LABELS[item.disposal_reason]) || '原因未记录');
   return <span data-media-disposal-reason="" title={`归入原因：${label}`}>{label}</span>;
 }
 
@@ -58,7 +58,7 @@ function ResourceAction({ item, actions }: { item: MediaItem; actions: MediaCard
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const operation = item.disposal === 'trash' ? 'restore' : 'dispose';
-  const label = operation === 'restore' ? '还原' : '移入回收站';
+  const label = translate(operation === 'restore' ? '还原' : '移入回收站');
   const run = (event: MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
@@ -102,7 +102,7 @@ export interface MediaCardProps {
 function identityParts(item: MediaItem): { avatar: ReactNode; who: ReactNode } {
   const { kind, name, coStarred, performers, refs, total } = cardIdentity(item);
   const performer = performers[0] || '';
-  const label = performerLabel(item);
+  const label = translate(performerLabel(item));
   const avatar = coStarred
     ? (
       <div data-media-avatars="">
@@ -116,12 +116,12 @@ function identityParts(item: MediaItem): { avatar: ReactNode; who: ReactNode } {
     : kind
       ? (
         <button type="button" data-media-avatar="" data-entity-kind={kind} data-entity-name={name}
-          title={`打开${kind === 'performer' ? label : '资料'}页`}
+          title={`打开${kind === 'performer' ? label : translate('资料')}页`}
           dangerouslySetInnerHTML={{
             __html: entityAvatar(name, kind === 'performer' ? refs[0] ?? null : item.creator_entity ?? null, kind),
           }} />
       )
-      : <span data-media-avatar="" dangerouslySetInnerHTML={{ __html: entityAvatar(name, null, '') }} />;
+      : <span data-media-avatar="" dangerouslySetInnerHTML={{ __html: entityAvatar(translate('未归属'), null, '') }} />;
   const who = coStarred
     ? (
       <>
@@ -277,7 +277,7 @@ function VideoCard({ item, variant, layout, selected, selectMode, seekSeconds, h
       data-pending-delete={item.disposal === 'trash' ? '' : undefined} data-selected={selected ? '' : undefined}
       onClick={click} onMouseDown={suppressShiftTextSelection}>
       <button type="button" data-media-open="" data-open=""
-        aria-label={`打开 ${shownName}${editions ? '版本' : parts ? '分卷' : '详情'}`} />
+        aria-label={`打开 ${shownName}${translate(editions ? '版本' : parts ? '分卷' : '详情')}`} />
       {stacked ? <div data-media-stack="">{pic}</div> : pic}
       <div data-media-meta="">
         {avatar}

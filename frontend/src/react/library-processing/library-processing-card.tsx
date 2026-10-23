@@ -6,6 +6,7 @@
  * 写操作是 `useMutation`：服务端回的就是这一趟的新快照，用 `setQueryData` 换进缓存，
  * 再让这个键立刻重读一次接上轮询的节律。首屏读到的旧终态不冒充新结果——任务关掉页面
  * 照样在跑，状态里常年躺着上一趟的回执，判据在 `use-library-processing.ts`。 */
+import { format, translate } from '../../i18n';
 import { useEffect } from 'react';
 import { RiArrowRightLine } from '@remixicon/react';
 import { useMutation } from '@tanstack/react-query';
@@ -42,17 +43,17 @@ const profileText = (state: LibraryProcessingData) => {
   const conflicts = state.performer_profile_conflicts || 0;
   const failed = state.performer_profile_failed || 0;
   if (!aliases && !avatars && !conflicts && !failed) return '';
-  const parts = [`补齐女优资料：别名 ${aliases} 个，头像 ${avatars} 张`];
-  if (conflicts) parts.push(`${conflicts} 个同名冲突交回人工`);
-  if (failed) parts.push(`${failed} 张头像未取得`);
-  return `${parts.join('，')}。`;
+  const parts = [format('补齐女优资料：别名 {0} 个，头像 {1} 张', aliases, avatars)];
+  if (conflicts) parts.push(format('{0} 个同名冲突交回人工', conflicts));
+  if (failed) parts.push(format('{0} 张头像未取得', failed));
+  return `${parts.join(translate('，'))}${translate('。')}`;
 };
 
 const receiptText = (state: LibraryProcessingData) =>
-  state.requested_stage === 'previews' ? `已生成 ${state.previews || 0} 部视频预览。`
-  : `已扫描 ${state.scanned || 0} 个文件，识别 ${state.identified || 0} 个番号，`
-  + `整理 ${state.candidates || 0} 组资料结果，自动保存 ${state.auto_applied || 0} 条。`
-  + (state.previews ? `已生成 ${state.previews} 部视频预览。` : '')
+  state.requested_stage === 'previews' ? format('已生成 {0} 部视频预览。', state.previews || 0)
+  : format('已扫描 {0} 个文件，识别 {1} 个番号，整理 {2} 组资料结果，自动保存 {3} 条。',
+    state.scanned || 0, state.identified || 0, state.candidates || 0, state.auto_applied || 0)
+  + (state.previews ? format('已生成 {0} 部视频预览。', state.previews) : '')
   + profileText(state);
 
 /** 卡片外面那一块：这一趟怎么了。逐条明细要展开才读，完整清单在状态给出的日志文件里。 */

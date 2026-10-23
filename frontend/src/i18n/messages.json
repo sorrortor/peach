@@ -1,353 +1,4638 @@
 {
-  "切换语言会刷新页面，请先保存表单。": ["Switching language reloads the page. Save forms first.", "การเปลี่ยนภาษาจะรีเฟรชหน้า กรุณาบันทึกแบบฟอร์มก่อน"],
-  "回收站": ["Trash", "ถังขยะ"],
-  "人工复核": ["Manual review", "ตรวจสอบด้วยตนเอง"],
-  "高清版": ["Higher quality", "เวอร์ชันคุณภาพสูง"],
-  "还原": ["Restore", "กู้คืน"],
-  "移入回收站": ["Move to trash", "ย้ายไปถังขยะ"],
-  "未命名视频": ["Untitled video", "วิดีโอไม่มีชื่อ"],
-  "名称": ["Name", "ชื่อ"],
-  "每页": ["Per page", "ต่อหน้า"],
-  "部": ["videos", "วิดีโอ"],
-  "条记录": ["records", "รายการ"],
-  "导航与筛选": ["Navigation and filters", "เมนูและตัวกรอง"],
-  "展开导航与筛选": ["Open navigation and filters", "เปิดเมนูและตัวกรอง"],
-  "退出搜索": ["Exit search", "ออกจากการค้นหา"],
-  "多选模式": ["Select multiple", "เลือกหลายรายการ"],
-  "切换卡片密度": ["Change card density", "เปลี่ยนความหนาแน่นของการ์ด"],
-  "进入沉浸模式": ["Enter immersive mode", "เข้าสู่โหมดเต็มอารมณ์"],
-  "语言": ["Language", "ภาษา"],
-  "首页": ["Home", "หน้าแรก"],
-  "关注": ["Following", "ติดตาม"],
-  "艺人": ["Performers", "นักแสดง"],
-  "标签": ["Tags", "แท็ก"],
-  "厂牌": ["Studios", "ค่าย"],
-  "已标记": ["Flagged", "ทำเครื่องหมายแล้ว"],
-  "管理": ["Manage", "จัดการ"],
-  "统计": ["Statistics", "สถิติ"],
-  "口味": ["Preferences", "ความชอบ"],
-  "数据管理": ["Data management", "จัดการข้อมูล"],
-  "关注管理": ["Manage follows", "จัดการการติดตาม"],
-  "任务中心": ["Tasks", "งาน"],
-  "Peach 配置": ["Peach settings", "ตั้งค่า Peach"],
-  "设置": ["Settings", "ตั้งค่า"],
-  "打开设置": ["Open settings", "เปิดการตั้งค่า"],
-  "关闭设置": ["Close settings", "ปิดการตั้งค่า"],
-  "外观与导航": ["Appearance and navigation", "หน้าตาและการนำทาง"],
-  "浏览与播放": ["Browsing and playback", "การเรียกดูและการเล่น"],
-  "JAV 与新作": ["JAV and new releases", "JAV และผลงานใหม่"],
-  "搜索与推荐": ["Search and recommendations", "ค้นหาและแนะนำ"],
-  "内容显示": ["Content display", "การแสดงเนื้อหา"],
-  "媒体库与入库": ["Library and importing", "คลังและการนำเข้า"],
-  "来源与订阅": ["Sources and subscriptions", "แหล่งข้อมูลและการติดตาม"],
-  "下载渠道": ["Download providers", "ช่องทางดาวน์โหลด"],
-  "网络与访问": ["Network and access", "เครือข่ายและการเข้าถึง"],
-  "应用与维护": ["Application and maintenance", "แอปและการบำรุงรักษา"],
-  "系统诊断": ["Diagnostics", "วินิจฉัยระบบ"],
-  "主题": ["Theme", "ธีม"],
-  "跟随系统": ["System", "ตามระบบ"],
-  "浅色": ["Light", "สว่าง"],
-  "深色": ["Dark", "มืด"],
-  "浅色主题": ["Light theme", "ธีมสว่าง"],
-  "深色主题": ["Dark theme", "ธีมมืด"],
-  "增加对比度": ["Increase contrast", "เพิ่มความคมชัด"],
-  "界面音效": ["Interface sounds", "เสียงหน้าจอ"],
-  "侧栏光晕": ["Sidebar glow", "แสงแถบด้านข้าง"],
-  "导航入口与顺序": ["Navigation and order", "รายการและลำดับเมนู"],
-  "配色": ["Colors", "สี"],
-  "颜色": ["Color", "สี"],
-  "强度": ["Intensity", "ความเข้ม"],
-  "颗粒": ["Grain", "เกรน"],
-  "漂移速度": ["Drift speed", "ความเร็วการเคลื่อนไหว"],
-  "柔化": ["Softness", "ความนุ่ม"],
-  "大小": ["Size", "ขนาด"],
-  "恢复默认": ["Restore defaults", "คืนค่าเริ่มต้น"],
-  "随机": ["Random", "สุ่ม"],
-  "评分": ["Rating", "คะแนน"],
-  "高潮计数": ["Climax count", "จำนวนไคลแมกซ์"],
-  "观看次数": ["Play count", "จำนวนครั้งที่ดู"],
-  "时长": ["Duration", "ความยาว"],
-  "体积": ["File size", "ขนาดไฟล์"],
-  "入库时间": ["Date added", "วันที่เพิ่ม"],
-  "观看时间": ["Last watched", "ดูล่าสุด"],
-  "降序": ["Descending", "มากไปน้อย"],
-  "升序": ["Ascending", "น้อยไปมาก"],
-  "官方封面": ["Official cover", "ปกทางการ"],
-  "预览图": ["Preview image", "ภาพตัวอย่าง"],
-  "保存配置": ["Save settings", "บันทึกการตั้งค่า"],
-  "已保存配置": ["Settings saved", "บันทึกการตั้งค่าแล้ว"],
-  "保存": ["Save", "บันทึก"],
-  "取消": ["Cancel", "ยกเลิก"],
-  "关闭": ["Close", "ปิด"],
-  "开启": ["On", "เปิด"],
-  "添加": ["Add", "เพิ่ม"],
-  "删除": ["Delete", "ลบ"],
-  "移除": ["Remove", "นำออก"],
-  "重试": ["Retry", "ลองอีกครั้ง"],
-  "刷新": ["Refresh", "รีเฟรช"],
-  "展开": ["Expand", "ขยาย"],
-  "收起": ["Collapse", "ยุบ"],
-  "全部": ["All", "ทั้งหมด"],
-  "没看过": ["Unwatched", "ยังไม่ได้ดู"],
-  "稍后看": ["Watch later", "ดูภายหลัง"],
-  "我的收藏": ["My collection", "คอลเลกชันของฉัน"],
-  "换一批": ["Shuffle", "สุ่มชุดใหม่"],
-  "卡片": ["Cards", "การ์ด"],
-  "列表": ["List", "รายการ"],
-  "大图": ["Large covers", "ปกใหญ่"],
-  "小图": ["Small covers", "ปกเล็ก"],
-  "文件夹模式": ["Folder view", "มุมมองโฟลเดอร์"],
-  "搜索馆藏": ["Search library", "ค้นหาในคลัง"],
-  "搜索作品、女优、厂牌或标签": ["Search titles, performers, studios or tags", "ค้นหาผลงาน นักแสดง ค่าย หรือแท็ก"],
-  "选择媒体库": ["Choose library", "เลือกคลัง"],
-  "全部媒体库": ["All libraries", "คลังทั้งหมด"],
-  "来源": ["Sources", "แหล่งข้อมูล"],
-  "产地": ["Region", "ภูมิภาค"],
-  "本地": ["Local", "ในเครื่อง"],
-  "本地磁盘": ["Local disk", "ดิสก์ในเครื่อง"],
-  "在线": ["Online", "ออนไลน์"],
-  "离线": ["Offline", "ออฟไลน์"],
-  "未归属": ["Unassigned", "ยังไม่จัดหมวด"],
-  "暂无影片": ["No videos", "ยังไม่มีวิดีโอ"],
-  "没有符合条件的影片": ["No matching videos", "ไม่พบวิดีโอที่ตรงเงื่อนไข"],
-  "打开预览": ["Open preview", "เปิดตัวอย่าง"],
-  "打开详情": ["Open details", "เปิดรายละเอียด"],
-  "访问密码": ["Access password", "รหัสผ่านเข้าใช้งาน"],
-  "保持登录": ["Keep me signed in", "คงการเข้าสู่ระบบ"],
-  "登录": ["Sign in", "เข้าสู่ระบบ"],
-  "登录 Peach": ["Sign in to Peach", "เข้าสู่ระบบ Peach"],
-  "访问密码不正确": ["Incorrect access password", "รหัสผ่านเข้าใช้งานไม่ถูกต้อง"],
-  "请输入访问密码": ["Enter your access password", "กรอกรหัสผ่านเข้าใช้งาน"],
-  "请选择有效的保持登录时间": ["Choose a valid session duration", "เลือกระยะเวลาเข้าสู่ระบบที่ถูกต้อง"],
-  "媒体目录": ["Media folders", "โฟลเดอร์สื่อ"],
-  "选择文件夹": ["Choose folder", "เลือกโฟลเดอร์"],
-  "添加文件夹": ["Add folder", "เพิ่มโฟลเดอร์"],
-  "移除这个文件夹": ["Remove this folder", "นำโฟลเดอร์นี้ออก"],
-  "保存后扫描并补全资料": ["Scan and fetch metadata after saving", "สแกนและเติมข้อมูลหลังบันทึก"],
-  "保存后 Peach 会重新启动。": ["Peach will restart after saving.", "Peach จะเริ่มใหม่หลังบันทึก"],
-  "正常读取": ["Normal reading", "อ่านตามปกติ"],
-  "代理流量保护": ["Metered connection protection", "ป้องกันการใช้ข้อมูลเกิน"],
-  "选择读取策略": ["Choose reading policy", "เลือกนโยบายการอ่าน"],
-  "推送发现": ["File discovery", "การตรวจพบไฟล์"],
-  "新文件落地就入库": ["Import new files automatically", "นำเข้าไฟล์ใหม่อัตโนมัติ"],
-  "监视本机文件夹": ["Watch local folders", "เฝ้าดูโฟลเดอร์ในเครื่อง"],
-  "接收 CloudDrive2 通知": ["Receive CloudDrive2 notifications", "รับการแจ้งเตือนจาก CloudDrive2"],
-  "视频预览": ["Video previews", "ตัวอย่างวิดีโอ"],
-  "生成视频预览": ["Generate video previews", "สร้างตัวอย่างวิดีโอ"],
-  "时间轴预览": ["Timeline previews", "ตัวอย่างบนไทม์ไลน์"],
-  "来源凭据": ["Source credentials", "ข้อมูลเข้าสู่ระบบแหล่งข้อมูล"],
-  "可配置凭据": ["Configurable credentials", "ข้อมูลเข้าสู่ระบบที่ตั้งค่าได้"],
-  "不需要凭据": ["No credentials required", "ไม่ต้องใช้ข้อมูลเข้าสู่ระบบ"],
-  "填写凭据": ["Enter credentials", "กรอกข้อมูลเข้าสู่ระบบ"],
-  "获取凭据": ["Get credentials", "รับข้อมูลเข้าสู่ระบบ"],
-  "凭据文件": ["Credentials file", "ไฟล์ข้อมูลเข้าสู่ระบบ"],
-  "作品资料站点": ["Metadata websites", "เว็บไซต์ข้อมูลผลงาน"],
-  "JavDB 地址": ["JavDB address", "ที่อยู่ JavDB"],
-  "MISSAV 地址": ["MISSAV address", "ที่อยู่ MISSAV"],
-  "只填域名，留空用默认地址": ["Domain only; leave blank for the default", "กรอกเฉพาะโดเมน เว้นว่างเพื่อใช้ค่าเริ่มต้น"],
-  "资源搜索": ["Resource search", "ค้นหาแหล่งไฟล์"],
-  "添加索引器": ["Add indexer", "เพิ่มตัวค้นหา"],
-  "索引器连接帮助": ["Indexer connection help", "วิธีเชื่อมตัวค้นหา"],
-  "关注采集": ["Following updates", "อัปเดตการติดตาม"],
-  "自动检查更新": ["Check for updates automatically", "ตรวจอัปเดตอัตโนมัติ"],
-  "首次采集范围": ["Initial collection range", "ช่วงเก็บข้อมูลครั้งแรก"],
-  "最近 30 天": ["Last 30 days", "30 วันล่าสุด"],
-  "分钟": ["minutes", "นาที"],
-  "云下载": ["Cloud downloads", "ดาวน์โหลดบนคลาวด์"],
-  "CloudDrive2 地址": ["CloudDrive2 address", "ที่อยู่ CloudDrive2"],
-  "CloudDrive2 API 令牌": ["CloudDrive2 API token", "โทเคน API ของ CloudDrive2"],
-  "115 目标目录": ["115 destination folder", "โฟลเดอร์ปลายทาง 115"],
-  "PikPak 目标目录": ["PikPak destination folder", "โฟลเดอร์ปลายทาง PikPak"],
-  "目录要已经存在。": ["The folder must already exist.", "ต้องมีโฟลเดอร์นี้อยู่แล้ว"],
-  "等待上限（小时）": ["Maximum wait (hours)", "เวลารอสูงสุด (ชั่วโมง)"],
-  "检查连接": ["Check connection", "ตรวจการเชื่อมต่อ"],
-  "PikPak 账号": ["PikPak account", "บัญชี PikPak"],
-  "账号": ["Account", "บัญชี"],
-  "密码": ["Password", "รหัสผ่าน"],
-  "登录方式": ["Sign-in method", "วิธีเข้าสู่ระบบ"],
-  "已登录": ["Signed in", "เข้าสู่ระบบแล้ว"],
-  "浏览器登录，由 Peach 续期": ["Browser sign-in, renewed by Peach", "เข้าสู่ระบบผ่านเบราว์เซอร์ ต่ออายุโดย Peach"],
-  "登出": ["Sign out", "ออกจากระบบ"],
-  "用浏览器登录": ["Sign in with browser", "เข้าสู่ระบบด้วยเบราว์เซอร์"],
-  "浏览器添加 JAV": ["Add JAV from browser", "เพิ่ม JAV จากเบราว์เซอร์"],
-  "安装 Peach 用户脚本": ["Install Peach userscript", "ติดตั้ง userscript ของ Peach"],
-  "浏览器添加的下载渠道": ["Browser add download provider", "ช่องทางดาวน์โหลดจากเบราว์เซอร์"],
-  "Peach 地址": ["Peach address", "ที่อยู่ Peach"],
-  "浏览器添加专用令牌": ["Browser add token", "โทเคนสำหรับเบราว์เซอร์"],
-  "复制专用令牌": ["Copy token", "คัดลอกโทเคน"],
-  "已启用": ["Enabled", "เปิดใช้งานแล้ว"],
-  "未启用": ["Disabled", "ยังไม่เปิดใช้งาน"],
-  "启用并生成令牌": ["Enable and generate token", "เปิดใช้งานและสร้างโทเคน"],
-  "更新渠道与令牌": ["Update provider and token", "อัปเดตช่องทางและโทเคน"],
-  "关闭浏览器添加": ["Disable browser add", "ปิดการเพิ่มจากเบราว์เซอร์"],
-  "数据上传": ["Data sharing", "การส่งข้อมูล"],
-  "开机自启": ["Launch at login", "เปิดเมื่อเข้าสู่ระบบ"],
-  "开机后启动 Peach": ["Start Peach at login", "เริ่ม Peach เมื่อเข้าสู่ระบบ"],
-  "只启动托盘，不打开网页": ["Start in menu bar without opening browser", "เปิดเฉพาะเมนูบาร์ ไม่เปิดหน้าเว็บ"],
-  "在桌面创建快捷方式": ["Create desktop shortcut", "สร้างทางลัดบนเดสก์ท็อป"],
-  "跳到正文": ["Skip to content", "ข้ามไปเนื้อหา"],
-  "收起侧栏": ["Collapse sidebar", "ยุบแถบด้านข้าง"],
-  "进入播放墙": ["Open video wall", "เปิดกำแพงวิดีโอ"],
-  "进入沉浸模式": ["Enter immersive mode", "เข้าโหมดเต็มอารมณ์"],
-  "未设置访问密码": ["No access password set", "ยังไม่ได้ตั้งรหัสผ่าน"],
-  "关闭访问密码": ["Disable access password", "ปิดรหัสผ่านเข้าใช้งาน"],
-  "当前访问密码": ["Current access password", "รหัสผ่านปัจจุบัน"],
-  "确认访问密码": ["Confirm access password", "ยืนยันรหัสผ่าน"],
-  "访问范围": ["Access scope", "ขอบเขตการเข้าถึง"],
-  "保存后，能连接到 Peach 的设备将直接访问馆藏。": ["After saving, devices that can connect to Peach can access the library directly.", "หลังบันทึก อุปกรณ์ที่เชื่อมต่อ Peach ได้จะเข้าคลังได้โดยตรง"],
-  "挂载帮助": ["Mount help", "วิธีเมานต์ไดรฟ์"],
-  "缓存按所在硬盘和可用内存选起步值，再根据播放表现调整。": ["Choose initial cache settings for your disk and available memory, then adjust for playback.", "เลือกแคชตามดิสก์และหน่วยความจำที่ว่าง แล้วปรับตามการเล่น"],
-  "按缓存所在硬盘分档": ["Cache disk profile", "รูปแบบดิสก์สำหรับแคช"],
-  "完整配置与调优说明": ["Configuration and tuning guide", "คู่มือตั้งค่าและปรับแต่ง"],
-  "配置读取失败": ["Could not load settings", "โหลดการตั้งค่าไม่สำเร็จ"],
-  "配置分区": ["Settings sections", "หมวดการตั้งค่า"],
-  "留空自动查找": ["Leave blank to detect automatically", "เว้นว่างเพื่อตรวจหาอัตโนมัติ"],
-  "需要离线任务权限。": ["Offline task permission is required.", "ต้องมีสิทธิ์จัดการงานออฟไลน์"],
-  "留空时按推送发现自动填写": ["Leave blank to use file discovery settings", "เว้นว่างเพื่อใช้ค่าการตรวจพบไฟล์"],
-  "以 / 开头的网盘路径": ["Cloud path starting with /", "พาธคลาวด์ที่ขึ้นต้นด้วย /"],
-  "PikPak 根目录对应的媒体目录": ["Media folder mapped to the PikPak root", "โฟลเดอร์สื่อที่ตรงกับราก PikPak"],
-  "检查时按推送发现选": ["Detect from file discovery", "ตรวจจากการค้นพบไฟล์"],
-  "先在「媒体库与入库」添加 PikPak 挂载文件夹。": ["Add a mounted PikPak folder under Library and importing first.", "เพิ่มโฟลเดอร์ PikPak ที่เมานต์แล้วในหมวดคลังและการนำเข้าก่อน"],
-  "正在检查 CloudDrive2": ["Checking CloudDrive2", "กำลังตรวจ CloudDrive2"],
-  "新建这个目录": ["Create this folder", "สร้างโฟลเดอร์นี้"],
-  "PikPak 根目录": ["PikPak root", "ราก PikPak"],
-  "115 离线配额": ["115 offline quota", "โควตาออฟไลน์ 115"],
-  "邮箱或手机号": ["Email or phone number", "อีเมลหรือเบอร์โทรศัพท์"],
-  "保存密码，登录过期时自动重新登录": ["Save password and sign in again when the session expires", "บันทึกรหัสผ่านและเข้าสู่ระบบใหม่เมื่อหมดอายุ"],
-  "需要人机验证": ["Verification required", "ต้องยืนยันตัวตน"],
-  "打开 PikPak 验证页": ["Open PikPak verification", "เปิดหน้ายืนยัน PikPak"],
-  "在浏览器里完成验证后，回到这里再点一次「登录」。": ["Complete verification in the browser, then return here and sign in again.", "ยืนยันในเบราว์เซอร์แล้วกลับมากดเข้าสู่ระบบอีกครั้ง"],
-  "按挂载工具实际配置选择；代理流量保护会限制自动媒体读取。": ["Match the mount configuration; metered protection limits automatic media reads.", "เลือกตามการตั้งค่าเมานต์ การป้องกันข้อมูลจำกัดการอ่านสื่ออัตโนมัติ"],
-  "媒体目录路径": ["Media folder path", "พาธโฟลเดอร์สื่อ"],
-  "正在读取资源搜索设置": ["Loading resource search settings", "กำลังโหลดค่าค้นหาแหล่งไฟล์"],
-  "详细配置说明": ["Configuration guide", "คู่มือตั้งค่า"],
-  "索引器提供的 API 地址": ["Indexer API address", "ที่อยู่ API ของตัวค้นหา"],
-  "启用": ["Enable", "เปิดใช้งาน"],
-  "清除已保存的 API key": ["Clear saved API key", "ล้าง API key ที่บันทึก"],
-  "移除索引器": ["Remove indexer", "นำตัวค้นหาออก"],
-  "正在读取浏览器添加设置": ["Loading browser add settings", "กำลังโหลดค่าเพิ่มจากเบราว์เซอร์"],
-  "请先保存所选网盘的账号和目标目录。": ["Save the selected cloud account and destination folder first.", "บันทึกบัญชีคลาวด์และโฟลเดอร์ปลายทางก่อน"],
-  "选择媒体库图标": ["Choose library icon", "เลือกไอคอนคลัง"],
-  "可选图标": ["Available icons", "ไอคอนที่เลือกได้"],
-  "应用": ["Apply", "นำไปใช้"],
-  "上传馆藏与口味明细": ["Upload library and preference details", "ส่งรายละเอียดคลังและความชอบ"],
-  "上传服务未配置。": ["Upload service is not configured.", "ยังไม่ได้ตั้งค่าบริการส่งข้อมูล"],
-  "馆藏与口味上传失败，自动重试。": ["Library and preference upload failed; retrying automatically.", "ส่งคลังและความชอบไม่สำเร็จ จะลองใหม่อัตโนมัติ"],
-  "当前预览包含": ["This preview contains", "ตัวอย่างนี้ประกอบด้วย"],
-  "部有编号作品、": ["coded titles,", "ผลงานที่มีรหัส"],
-  "条无编号馆藏的汇总，约": ["uncoded library summaries, approximately", "สรุปรายการที่ไม่มีรหัส ประมาณ"],
-  "馆藏与口味上传预览": ["Library and preference upload preview", "ตัวอย่างข้อมูลคลังและความชอบที่จะส่ง"],
-  "显示前 24,000 个字符，下载可查看完整内容。": ["Showing the first 24,000 characters. Download to view all.", "แสดง 24,000 ตัวอักษรแรก ดาวน์โหลดเพื่อดูทั้งหมด"],
-  "下载完整预览": ["Download full preview", "ดาวน์โหลดตัวอย่างทั้งหมด"],
-  "我已查看上传预览，同意上传馆藏与口味明细": ["I reviewed the preview and consent to uploading library and preference details", "ฉันตรวจตัวอย่างแล้วและยินยอมส่งรายละเอียดคลังและความชอบ"],
-  "预览上传内容": ["Preview upload", "ดูตัวอย่างข้อมูลที่จะส่ง"],
-  "同意并开启上传": ["Agree and enable uploads", "ยินยอมและเปิดการส่งข้อมูล"],
-  "安装教程": ["Setup tutorial", "คู่มือตั้งค่าเริ่มต้น"],
-  "重新打开教程": ["Reopen tutorial", "เปิดคู่มืออีกครั้ง"],
-  "自动更新": ["Automatic updates", "อัปเดตอัตโนมัติ"],
-  "自动检查新版本": ["Check for new versions automatically", "ตรวจเวอร์ชันใหม่อัตโนมัติ"],
-  "自动下载更新": ["Download updates automatically", "ดาวน์โหลดอัปเดตอัตโนมัติ"],
-  "检查频率": ["Check frequency", "ความถี่ตรวจสอบ"],
-  "运行信息": ["Runtime information", "ข้อมูลการทำงาน"],
-  "卸载 Peach": ["Uninstall Peach", "ถอนการติดตั้ง Peach"],
-  "卸载移除 Peach 程序本身，原始媒体文件保留。": ["Uninstalling removes Peach and keeps original media files.", "การถอนการติดตั้งจะนำ Peach ออก แต่เก็บไฟล์สื่อต้นฉบับ"],
-  "完全卸载": ["Complete uninstall", "ถอนการติดตั้งทั้งหมด"],
-  "同时删除设置、本地数据库、观看记录、凭据和缓存": ["Also delete settings, local database, watch history, credentials and cache", "ลบการตั้งค่า ฐานข้อมูล ประวัติการดู ข้อมูลเข้าสู่ระบบ และแคชด้วย"],
-  "正在保存…": ["Saving…", "กำลังบันทึก…"],
-  "只读": ["Read only", "อ่านอย่างเดียว"],
-  "配置已保存": ["Settings saved", "บันทึกการตั้งค่าแล้ว"],
-  "Peach 正在重新启动。稍后自动跳转，或点击": ["Peach is restarting. You will be redirected, or choose", "Peach กำลังเริ่มใหม่ จะเปลี่ยนหน้าอัตโนมัติ หรือเลือก"],
-  "进入馆藏": ["Open library", "เปิดคลัง"],
-  "媒体库名称": ["Library name", "ชื่อคลัง"],
-  "未检测到": ["Not detected", "ตรวจไม่พบ"],
-  "下载": ["Download", "ดาวน์โหลด"],
-  "没有保存": ["Not saved", "ยังไม่บันทึก"],
-  "挂载状态": ["Mount status", "สถานะเมานต์"],
-  "刷新挂载状态": ["Refresh mount status", "รีเฟรชสถานะเมานต์"],
-  "Peach 代理": ["Peach proxy", "พร็อกซี Peach"],
-  "连接方式": ["Connection method", "วิธีเชื่อมต่อ"],
-  "代理地址": ["Proxy address", "ที่อยู่พร็อกซี"],
-  "需要选择连接方式": ["Choose a connection method", "เลือกวิธีเชื่อมต่อ"],
-  "已有来源的代理地址不同，请选择公共连接方式。": ["Sources have different proxy addresses. Choose a shared connection method.", "แหล่งข้อมูลใช้พร็อกซีต่างกัน โปรดเลือกวิธีเชื่อมต่อร่วม"],
-  "本机访问端口": ["Local access port", "พอร์ตเข้าใช้งานในเครื่อง"],
-  "Peach 正在重新启动。": ["Peach is restarting.", "Peach กำลังเริ่มใหม่"],
-  "端口": ["Port", "พอร์ต"],
-  "Webhook 配置": ["Webhook settings", "ตั้งค่า Webhook"],
-  "CloudDrive2 配置": ["CloudDrive2 settings", "ตั้งค่า CloudDrive2"],
-  "云端路径前缀": ["Cloud path prefix", "คำนำหน้าพาธคลาวด์"],
-  "移除这一条": ["Remove this entry", "นำรายการนี้ออก"],
-  "添加前缀": ["Add prefix", "เพิ่มคำนำหน้า"],
-  "更换密钥": ["Replace secret", "เปลี่ยนคีย์"],
-  "检查更新": ["Check for updates", "ตรวจอัปเดต"],
-  "本次更新包含媒体工具。": ["This update includes media tools.", "อัปเดตนี้มีเครื่องมือสื่อด้วย"],
-  "检查于": ["Checked at", "ตรวจเมื่อ"],
-  "有可用更新": ["Update available", "มีอัปเดต"],
-  "更新准备进度": ["Update preparation", "ความคืบหน้าการเตรียมอัปเดต"],
-  "下载 → 校验 → 解压 → 准备安装 ·": ["Download → Verify → Extract → Prepare installation ·", "ดาวน์โหลด → ตรวจสอบ → แตกไฟล์ → เตรียมติดตั้ง ·"],
-  "查看发布页": ["View release", "ดูหน้าเผยแพร่"],
-  "重启安装": ["Restart and install", "เริ่มใหม่และติดตั้ง"],
-  "下载并安装": ["Download and install", "ดาวน์โหลดและติดตั้ง"],
-  "发送版本统计与错误诊断（推荐）": ["Send version statistics and error diagnostics (recommended)", "ส่งสถิติเวอร์ชันและข้อมูลวินิจฉัยข้อผิดพลาด (แนะนำ)"],
-  "上传版本、系统信息、故障类型、代码位置与发生次数。": ["Send version, system information, error type, code location and occurrence count.", "ส่งเวอร์ชัน ข้อมูลระบบ ชนิดข้อผิดพลาด ตำแหน่งโค้ด และจำนวนครั้ง"],
-  "时间轴缩略图": ["Timeline thumbnails", "ภาพย่อไทม์ไลน์"],
-  "按所选间隔抽帧，仅处理本机磁盘上的视频。": ["Extract frames at the selected interval from local videos only.", "ดึงภาพตามช่วงที่เลือก เฉพาะวิดีโอบนดิสก์ในเครื่อง"],
-  "缩略图采集间隔": ["Thumbnail interval", "ช่วงเวลาภาพย่อ"],
-  "头像刷新": ["Avatar refresh", "รีเฟรชรูปประจำตัว"],
-  "每 3 个月": ["Every 3 months", "ทุก 3 เดือน"],
-  "favicon 刷新": ["Site icon refresh", "รีเฟรชไอคอนเว็บไซต์"],
-  "每年": ["Yearly", "ทุกปี"],
-  "自动检查间隔": ["Automatic check interval", "ช่วงเวลาตรวจอัตโนมัติ"],
-  "请输入 15–10080 的整数（分钟）。": ["Enter an integer from 15 to 10080 minutes.", "กรอกจำนวนเต็ม 15–10080 นาที"],
-  "采集来源与登录状态": ["Sources and sign-in status", "แหล่งข้อมูลและสถานะเข้าสู่ระบบ"],
-  "来源凭据未取得": ["Source credentials unavailable", "ไม่พบข้อมูลเข้าสู่ระบบแหล่งข้อมูล"],
-  "正在读取来源凭据": ["Loading source credentials", "กำลังโหลดข้อมูลเข้าสู่ระบบแหล่งข้อมูล"],
-  "Cloudflare 公网入口": ["Cloudflare public access", "ทางเข้าสาธารณะ Cloudflare"],
-  "公网入口的形态（二选一）": ["Public access mode (choose one)", "รูปแบบทางเข้าสาธารณะ (เลือกหนึ่ง)"],
-  "公开主机名": ["Public hostname", "ชื่อโฮสต์สาธารณะ"],
-  "隧道令牌": ["Tunnel token", "โทเคน Tunnel"],
-  "找不到 cloudflared": ["cloudflared not found", "ไม่พบ cloudflared"],
-  "公网地址": ["Public address", "ที่อยู่สาธารณะ"],
-  "正在连接": ["Connecting", "กำลังเชื่อมต่อ"],
-  "色系": ["Palette", "ชุดสี"],
-  "侧栏光晕参数": ["Sidebar glow settings", "ตั้งค่าแสงแถบด้านข้าง"],
-  "当前配色": ["Current palette", "ชุดสีปัจจุบัน"],
-  "光晕配色": ["Glow palette", "ชุดสีแสง"],
-  "这一档用每块玻璃自带的反光，颜色跟着明暗主题走。": ["This mode uses each glass surface reflection and follows the theme.", "โหมดนี้ใช้แสงสะท้อนของพื้นผิวตามธีม"],
-  "设置分区": ["Settings sections", "หมวดการตั้งค่า"],
-  "相关推荐数量": ["Related recommendation count", "จำนวนรายการแนะนำที่เกี่ยวข้อง"],
-  "口味与记录": ["Preferences and history", "ความชอบและประวัติ"],
-  "打开口味与记录": ["Open preferences and history", "เปิดความชอบและประวัติ"],
-  "SFW 模式": ["SFW mode", "โหมดปลอดภัยต่อที่ทำงาน"],
-  "隐藏敏感画面，停止悬停预览。": ["Hide sensitive images and disable hover previews.", "ซ่อนภาพละเอียดอ่อนและหยุดตัวอย่างเมื่อชี้เมาส์"],
-  "每批加载作品": ["Titles per batch", "ผลงานต่อชุด"],
-  "每批作品": ["Batch size", "ขนาดชุด"],
-  "默认排序": ["Default sort", "การเรียงเริ่มต้น"],
-  "默认排序方向": ["Default sort direction", "ทิศทางการเรียงเริ่มต้น"],
-  "视频卡片大小": ["Video card size", "ขนาดการ์ดวิดีโอ"],
-  "作品显示": ["Title display", "การแสดงผลงาน"],
-  "默认图片": ["Default image", "ภาพเริ่มต้น"],
-  "合并分卷与版本": ["Group parts and versions", "รวมพาร์ตและเวอร์ชัน"],
-  "新作显示": ["New release display", "การแสดงผลงานใหม่"],
-  "新作自动滚动": ["Scroll new releases automatically", "เลื่อนผลงานใหม่อัตโนมัติ"],
-  "悬停预览延迟": ["Hover preview delay", "หน่วงตัวอย่างเมื่อชี้เมาส์"],
-  "打开详情自动播放": ["Autoplay details", "เล่นอัตโนมัติเมื่อเปิดรายละเอียด"],
-  "离开详情后小窗播放": ["Keep playing in mini player", "เล่นต่อในหน้าต่างเล็ก"],
-  "快进 / 快退步长": ["Seek step", "ช่วงเลื่อนไปหน้าและหลัง"],
-  "快进 / 快退": ["Seek forward / backward", "เลื่อนไปหน้า / หลัง"],
-  "搜索记录数量": ["Search history limit", "จำนวนประวัติค้นหา"],
-  "搜索记录": ["Search history", "ประวัติค้นหา"],
-  "上移": ["Move up", "เลื่อนขึ้น"],
-  "下移": ["Move down", "เลื่อนลง"],
-  "隐藏": ["Hide", "ซ่อน"],
-  "全部页面都已显示": ["All pages are visible", "แสดงทุกหน้าแล้ว"],
-  "选择要添加的页面": ["Choose a page to add", "เลือกหน้าที่จะเพิ่ม"],
-  "筛选与排序": ["Filter and sort", "กรองและเรียง"],
-  "视图": ["View", "มุมมอง"],
-  "竖屏": ["Portrait", "แนวตั้ง"],
-  "全选本页作品": ["Select all titles on this page", "เลือกผลงานทั้งหมดในหน้านี้"],
-  "作品列表工具栏": ["Title list toolbar", "แถบเครื่องมือรายการผลงาน"],
-  "作品列表": ["Title list", "รายการผลงาน"],
-  "正在读取作品列表": ["Loading titles", "กำลังโหลดผลงาน"],
-  "无预览": ["No preview", "ไม่มีตัวอย่าง"],
-  "馆藏显示方式": ["Library view", "รูปแบบแสดงคลัง"]
+  "视图与标签": [
+    "Views and tags",
+    "มุมมองและแท็ก"
+  ],
+  "打开文件夹目录": [
+    "Open folder navigation",
+    "เปิดรายการโฟลเดอร์"
+  ],
+  "文件夹路径": [
+    "Folder path",
+    "พาธโฟลเดอร์"
+  ],
+  "全部文件夹": [
+    "All folders",
+    "โฟลเดอร์ทั้งหมด"
+  ],
+  "设置目录用途": [
+    "Set folder purpose",
+    "ตั้งค่าการใช้งานโฟลเดอร์"
+  ],
+  "项保留现有归属": [
+    "items keep their current assignments",
+    "รายการคงการจัดหมวดเดิม"
+  ],
+  "包含子文件夹": [
+    "Include subfolders",
+    "รวมโฟลเดอร์ย่อย"
+  ],
+  "个人分类": [
+    "Personal category",
+    "หมวดส่วนตัว"
+  ],
+  "正在读取文件夹": [
+    "Loading folders",
+    "กำลังโหลดโฟลเดอร์"
+  ],
+  "子文件夹": [
+    "Subfolders",
+    "โฟลเดอร์ย่อย"
+  ],
+  "文件夹目录": [
+    "Folder navigation",
+    "รายการโฟลเดอร์"
+  ],
+  "文件夹": [
+    "Folders",
+    "โฟลเดอร์"
+  ],
+  "关闭文件夹目录": [
+    "Close folder navigation",
+    "ปิดรายการโฟลเดอร์"
+  ],
+  "文件夹导航": [
+    "Folder navigation",
+    "เมนูโฟลเดอร์"
+  ],
+  "查找文件夹": [
+    "Find a folder",
+    "ค้นหาโฟลเดอร์"
+  ],
+  "正在读取目录树": [
+    "Loading folder tree",
+    "กำลังโหลดโครงสร้างโฟลเดอร์"
+  ],
+  "正在查找文件夹": [
+    "Finding folders",
+    "กำลังค้นหาโฟลเดอร์"
+  ],
+  "没有匹配的文件夹": [
+    "No matching folders",
+    "ไม่พบโฟลเดอร์ที่ตรงกัน"
+  ],
+  "换个目录名称试试。": [
+    "Try another folder name.",
+    "ลองใช้ชื่อโฟลเดอร์อื่น"
+  ],
+  "关闭目录用途": [
+    "Close folder purpose",
+    "ปิดการใช้งานโฟลเดอร์"
+  ],
+  "这个文件夹用于": [
+    "Use this folder for",
+    "ใช้โฟลเดอร์นี้สำหรับ"
+  ],
+  "关联名称": [
+    "Associated name",
+    "ชื่อที่เชื่อมโยง"
+  ],
+  "输入人物、账号或厂牌名称": [
+    "Enter a person, account or studio name",
+    "กรอกชื่อบุคคล บัญชี หรือค่าย"
+  ],
+  "应用到子文件夹": [
+    "Apply to subfolders",
+    "ใช้กับโฟลเดอร์ย่อย"
+  ],
+  "新文件沿用此规则": [
+    "Apply this rule to new files",
+    "ใช้กฎนี้กับไฟล์ใหม่"
+  ],
+  "目录用途影响范围": [
+    "Folder rule scope",
+    "ขอบเขตกฎโฟลเดอร์"
+  ],
+  "项 · 可应用": [
+    "items · Applicable",
+    "รายการ · ใช้ได้"
+  ],
+  "项": [
+    "items",
+    "รายการ"
+  ],
+  " · 保留现有归属 {0} 项": [
+    " · Keep {0} existing assignments",
+    " · คงการจัดหมวดเดิม {0} รายการ"
+  ],
+  "撤回此规则已有的": [
+    "Remove this rule's existing",
+    "ยกเลิกความเชื่อมโยงเดิมของกฎนี้"
+  ],
+  "项关联，再按当前范围应用。": [
+    "associations, then apply the current scope.",
+    "รายการ แล้วใช้ตามขอบเขตปัจจุบัน"
+  ],
+  "已有归属或逐件确认的内容保留，目录规则只应用到其余内容。": [
+    "Existing assignments and individually confirmed items are kept. The folder rule applies to the remaining items.",
+    "คงการจัดหมวดเดิมและรายการที่ยืนยันเป็นรายชิ้นไว้ กฎโฟลเดอร์จะใช้กับรายการที่เหลือ"
+  ],
+  "移除规则": [
+    "Remove rule",
+    "นำกฎออก"
+  ],
+  "保存目录用途": [
+    "Save folder purpose",
+    "บันทึกการใช้งานโฟลเดอร์"
+  ],
+  "预览影响": [
+    "Preview affected items",
+    "ดูตัวอย่างรายการที่ได้รับผล"
+  ],
+  "载入更多": [
+    "Load more",
+    "โหลดเพิ่มเติม"
+  ],
+  "{0} 个": [
+    "{0} items",
+    "{0} รายการ"
+  ],
+  "选择 {0}": [
+    "Select {0}",
+    "เลือก {0}"
+  ],
+  "打开 {0}": [
+    "Open {0}",
+    "เปิด {0}"
+  ],
+  "未检测": [
+    "Not checked",
+    "ยังไม่ตรวจ"
+  ],
+  "全选{0}": [
+    "Select all {0}",
+    "เลือก{0}ทั้งหมด"
+  ],
+  "{0}工具栏": [
+    "{0} toolbar",
+    "แถบเครื่องมือ{0}"
+  ],
+  "{0}批量操作": [
+    "{0} bulk actions",
+    "จัดการ{0}หลายรายการ"
+  ],
+  "取消选择": [
+    "Clear selection",
+    "ยกเลิกการเลือก"
+  ],
+  "收起排名": [
+    "Collapse rankings",
+    "ยุบอันดับ"
+  ],
+  "展开更多排名": [
+    "Show more rankings",
+    "แสดงอันดับเพิ่มเติม"
+  ],
+  "系列": [
+    "Series",
+    "ซีรีส์"
+  ],
+  "中文": [
+    "中文",
+    "中文"
+  ],
+  "无法保存语言": [
+    "Could not save the language",
+    "ไม่สามารถบันทึกภาษาได้"
+  ],
+  "归入原因：{0}": [
+    "Assignment reason: {0}",
+    "เหตุผลที่จัดหมวด: {0}"
+  ],
+  "正在{0}": [
+    "In progress: {0}",
+    "กำลัง{0}"
+  ],
+  "打开{0}页：{1}": [
+    "Open {0}: {1}",
+    "เปิดหน้า{0}: {1}"
+  ],
+  "打开{0}页": [
+    "Open {0} page",
+    "เปิดหน้า{0}"
+  ],
+  "等 {0} 人": [
+    "and others · {0} people",
+    "และคนอื่น ๆ รวม {0} คน"
+  ],
+  "{0} 卷": [
+    "{0} parts",
+    "{0} พาร์ต"
+  ],
+  "{0} 个版本": [
+    "{0} versions",
+    "{0} เวอร์ชัน"
+  ],
+  "观看进度": [
+    "Playback progress",
+    "ความคืบหน้าการรับชม"
+  ],
+  "后退 {0} 秒": [
+    "Back {0} seconds",
+    "ย้อนกลับ {0} วินาที"
+  ],
+  "前进 {0} 秒": [
+    "Forward {0} seconds",
+    "ไปข้างหน้า {0} วินาที"
+  ],
+  "打开 {0}{1}": [
+    "Open {0} {1}",
+    "เปิด {0} {1}"
+  ],
+  "大小未知": [
+    "Unknown size",
+    "ไม่ทราบขนาด"
+  ],
+  "看过 {0}": [
+    "Watched {0}",
+    "ดูแล้ว {0}"
+  ],
+  "第 {0} 张，共 {1} 张": [
+    "Image {0} of {1}",
+    "ภาพที่ {0} จาก {1}"
+  ],
+  "第 {0} 张": [
+    "Image {0}",
+    "ภาพที่ {0}"
+  ],
+  "上一项媒体": [
+    "Previous media",
+    "สื่อก่อนหน้า"
+  ],
+  "上一张图片": [
+    "Previous image",
+    "ภาพก่อนหน้า"
+  ],
+  "上一张": [
+    "Previous",
+    "ก่อนหน้า"
+  ],
+  "下一项媒体": [
+    "Next media",
+    "สื่อถัดไป"
+  ],
+  "下一张图片": [
+    "Next image",
+    "ภาพถัดไป"
+  ],
+  "下一张": [
+    "Next",
+    "ถัดไป"
+  ],
+  "媒体缩略图": [
+    "Media thumbnails",
+    "ภาพย่อสื่อ"
+  ],
+  "切换到{0}": [
+    "Switch to {0}",
+    "เปลี่ยนเป็น{0}"
+  ],
+  "打开资料页：{0}": [
+    "Open profile: {0}",
+    "เปิดหน้าข้อมูล: {0}"
+  ],
+  "{0} 个视频": [
+    "{0} videos",
+    "วิดีโอ {0} รายการ"
+  ],
+  "在资源管理器中显示": [
+    "Show in file manager",
+    "แสดงในตัวจัดการไฟล์"
+  ],
+  "接着看": [
+    "Continue watching",
+    "ดูต่อ"
+  ],
+  "暂无接着看的内容": [
+    "Nothing to continue watching",
+    "ยังไม่มีรายการให้ดูต่อ"
+  ],
+  "可以回到列表挑选其他作品。": [
+    "Return to the list to choose another title.",
+    "กลับไปเลือกรายการอื่นในคลังได้"
+  ],
+  "{0} 封面": [
+    "{0} cover",
+    "ปก {0}"
+  ],
+  "{0} 预览 {1}": [
+    "{0} preview {1}",
+    "ตัวอย่าง {0} {1}"
+  ],
+  "正在读取预览": [
+    "Loading preview",
+    "กำลังโหลดตัวอย่าง"
+  ],
+  "预览未取得": [
+    "Preview unavailable",
+    "ไม่พบตัวอย่าง"
+  ],
+  "正在读取图片": [
+    "Loading image",
+    "กำลังโหลดภาพ"
+  ],
+  "{0}排序": [
+    "{0} sorting",
+    "เรียง{0}"
+  ],
+  "默认顺序": [
+    "Default order",
+    "ลำดับเริ่มต้น"
+  ],
+  "{0}改为{1}": [
+    "Set {0} to {1}",
+    "เปลี่ยน{0}เป็น{1}"
+  ],
+  "每页显示数量": [
+    "Items per page",
+    "จำนวนรายการต่อหน้า"
+  ],
+  "{0}分页": [
+    "{0} pagination",
+    "เปลี่ยนหน้า{0}"
+  ],
+  "上一页": [
+    "Previous page",
+    "หน้าก่อน"
+  ],
+  "第 {0} 页": [
+    "Page {0}",
+    "หน้าที่ {0}"
+  ],
+  "下一页": [
+    "Next page",
+    "หน้าถัดไป"
+  ],
+  "媒体与标签": [
+    "Media and tags",
+    "สื่อและแท็ก"
+  ],
+  "在线媒体类型": [
+    "Online media type",
+    "ประเภทสื่อออนไลน์"
+  ],
+  "来源：{0}": [
+    "Source: {0}",
+    "แหล่งข้อมูล: {0}"
+  ],
+  "撤掉 {0}": [
+    "Remove {0}",
+    "นำ {0} ออก"
+  ],
+  "全部清除": [
+    "Clear all",
+    "ล้างทั้งหมด"
+  ],
+  "全部照片": [
+    "All photos",
+    "รูปภาพทั้งหมด"
+  ],
+  "JAV 卡片版式": [
+    "JAV card layout",
+    "รูปแบบการ์ด JAV"
+  ],
+  "图片布局": [
+    "Image layout",
+    "รูปแบบภาพ"
+  ],
+  "仅显示图片": [
+    "Images only",
+    "แสดงเฉพาะภาพ"
+  ],
+  "外部播放器 / VR": [
+    "External player / VR",
+    "โปรแกรมเล่นภายนอก / VR"
+  ],
+  "此设备的外部播放器": [
+    "External player on this device",
+    "โปรแกรมเล่นภายนอกบนอุปกรณ์นี้"
+  ],
+  "生成播放链接": [
+    "Generate playback link",
+    "สร้างลิงก์สำหรับเล่น"
+  ],
+  "下载 M3U 播放列表": [
+    "Download M3U playlist",
+    "ดาวน์โหลดเพลย์ลิสต์ M3U"
+  ],
+  "网络播放地址": [
+    "Network playback URL",
+    "URL สำหรับเล่นผ่านเครือข่าย"
+  ],
+  "链接有效期为 6 小时。VR 播放器可使用网络播放地址；另一台设备需要能访问当前 Peach 地址。": [
+    "Links expire after 6 hours. VR players can use the network URL. Other devices must be able to reach this Peach address.",
+    "ลิงก์มีอายุ 6 ชั่วโมง โปรแกรม VR ใช้ URL เครือข่ายนี้ได้ อุปกรณ์อื่นต้องเข้าถึงที่อยู่ Peach นี้ได้"
+  ],
+  "查看图片": [
+    "View image",
+    "ดูภาพ"
+  ],
+  "播放正片": [
+    "Play video",
+    "เล่นวิดีโอ"
+  ],
+  "正在读取样图": [
+    "Loading sample images",
+    "กำลังโหลดภาพตัวอย่าง"
+  ],
+  "重试样图": [
+    "Retry sample images",
+    "โหลดภาพตัวอย่างอีกครั้ง"
+  ],
+  "ISO 原盘": [
+    "ISO disc image",
+    "ไฟล์แผ่น ISO"
+  ],
+  "请使用支持原盘的外部播放器打开。": [
+    "Open with an external player that supports disc images.",
+    "เปิดด้วยโปรแกรมเล่นภายนอกที่รองรับไฟล์แผ่น"
+  ],
+  "在线作品": [
+    "Online title",
+    "ผลงานออนไลน์"
+  ],
+  "这条没有对应的关注条目，媒体地址无从解析。": [
+    "No matching followed entry is available to resolve the media URL.",
+    "ไม่มีรายการติดตามที่ตรงกัน จึงหาที่อยู่สื่อไม่ได้"
+  ],
+  "打开已保存关注": [
+    "Open saved follow",
+    "เปิดรายการติดตามที่บันทึกไว้"
+  ],
+  "点此开始拉流 ·": [
+    "Click to start streaming ·",
+    "กดเพื่อเริ่มสตรีม ·"
+  ],
+  "媒体目录无法访问": [
+    "Media folder is inaccessible",
+    "เข้าถึงโฟลเดอร์สื่อไม่ได้"
+  ],
+  "仍无法读取 · 刷新": [
+    "Still inaccessible · Refresh",
+    "ยังอ่านไม่ได้ · รีเฟรช"
+  ],
+  "刷新状态": [
+    "Refresh status",
+    "รีเฟรชสถานะ"
+  ],
+  "保存为播放列表": [
+    "Save as playlist",
+    "บันทึกเป็นเพลย์ลิสต์"
+  ],
+  "编辑播放列表": [
+    "Edit playlist",
+    "แก้ไขเพลย์ลิสต์"
+  ],
+  "文件已不在盘上，不能播放": [
+    "File is missing from the drive and cannot be played",
+    "ไฟล์ไม่อยู่ในไดรฟ์แล้ว จึงเล่นไม่ได้"
+  ],
+  "已消失 · 文件已不在盘上": [
+    "Missing · File is no longer on the drive",
+    "ไฟล์หาย · ไม่พบไฟล์ในไดรฟ์แล้ว"
+  ],
+  "已判定的产地；打开同产地的作品": [
+    "Confirmed region; open titles from this region",
+    "ภูมิภาคที่ยืนยันแล้ว เปิดผลงานจากภูมิภาคนี้"
+  ],
+  "按番号或厂牌推断的产地，批量判定后不再变；打开同产地的作品": [
+    "Region inferred from the code or studio and fixed after batch confirmation; open titles from this region",
+    "ภูมิภาคที่คาดจากรหัสหรือค่าย จะคงที่เมื่อยืนยันเป็นชุด เปิดผลงานจากภูมิภาคนี้"
+  ],
+  "（推断）": [
+    "(inferred)",
+    "(คาดการณ์)"
+  ],
+  "取消喜欢": [
+    "Remove like",
+    "ยกเลิกถูกใจ"
+  ],
+  "喜欢": [
+    "Like",
+    "ถูกใจ"
+  ],
+  "喜欢 · 记录口味偏好": [
+    "Like · Save your preference",
+    "ถูกใจ · บันทึกความชอบ"
+  ],
+  "喜爱理由": [
+    "Reason for liking",
+    "เหตุผลที่ถูกใจ"
+  ],
+  "不合口味": [
+    "Not for me",
+    "ไม่ตรงความชอบ"
+  ],
+  "不合口味 · 降低推荐权重": [
+    "Not for me · Recommend less",
+    "ไม่ตรงความชอบ · แนะนำน้อยลง"
+  ],
+  "看过了": [
+    "Already watched",
+    "ดูแล้ว"
+  ],
+  "看过了 · 只降低近期推荐": [
+    "Already watched · Recommend less for now",
+    "ดูแล้ว · ลดการแนะนำช่วงนี้"
+  ],
+  "稍后看 · 加入或移出队列": [
+    "Watch later · Add to or remove from queue",
+    "ดูภายหลัง · เพิ่มหรือนำออกจากคิว"
+  ],
+  "加入播放列表": [
+    "Add to playlist",
+    "เพิ่มในเพลย์ลิสต์"
+  ],
+  "寻找更好版本": [
+    "Find a better version",
+    "หาเวอร์ชันที่ดีกว่า"
+  ],
+  "寻找高清、无水印或完整版": [
+    "Find a higher-resolution, watermark-free or complete version",
+    "หาเวอร์ชันความละเอียดสูง ไม่มีลายน้ำ หรือฉบับเต็ม"
+  ],
+  "移入回收站 · 文件仍保留，可从回收站永久清除": [
+    "Move to trash · Keep the file until permanently deleted from trash",
+    "ย้ายไปถังขยะ · เก็บไฟล์ไว้จนกว่าจะลบถาวรจากถังขยะ"
+  ],
+  "记一次高潮": [
+    "Record a climax",
+    "บันทึกไคลแมกซ์หนึ่งครั้ง"
+  ],
+  "收起标题": [
+    "Collapse title",
+    "ย่อชื่อเรื่อง"
+  ],
+  "展开标题": [
+    "Expand title",
+    "ขยายชื่อเรื่อง"
+  ],
+  "展开完整标题": [
+    "Show full title",
+    "แสดงชื่อเรื่องเต็ม"
+  ],
+  "在文件管理器里打开源文件所在目录": [
+    "Open the source folder in the file manager",
+    "เปิดโฟลเดอร์ไฟล์ต้นฉบับในตัวจัดการไฟล์"
+  ],
+  "定位源文件": [
+    "Locate source file",
+    "ค้นหาตำแหน่งไฟล์ต้นฉบับ"
+  ],
+  "核对该目录：磁盘上已删除的移入 Peach 回收站，带个人记录的标为已消失": [
+    "Check this folder: move deleted files to Peach trash and mark files with personal records as missing",
+    "ตรวจโฟลเดอร์นี้ ย้ายรายการที่ลบจากดิสก์แล้วไปถังขยะ Peach และทำเครื่องหมายไฟล์ที่มีประวัติส่วนตัวว่าหาย"
+  ],
+  "同步删除": [
+    "Sync deleted files",
+    "ซิงก์รายการที่ลบ"
+  ],
+  "再点一次取消评分": [
+    "Click again to clear the rating",
+    "กดอีกครั้งเพื่อล้างคะแนน"
+  ],
+  "{0} 星": [
+    "{0} stars",
+    "{0} ดาว"
+  ],
+  "取消评分（当前 {0} 星）": [
+    "Clear rating (currently {0} stars)",
+    "ล้างคะแนน (ปัจจุบัน {0} ดาว)"
+  ],
+  "评为 {0} 星": [
+    "Rate {0} stars",
+    "ให้ {0} ดาว"
+  ],
+  "归属": [
+    "Assignments",
+    "การจัดหมวด"
+  ],
+  "打开未归属：馆藏里没有署名人的作品": [
+    "Open unassigned titles without credited people",
+    "เปิดผลงานในคลังที่ยังไม่มีผู้ได้รับเครดิต"
+  ],
+  "还有": [
+    "and",
+    "และอีก"
+  ],
+  "位": [
+    "people",
+    "คน"
+  ],
+  "从此视频隐藏该标签": [
+    "Hide this tag on this video",
+    "ซ่อนแท็กนี้จากวิดีโอนี้"
+  ],
+  "删除标签 {0}": [
+    "Delete tag {0}",
+    "ลบแท็ก {0}"
+  ],
+  "添加标签": [
+    "Add tag",
+    "เพิ่มแท็ก"
+  ],
+  "搜索或输入新标签": [
+    "Search or enter a new tag",
+    "ค้นหาหรือกรอกแท็กใหม่"
+  ],
+  "最近使用": [
+    "Recently used",
+    "ใช้ล่าสุด"
+  ],
+  "搜索结果": [
+    "Search results",
+    "ผลการค้นหา"
+  ],
+  "全部标签": [
+    "All tags",
+    "แท็กทั้งหมด"
+  ],
+  "新建“": [
+    "Create “",
+    "สร้าง “"
+  ],
+  "离开位置": [
+    "Resume position",
+    "ตำแหน่งที่หยุดดู"
+  ],
+  "真实观看": [
+    "Watch time",
+    "เวลาที่รับชมจริง"
+  ],
+  "为什么喜欢？": [
+    "Why do you like it?",
+    "ชอบเพราะอะไร?"
+  ],
+  "提交喜爱理由": [
+    "Save reason for liking",
+    "บันทึกเหตุผลที่ถูกใจ"
+  ],
+  "补全预览": [
+    "Complete previews",
+    "เติมตัวอย่างให้ครบ"
+  ],
+  "查看并处理": [
+    "Review and process",
+    "ตรวจสอบและประมวลผล"
+  ],
+  "查看处理详情": [
+    "View processing details",
+    "ดูรายละเอียดการประมวลผล"
+  ],
+  "处理较慢": [
+    "Processing is slow",
+    "ประมวลผลช้า"
+  ],
+  "处理未完成，请重试": [
+    "Processing incomplete; retry",
+    "ประมวลผลไม่สำเร็จ โปรดลองอีกครั้ง"
+  ],
+  "处理完成": [
+    "Processing complete",
+    "ประมวลผลเสร็จแล้ว"
+  ],
+  "扫描与采集": [
+    "Scan and collect metadata",
+    "สแกนและเก็บข้อมูล"
+  ],
+  "已暂停": [
+    "Paused",
+    "หยุดชั่วคราว"
+  ],
+  "当前阶段完成率": [
+    "Current stage progress",
+    "ความคืบหน้าขั้นตอนปัจจุบัน"
+  ],
+  "扫描任务": [
+    "Scan task",
+    "งานสแกน"
+  ],
+  "收起任务详情": [
+    "Collapse task details",
+    "ยุบรายละเอียดงาน"
+  ],
+  "展开任务详情": [
+    "Expand task details",
+    "ขยายรายละเอียดงาน"
+  ],
+  "处理步骤": [
+    "Processing steps",
+    "ขั้นตอนประมวลผล"
+  ],
+  "已完成：": [
+    "Completed: ",
+    "เสร็จแล้ว: "
+  ],
+  "当前：": [
+    "Current: ",
+    "ปัจจุบัน: "
+  ],
+  "待处理：": [
+    "Pending: ",
+    "รอดำเนินการ: "
+  ],
+  "当前阶段 ·": [
+    "Current stage ·",
+    "ขั้นตอนปัจจุบัน ·"
+  ],
+  "当前步骤耗时较长，正在等待进展": [
+    "This step is taking longer; waiting for progress",
+    "ขั้นตอนนี้ใช้เวลานาน กำลังรอความคืบหน้า"
+  ],
+  "任务详情": [
+    "Task details",
+    "รายละเอียดงาน"
+  ],
+  "更多同步方式": [
+    "More sync options",
+    "วิธีซิงก์เพิ่มเติม"
+  ],
+  "同步方式": [
+    "Sync method",
+    "วิธีซิงก์"
+  ],
+  "请先在媒体库设置中开启视频预览生成": [
+    "Enable video preview generation in library settings first",
+    "เปิดการสร้างตัวอย่างวิดีโอในตั้งค่าคลังก่อน"
+  ],
+  "处理速度：{0}": [
+    "Processing speed: {0}",
+    "ความเร็วประมวลผล: {0}"
+  ],
+  "处理速度": [
+    "Processing speed",
+    "ความเร็วประมวลผล"
+  ],
+  "处理强度": [
+    "Processing intensity",
+    "ระดับการประมวลผล"
+  ],
+  "最慢": [
+    "Slowest",
+    "ช้าที่สุด"
+  ],
+  "标准": [
+    "Standard",
+    "มาตรฐาน"
+  ],
+  "最快": [
+    "Fastest",
+    "เร็วที่สุด"
+  ],
+  "占用少": [
+    "Lower usage",
+    "ใช้ทรัพยากรน้อย"
+  ],
+  "占用多": [
+    "Higher usage",
+    "ใช้ทรัพยากรมาก"
+  ],
+  "重试读取收藏": [
+    "Retry loading favorites",
+    "โหลดรายการโปรดอีกครั้ง"
+  ],
+  "关闭我的收藏": [
+    "Close my collection",
+    "ปิดคอลเลกชันของฉัน"
+  ],
+  "收藏类型": [
+    "Favorite type",
+    "ประเภทรายการโปรด"
+  ],
+  "收藏作品清单": [
+    "Saved titles",
+    "ผลงานที่บันทึกไว้"
+  ],
+  "搜索收藏": [
+    "Search favorites",
+    "ค้นหารายการโปรด"
+  ],
+  "没有匹配的收藏": [
+    "No matching favorites",
+    "ไม่พบรายการโปรดที่ตรงกัน"
+  ],
+  "试试其他名称。": [
+    "Try another name.",
+    "ลองใช้ชื่ออื่น"
+  ],
+  "在资料页或标签页收藏常用内容。": [
+    "Save favorites from profile or tag pages.",
+    "เพิ่มรายการที่ใช้บ่อยจากหน้าข้อมูลหรือหน้าแท็ก"
+  ],
+  "取消收藏{0}": [
+    "Remove {0} from favorites",
+    "นำ{0}ออกจากรายการโปรด"
+  ],
+  "取消收藏": [
+    "Remove favorite",
+    "นำออกจากรายการโปรด"
+  ],
+  "还没有保存的筛选": [
+    "No saved filters",
+    "ยังไม่มีตัวกรองที่บันทึกไว้"
+  ],
+  "在馆藏页保存当前条件，随时打开。": [
+    "Save your current library filters to reopen them anytime.",
+    "บันทึกตัวกรองปัจจุบันในหน้าคลังเพื่อเปิดใช้ภายหลัง"
+  ],
+  "删除筛选{0}": [
+    "Delete filter {0}",
+    "ลบตัวกรอง{0}"
+  ],
+  "保存当前筛选": [
+    "Save current filters",
+    "บันทึกตัวกรองปัจจุบัน"
+  ],
+  "筛选名称": [
+    "Filter name",
+    "ชื่อตัวกรอง"
+  ],
+  "永久删除回收站内容": [
+    "Permanently delete trash contents",
+    "ลบรายการในถังขยะถาวร"
+  ],
+  "清空回收站": [
+    "Empty trash",
+    "ล้างถังขยะ"
+  ],
+  "能连接到 Peach 的设备打开地址就能看馆藏，不需要登录。": [
+    "Devices that can reach Peach can open the library without signing in.",
+    "อุปกรณ์ที่เข้าถึง Peach ได้จะเปิดคลังได้โดยไม่ต้องเข้าสู่ระบบ"
+  ],
+  "新访问密码": [
+    "New access password",
+    "รหัสผ่านเข้าใช้งานใหม่"
+  ],
+  "设置访问密码": [
+    "Set access password",
+    "ตั้งรหัสผ่านเข้าใช้งาน"
+  ],
+  "CloudDrive 设置帮助": [
+    "CloudDrive setup help",
+    "วิธีตั้งค่า CloudDrive"
+  ],
+  "先将 CloudDrive2 或 OpenList 中的网盘挂载为本机文件夹，再在这里选择。": [
+    "Mount your cloud drive as a local folder using CloudDrive2 or OpenList, then select it here.",
+    "เมานต์คลาวด์ไดรฟ์เป็นโฟลเดอร์ในเครื่องผ่าน CloudDrive2 หรือ OpenList แล้วเลือกที่นี่"
+  ],
+  "文件操作需要挂载工具和网盘账号授予写入权限。光鸭云盘的上传、建文件夹、改名和移动需要 CloudDrive2 v1.1.0 或更高版本，删除和复制暂不支持。": [
+    "File operations require write access from the mounting tool and cloud account. Guangya upload, folder creation, rename and move require CloudDrive2 v1.1.0 or later; delete and copy are unavailable.",
+    "การจัดการไฟล์ต้องมีสิทธิ์เขียนจากเครื่องมือเมานต์และบัญชีคลาวด์ การอัปโหลด สร้างโฟลเดอร์ เปลี่ยนชื่อ และย้ายใน Guangya ต้องใช้ CloudDrive2 v1.1.0 ขึ้นไป ยังไม่รองรับการลบและคัดลอก"
+  ],
+  "缓存上限和清理方式填在 CloudDrive「设置」里，清理方式选 LRU。上限不要填 0，系统盘至少留 40 GiB；填完重开设置页确认存住了。": [
+    "Set the cache limit and cleanup policy in CloudDrive Settings. Choose LRU, use a nonzero limit and leave at least 40 GiB free on the system drive. Reopen Settings to verify the saved values.",
+    "ตั้งขีดจำกัดแคชและวิธีล้างในตั้งค่า CloudDrive เลือก LRU กำหนดขีดจำกัดมากกว่า 0 และเหลือพื้นที่ไดรฟ์ระบบอย่างน้อย 40 GiB จากนั้นเปิดหน้าตั้งค่าใหม่เพื่อตรวจค่าที่บันทึก"
+  ],
+  "读取长度和下载线程填在每个网盘各自的下载设置里，线程都从 2 开始。": [
+    "Set read length and download threads in each cloud drive's download settings. Start with 2 threads.",
+    "ตั้งความยาวการอ่านและจำนวนเธรดในหน้าดาวน์โหลดของแต่ละคลาวด์ไดรฟ์ เริ่มที่ 2 เธรด"
+  ],
+  "Buffer Cache 占内存，磁盘缓存和文件夹缓存占硬盘，改一个管不住另外两个。": [
+    "Buffer Cache uses memory; disk and folder caches use drive space. Configure each cache separately.",
+    "Buffer Cache ใช้หน่วยความจำ ส่วนแคชดิสก์และโฟลเดอร์ใช้พื้นที่ไดรฟ์ ต้องตั้งค่าแคชแต่ละชนิดแยกกัน"
+  ],
+  "未取得配置，请刷新页面重试。": [
+    "Settings unavailable. Refresh the page to retry.",
+    "ไม่พบการตั้งค่า โปรดรีเฟรชหน้าเพื่อลองอีกครั้ง"
+  ],
+  "已保存，留空不改": [
+    "Saved; leave blank to keep",
+    "บันทึกแล้ว เว้นว่างเพื่อคงค่าเดิม"
+  ],
+  "在 CloudDrive2「设置 → API 令牌」中生成": [
+    "Generate in CloudDrive2 Settings → API token",
+    "สร้างใน CloudDrive2 ตั้งค่า → โทเคน API"
+  ],
+  "应位于自动入库的云端路径前缀内。": [
+    "Use a folder under the cloud path prefix configured for automatic importing.",
+    "ใช้โฟลเดอร์ภายใต้คำนำหน้าพาธคลาวด์ที่ตั้งไว้สำหรับนำเข้าอัตโนมัติ"
+  ],
+  "超时标为停滞；可填 1–{0} 小时。": [
+    "Mark stalled after timeout; enter 1–{0} hours.",
+    "ทำเครื่องหมายว่าค้างเมื่อหมดเวลา กรอกได้ 1–{0} ชั่วโมง"
+  ],
+  "云下载只在允许修改数据库的设备上可用。": [
+    "Cloud downloads are available on devices allowed to modify the database.",
+    "ดาวน์โหลดคลาวด์ได้เฉพาะอุปกรณ์ที่มีสิทธิ์แก้ไขฐานข้อมูล"
+  ],
+  "探测到 {0}，保存配置后生效": [
+    "Detected {0}; save settings to apply",
+    "ตรวจพบ {0} บันทึกการตั้งค่าเพื่อใช้"
+  ],
+  "已按推送发现填入 {0}": [
+    "Filled {0} from file discovery",
+    "กรอก {0} จากการตรวจพบไฟล์แล้ว"
+  ],
+  "按推送发现填入 {0}，保存配置后生效": [
+    "Filled {0} from file discovery; save settings to apply",
+    "กรอก {0} จากการตรวจพบไฟล์ บันทึกการตั้งค่าเพื่อใช้"
+  ],
+  "{0} 不存在": [
+    "{0} does not exist",
+    "ไม่มี {0}"
+  ],
+  "离线权限": [
+    "Offline download permission",
+    "สิทธิ์ดาวน์โหลดออฟไลน์"
+  ],
+  "缺少：{0}": [
+    "Missing: {0}",
+    "ขาด: {0}"
+  ],
+  "齐全": [
+    "Complete",
+    "ครบถ้วน"
+  ],
+  "目标目录": [
+    "Destination folder",
+    "โฟลเดอร์ปลายทาง"
+  ],
+  "{0} 可以离线下载": [
+    "{0} supports offline downloads",
+    "{0} ดาวน์โหลดออฟไลน์ได้"
+  ],
+  "{0} 不支持离线下载": [
+    "{0} does not support offline downloads",
+    "{0} ไม่รองรับดาวน์โหลดออฟไลน์"
+  ],
+  "本月还剩 {0} 条，共 {1} 条": [
+    "{0} of {1} downloads remaining this month",
+    "เดือนนี้เหลือ {0} จาก {1} รายการ"
+  ],
+  "已保存，登录过期时自动重新登录": [
+    "Saved; sign in again automatically when the session expires",
+    "บันทึกแล้ว จะเข้าสู่ระบบใหม่อัตโนมัติเมื่อเซสชันหมดอายุ"
+  ],
+  "未保存，登录过期后需要回到这里重新登录": [
+    "Not saved; return here to sign in when the session expires",
+    "ยังไม่บันทึก ต้องกลับมาเข้าสู่ระบบที่นี่เมื่อเซสชันหมดอายุ"
+  ],
+  "等你在浏览器窗口里登录 PikPak": [
+    "Waiting for you to sign in to PikPak in the browser",
+    "รอคุณเข้าสู่ระบบ PikPak ในหน้าต่างเบราว์เซอร์"
+  ],
+  "{0} 地址": [
+    "{0} address",
+    "ที่อยู่ {0}"
+  ],
+  "媒体读取策略 {0}": [
+    "Media reading policy {0}",
+    "นโยบายการอ่านสื่อ {0}"
+  ],
+  "媒体来源 {0}": [
+    "Media source {0}",
+    "แหล่งสื่อ {0}"
+  ],
+  "填写 Prowlarr 或 Jackett 提供的 Torznab 地址和 API key。": [
+    "Enter the Torznab URL and API key from Prowlarr or Jackett.",
+    "กรอก URL Torznab และ API key จาก Prowlarr หรือ Jackett"
+  ],
+  "索引器 {0} 名称": [
+    "Indexer {0} name",
+    "ชื่อตัวค้นหา {0}"
+  ],
+  "索引器 {0} Torznab 地址": [
+    "Indexer {0} Torznab URL",
+    "URL Torznab ของตัวค้นหา {0}"
+  ],
+  "索引器 {0} API key": [
+    "Indexer {0} API key",
+    "API key ของตัวค้นหา {0}"
+  ],
+  "{0}可选图标": [
+    "{0} available icons",
+    "ไอคอนที่เลือกได้สำหรับ {0}"
+  ],
+  "KiB。不含账号、设备、文件路径和浏览器历史记录等个人数据。": [
+    "KiB. Personal data such as accounts, devices, file paths and browser history is excluded.",
+    "KiB ไม่รวมข้อมูลส่วนตัว เช่น บัญชี อุปกรณ์ พาธไฟล์ และประวัติเบราว์เซอร์"
+  ],
+  "上传数据预览": [
+    "Upload data preview",
+    "ตัวอย่างข้อมูลที่จะส่ง"
+  ],
+  "数据目录": [
+    "Data directory",
+    "โฟลเดอร์ข้อมูล"
+  ],
+  "为本地视频生成九宫格与时间轴预览；关闭后仍按入库规则探测时长与分辨率。": [
+    "Generate contact sheets and timeline previews for local videos. Duration and resolution are detected according to import rules even when previews are disabled.",
+    "สร้างภาพรวมแบบตารางและตัวอย่างไทม์ไลน์สำหรับวิดีโอในเครื่อง เมื่อปิดยังตรวจความยาวและความละเอียดตามกฎนำเข้า"
+  ],
+  "媒体目录 {0}": [
+    "Media folder {0}",
+    "โฟลเดอร์สื่อ {0}"
+  ],
+  "媒体库名称 {0}": [
+    "Library name {0}",
+    "ชื่อคลัง {0}"
+  ],
+  "媒体库图标 {0}": [
+    "Library icon {0}",
+    "ไอคอนคลัง {0}"
+  ],
+  "未配置挂载点": [
+    "No mount point configured",
+    "ยังไม่ตั้งค่าจุดเมานต์"
+  ],
+  "已保存，留空保留": [
+    "Saved; leave blank to keep",
+    "บันทึกแล้ว เว้นว่างเพื่อคงค่าเดิม"
+  ],
+  "保存后 Peach 会重启，并跳转到新地址。": [
+    "Peach restarts after saving and redirects to the new address.",
+    "Peach จะเริ่มใหม่หลังบันทึกและเปลี่ยนไปยังที่อยู่ใหม่"
+  ],
+  "贴进 CloudDrive2「设置 → Webhooks」，需要会员；更换密钥后要重贴。": [
+    "Paste into CloudDrive2 Settings → Webhooks. Membership is required. Paste again after replacing the secret.",
+    "วางใน CloudDrive2 ตั้งค่า → Webhooks ต้องใช้สมาชิก และต้องวางใหม่เมื่อเปลี่ยนคีย์"
+  ],
+  "还没有共享密钥，保存配置后生成。": [
+    "No shared secret yet; save settings to generate one.",
+    "ยังไม่มีคีย์ร่วม บันทึกการตั้งค่าเพื่อสร้าง"
+  ],
+  "要先有 CloudDrive2 能访问的 HTTPS 地址才能生成。": [
+    "First configure an HTTPS address reachable by CloudDrive2.",
+    "ต้องมีที่อยู่ HTTPS ที่ CloudDrive2 เข้าถึงได้ก่อน"
+  ],
+  "查看配置": [
+    "View configuration",
+    "ดูการตั้งค่า"
+  ],
+  "Windows 桌面版粘贴后显示「无效」时，把这段存成 .toml 文件，放进 %LOCALAPPDATA%\\CloudDrive.WinUI\\webhooks\\ 目录。": [
+    "If the Windows desktop app reports Invalid after pasting, save this as a .toml file in %LOCALAPPDATA%\\CloudDrive.WinUI\\webhooks\\.",
+    "หากแอป Windows แสดงว่าไม่ถูกต้องหลังวาง ให้บันทึกข้อความนี้เป็นไฟล์ .toml ใน %LOCALAPPDATA%\\CloudDrive.WinUI\\webhooks\\"
+  ],
+  "云端路径前缀 {0}": [
+    "Cloud path prefix {0}",
+    "คำนำหน้าพาธคลาวด์ {0}"
+  ],
+  "前缀 {0} 对应的媒体根": [
+    "Media root for prefix {0}",
+    "โฟลเดอร์รากสื่อสำหรับคำนำหน้า {0}"
+  ],
+  "当前版本": [
+    "Current version",
+    "เวอร์ชันปัจจุบัน"
+  ],
+  "安装方式": [
+    "Installation type",
+    "รูปแบบการติดตั้ง"
+  ],
+  "更新通道": [
+    "Update channel",
+    "ช่องทางอัปเดต"
+  ],
+  "最新版本": [
+    "Latest version",
+    "เวอร์ชันล่าสุด"
+  ],
+  "下载内容": [
+    "Download contents",
+    "รายการดาวน์โหลด"
+  ],
+  "应用更新包": [
+    "Application update package",
+    "แพ็กเกจอัปเดตแอป"
+  ],
+  "应用与工具": [
+    "Application and tools",
+    "แอปและเครื่องมือ"
+  ],
+  "应用更新包复用已安装工具；工具缺失、损坏或版本变化时会另行下载所需工具包。": [
+    "Application updates reuse installed tools. Required tool packages are downloaded separately if tools are missing, damaged or changed in version.",
+    "อัปเดตแอปใช้เครื่องมือที่ติดตั้งอยู่ หากเครื่องมือขาด เสียหาย หรือเปลี่ยนเวอร์ชัน จะดาวน์โหลดแพ็กเกจที่จำเป็นแยก"
+  ],
+  "正在采集，进度在活动页查看。": [
+    "Collecting metadata; see progress on the activity page.",
+    "กำลังเก็บข้อมูล ดูความคืบหน้าได้ในหน้ากิจกรรม"
+  ],
+  "正在检查来源更新…": [
+    "Checking source updates…",
+    "กำลังตรวจอัปเดตแหล่งข้อมูล…"
+  ],
+  "Cloudflare Zero Trust 里指向这台电脑的主机名。": [
+    "The hostname in Cloudflare Zero Trust that points to this computer.",
+    "ชื่อโฮสต์ใน Cloudflare Zero Trust ที่ชี้มายังคอมพิวเตอร์นี้"
+  ],
+  "已保存，留空不改。": [
+    "Saved; leave blank to keep.",
+    "บันทึกแล้ว เว้นว่างเพื่อคงค่าเดิม"
+  ],
+  "在 Cloudflare Zero Trust 的隧道详情页复制。": [
+    "Copy from the tunnel details page in Cloudflare Zero Trust.",
+    "คัดลอกจากหน้ารายละเอียด Tunnel ใน Cloudflare Zero Trust"
+  ],
+  "安装官方 cloudflared，或用设置文件的 tunnel.binary 与 PEACH_CLOUDFLARED 指定路径。": [
+    "Install official cloudflared, or set its path using tunnel.binary in the settings file or PEACH_CLOUDFLARED.",
+    "ติดตั้ง cloudflared ทางการ หรือกำหนดพาธผ่าน tunnel.binary ในไฟล์ตั้งค่าหรือ PEACH_CLOUDFLARED"
+  ],
+  "正在等待 cloudflared 连上 Cloudflare 边缘。": [
+    "Waiting for cloudflared to connect to Cloudflare.",
+    "กำลังรอ cloudflared เชื่อมต่อ Cloudflare"
+  ],
+  "Peach 重启后自动恢复。": [
+    "Resumes automatically after Peach restarts.",
+    "กลับมาทำงานอัตโนมัติหลัง Peach เริ่มใหม่"
+  ],
+  "停止公网入口": [
+    "Stop public access",
+    "หยุดทางเข้าสาธารณะ"
+  ],
+  "启动公网入口": [
+    "Start public access",
+    "เปิดทางเข้าสาธารณะ"
+  ],
+  "{0}颜色": [
+    "{0} color",
+    "สี{0}"
+  ],
+  "启用{0}": [
+    "Enable {0}",
+    "เปิดใช้{0}"
+  ],
+  "请在运行 Peach 的设备上打开 Peach 配置": [
+    "Open Peach settings on the device running Peach",
+    "เปิดตั้งค่า Peach บนอุปกรณ์ที่รัน Peach"
+  ],
+  "上移 {0}": [
+    "Move {0} up",
+    "เลื่อน{0}ขึ้น"
+  ],
+  "下移 {0}": [
+    "Move {0} down",
+    "เลื่อน{0}ลง"
+  ],
+  "隐藏 {0}": [
+    "Hide {0}",
+    "ซ่อน{0}"
+  ],
+  "不限": [
+    "Any",
+    "ไม่จำกัด"
+  ],
+  "{0} 分钟": [
+    "{0} minutes",
+    "{0} นาที"
+  ],
+  "最短时长（分钟）": [
+    "Minimum duration (minutes)",
+    "ความยาวต่ำสุด (นาที)"
+  ],
+  "最长时长（分钟）": [
+    "Maximum duration (minutes)",
+    "ความยาวสูงสุด (นาที)"
+  ],
+  "切换语言会刷新页面，请先保存表单。": [
+    "Switching language reloads the page. Save forms first.",
+    "การเปลี่ยนภาษาจะรีเฟรชหน้า กรุณาบันทึกแบบฟอร์มก่อน"
+  ],
+  "回收站": [
+    "Trash",
+    "ถังขยะ"
+  ],
+  "人工复核": [
+    "Manual review",
+    "ตรวจสอบด้วยตนเอง"
+  ],
+  "高清版": [
+    "Higher quality",
+    "เวอร์ชันคุณภาพสูง"
+  ],
+  "还原": [
+    "Restore",
+    "กู้คืน"
+  ],
+  "移入回收站": [
+    "Move to trash",
+    "ย้ายไปถังขยะ"
+  ],
+  "未命名视频": [
+    "Untitled video",
+    "วิดีโอไม่มีชื่อ"
+  ],
+  "名称": [
+    "Name",
+    "ชื่อ"
+  ],
+  "每页": [
+    "Per page",
+    "ต่อหน้า"
+  ],
+  "部": [
+    "videos",
+    "วิดีโอ"
+  ],
+  "条记录": [
+    "records",
+    "รายการ"
+  ],
+  "导航与筛选": [
+    "Navigation and filters",
+    "เมนูและตัวกรอง"
+  ],
+  "展开导航与筛选": [
+    "Open navigation and filters",
+    "เปิดเมนูและตัวกรอง"
+  ],
+  "退出搜索": [
+    "Exit search",
+    "ออกจากการค้นหา"
+  ],
+  "多选模式": [
+    "Select multiple",
+    "เลือกหลายรายการ"
+  ],
+  "切换卡片密度": [
+    "Change card density",
+    "เปลี่ยนความหนาแน่นของการ์ด"
+  ],
+  "进入沉浸模式": [
+    "Enter immersive mode",
+    "เข้าโหมดเต็มอารมณ์"
+  ],
+  "语言": [
+    "Language",
+    "ภาษา"
+  ],
+  "首页": [
+    "Home",
+    "หน้าแรก"
+  ],
+  "关注": [
+    "Following",
+    "ติดตาม"
+  ],
+  "艺人": [
+    "Performers",
+    "นักแสดง"
+  ],
+  "标签": [
+    "Tags",
+    "แท็ก"
+  ],
+  "厂牌": [
+    "Studios",
+    "ค่าย"
+  ],
+  "已标记": [
+    "Flagged",
+    "ทำเครื่องหมายแล้ว"
+  ],
+  "管理": [
+    "Manage",
+    "จัดการ"
+  ],
+  "统计": [
+    "Statistics",
+    "สถิติ"
+  ],
+  "口味": [
+    "Preferences",
+    "ความชอบ"
+  ],
+  "数据管理": [
+    "Data management",
+    "จัดการข้อมูล"
+  ],
+  "关注管理": [
+    "Manage follows",
+    "จัดการการติดตาม"
+  ],
+  "任务中心": [
+    "Tasks",
+    "งาน"
+  ],
+  "Peach 配置": [
+    "Peach settings",
+    "ตั้งค่า Peach"
+  ],
+  "设置": [
+    "Settings",
+    "ตั้งค่า"
+  ],
+  "打开设置": [
+    "Open settings",
+    "เปิดการตั้งค่า"
+  ],
+  "关闭设置": [
+    "Close settings",
+    "ปิดการตั้งค่า"
+  ],
+  "外观与导航": [
+    "Appearance and navigation",
+    "หน้าตาและการนำทาง"
+  ],
+  "浏览与播放": [
+    "Browsing and playback",
+    "การเรียกดูและการเล่น"
+  ],
+  "JAV 与新作": [
+    "JAV and new releases",
+    "JAV และผลงานใหม่"
+  ],
+  "搜索与推荐": [
+    "Search and recommendations",
+    "ค้นหาและแนะนำ"
+  ],
+  "内容显示": [
+    "Content display",
+    "การแสดงเนื้อหา"
+  ],
+  "媒体库与入库": [
+    "Library and importing",
+    "คลังและการนำเข้า"
+  ],
+  "来源与订阅": [
+    "Sources and subscriptions",
+    "แหล่งข้อมูลและการติดตาม"
+  ],
+  "下载渠道": [
+    "Download providers",
+    "ช่องทางดาวน์โหลด"
+  ],
+  "网络与访问": [
+    "Network and access",
+    "เครือข่ายและการเข้าถึง"
+  ],
+  "应用与维护": [
+    "Application and maintenance",
+    "แอปและการบำรุงรักษา"
+  ],
+  "系统诊断": [
+    "Diagnostics",
+    "วินิจฉัยระบบ"
+  ],
+  "主题": [
+    "Theme",
+    "ธีม"
+  ],
+  "跟随系统": [
+    "System",
+    "ตามระบบ"
+  ],
+  "浅色": [
+    "Light",
+    "สว่าง"
+  ],
+  "深色": [
+    "Dark",
+    "มืด"
+  ],
+  "浅色主题": [
+    "Light theme",
+    "ธีมสว่าง"
+  ],
+  "深色主题": [
+    "Dark theme",
+    "ธีมมืด"
+  ],
+  "增加对比度": [
+    "Increase contrast",
+    "เพิ่มความคมชัด"
+  ],
+  "界面音效": [
+    "Interface sounds",
+    "เสียงหน้าจอ"
+  ],
+  "侧栏光晕": [
+    "Sidebar glow",
+    "แสงแถบด้านข้าง"
+  ],
+  "导航入口与顺序": [
+    "Navigation and order",
+    "รายการและลำดับเมนู"
+  ],
+  "配色": [
+    "Colors",
+    "สี"
+  ],
+  "颜色": [
+    "Color",
+    "สี"
+  ],
+  "强度": [
+    "Intensity",
+    "ความเข้ม"
+  ],
+  "颗粒": [
+    "Grain",
+    "เกรน"
+  ],
+  "漂移速度": [
+    "Drift speed",
+    "ความเร็วการเคลื่อนไหว"
+  ],
+  "柔化": [
+    "Softness",
+    "ความนุ่ม"
+  ],
+  "大小": [
+    "Size",
+    "ขนาด"
+  ],
+  "恢复默认": [
+    "Restore defaults",
+    "คืนค่าเริ่มต้น"
+  ],
+  "随机": [
+    "Random",
+    "สุ่ม"
+  ],
+  "评分": [
+    "Rating",
+    "คะแนน"
+  ],
+  "高潮计数": [
+    "Climax count",
+    "จำนวนไคลแมกซ์"
+  ],
+  "观看次数": [
+    "Play count",
+    "จำนวนครั้งที่ดู"
+  ],
+  "时长": [
+    "Duration",
+    "ความยาว"
+  ],
+  "体积": [
+    "File size",
+    "ขนาดไฟล์"
+  ],
+  "入库时间": [
+    "Date added",
+    "วันที่เพิ่ม"
+  ],
+  "观看时间": [
+    "Last watched",
+    "ดูล่าสุด"
+  ],
+  "降序": [
+    "Descending",
+    "มากไปน้อย"
+  ],
+  "升序": [
+    "Ascending",
+    "น้อยไปมาก"
+  ],
+  "官方封面": [
+    "Official cover",
+    "ปกทางการ"
+  ],
+  "预览图": [
+    "Preview image",
+    "ภาพตัวอย่าง"
+  ],
+  "保存配置": [
+    "Save settings",
+    "บันทึกการตั้งค่า"
+  ],
+  "已保存配置": [
+    "Settings saved",
+    "บันทึกการตั้งค่าแล้ว"
+  ],
+  "保存": [
+    "Save",
+    "บันทึก"
+  ],
+  "取消": [
+    "Cancel",
+    "ยกเลิก"
+  ],
+  "关闭": [
+    "Off",
+    "ปิด"
+  ],
+  "开启": [
+    "On",
+    "เปิด"
+  ],
+  "添加": [
+    "Add",
+    "เพิ่ม"
+  ],
+  "删除": [
+    "Delete",
+    "ลบ"
+  ],
+  "移除": [
+    "Remove",
+    "นำออก"
+  ],
+  "重试": [
+    "Retry",
+    "ลองอีกครั้ง"
+  ],
+  "刷新": [
+    "Refresh",
+    "รีเฟรช"
+  ],
+  "展开": [
+    "Expand",
+    "ขยาย"
+  ],
+  "收起": [
+    "Collapse",
+    "ยุบ"
+  ],
+  "全部": [
+    "All",
+    "ทั้งหมด"
+  ],
+  "没看过": [
+    "Unwatched",
+    "ยังไม่ได้ดู"
+  ],
+  "稍后看": [
+    "Watch later",
+    "ดูภายหลัง"
+  ],
+  "我的收藏": [
+    "My collection",
+    "คอลเลกชันของฉัน"
+  ],
+  "换一批": [
+    "Shuffle",
+    "สุ่มชุดใหม่"
+  ],
+  "卡片": [
+    "Cards",
+    "การ์ด"
+  ],
+  "列表": [
+    "List",
+    "รายการ"
+  ],
+  "大图": [
+    "Large covers",
+    "ปกใหญ่"
+  ],
+  "小图": [
+    "Small covers",
+    "ปกเล็ก"
+  ],
+  "文件夹模式": [
+    "Folder view",
+    "มุมมองโฟลเดอร์"
+  ],
+  "搜索馆藏": [
+    "Search library",
+    "ค้นหาในคลัง"
+  ],
+  "搜索作品、女优、厂牌或标签": [
+    "Search titles, performers, studios or tags",
+    "ค้นหาผลงาน นักแสดง ค่าย หรือแท็ก"
+  ],
+  "选择媒体库": [
+    "Choose library",
+    "เลือกคลัง"
+  ],
+  "全部媒体库": [
+    "All libraries",
+    "คลังทั้งหมด"
+  ],
+  "来源": [
+    "Sources",
+    "แหล่งข้อมูล"
+  ],
+  "产地": [
+    "Region",
+    "ภูมิภาค"
+  ],
+  "本地": [
+    "Local",
+    "ในเครื่อง"
+  ],
+  "本地磁盘": [
+    "Local disk",
+    "ดิสก์ในเครื่อง"
+  ],
+  "在线": [
+    "Online",
+    "ออนไลน์"
+  ],
+  "离线": [
+    "Offline",
+    "ออฟไลน์"
+  ],
+  "未归属": [
+    "Unassigned",
+    "ยังไม่จัดหมวด"
+  ],
+  "暂无影片": [
+    "No videos",
+    "ยังไม่มีวิดีโอ"
+  ],
+  "没有符合条件的影片": [
+    "No matching videos",
+    "ไม่พบวิดีโอที่ตรงเงื่อนไข"
+  ],
+  "打开预览": [
+    "Open preview",
+    "เปิดตัวอย่าง"
+  ],
+  "打开详情": [
+    "Open details",
+    "เปิดรายละเอียด"
+  ],
+  "访问密码": [
+    "Access password",
+    "รหัสผ่านเข้าใช้งาน"
+  ],
+  "保持登录": [
+    "Keep me signed in",
+    "คงการเข้าสู่ระบบ"
+  ],
+  "登录": [
+    "Sign in",
+    "เข้าสู่ระบบ"
+  ],
+  "登录 Peach": [
+    "Sign in to Peach",
+    "เข้าสู่ระบบ Peach"
+  ],
+  "访问密码不正确": [
+    "Incorrect access password",
+    "รหัสผ่านเข้าใช้งานไม่ถูกต้อง"
+  ],
+  "请输入访问密码": [
+    "Enter your access password",
+    "กรอกรหัสผ่านเข้าใช้งาน"
+  ],
+  "请选择有效的保持登录时间": [
+    "Choose a valid session duration",
+    "เลือกระยะเวลาเข้าสู่ระบบที่ถูกต้อง"
+  ],
+  "媒体目录": [
+    "Media folders",
+    "โฟลเดอร์สื่อ"
+  ],
+  "选择文件夹": [
+    "Choose folder",
+    "เลือกโฟลเดอร์"
+  ],
+  "添加文件夹": [
+    "Add folder",
+    "เพิ่มโฟลเดอร์"
+  ],
+  "移除这个文件夹": [
+    "Remove this folder",
+    "นำโฟลเดอร์นี้ออก"
+  ],
+  "保存后扫描并补全资料": [
+    "Scan and fetch metadata after saving",
+    "สแกนและเติมข้อมูลหลังบันทึก"
+  ],
+  "保存后 Peach 会重新启动。": [
+    "Peach will restart after saving.",
+    "Peach จะเริ่มใหม่หลังบันทึก"
+  ],
+  "正常读取": [
+    "Normal reading",
+    "อ่านตามปกติ"
+  ],
+  "代理流量保护": [
+    "Metered connection protection",
+    "ป้องกันการใช้ข้อมูลเกิน"
+  ],
+  "选择读取策略": [
+    "Choose reading policy",
+    "เลือกนโยบายการอ่าน"
+  ],
+  "推送发现": [
+    "File discovery",
+    "การตรวจพบไฟล์"
+  ],
+  "新文件落地就入库": [
+    "Import new files automatically",
+    "นำเข้าไฟล์ใหม่อัตโนมัติ"
+  ],
+  "监视本机文件夹": [
+    "Watch local folders",
+    "เฝ้าดูโฟลเดอร์ในเครื่อง"
+  ],
+  "接收 CloudDrive2 通知": [
+    "Receive CloudDrive2 notifications",
+    "รับการแจ้งเตือนจาก CloudDrive2"
+  ],
+  "视频预览": [
+    "Video previews",
+    "ตัวอย่างวิดีโอ"
+  ],
+  "生成视频预览": [
+    "Generate video previews",
+    "สร้างตัวอย่างวิดีโอ"
+  ],
+  "时间轴预览": [
+    "Timeline previews",
+    "ตัวอย่างบนไทม์ไลน์"
+  ],
+  "来源凭据": [
+    "Source credentials",
+    "ข้อมูลเข้าสู่ระบบแหล่งข้อมูล"
+  ],
+  "可配置凭据": [
+    "Configurable credentials",
+    "ข้อมูลเข้าสู่ระบบที่ตั้งค่าได้"
+  ],
+  "不需要凭据": [
+    "No credentials required",
+    "ไม่ต้องใช้ข้อมูลเข้าสู่ระบบ"
+  ],
+  "填写凭据": [
+    "Enter credentials",
+    "กรอกข้อมูลเข้าสู่ระบบ"
+  ],
+  "获取凭据": [
+    "Get credentials",
+    "วิธีรับข้อมูลเข้าสู่ระบบ"
+  ],
+  "凭据文件": [
+    "Credentials file",
+    "ไฟล์ข้อมูลเข้าสู่ระบบ"
+  ],
+  "作品资料站点": [
+    "Metadata websites",
+    "เว็บไซต์ข้อมูลผลงาน"
+  ],
+  "JavDB 地址": [
+    "JavDB address",
+    "ที่อยู่ JavDB"
+  ],
+  "MISSAV 地址": [
+    "MISSAV address",
+    "ที่อยู่ MISSAV"
+  ],
+  "只填域名，留空用默认地址": [
+    "Domain only; leave blank to use the default address",
+    "ใส่เฉพาะโดเมน เว้นว่างเพื่อใช้ที่อยู่เริ่มต้น"
+  ],
+  "资源搜索": [
+    "Resource search",
+    "ค้นหาแหล่งไฟล์"
+  ],
+  "添加索引器": [
+    "Add indexer",
+    "เพิ่มตัวค้นหา"
+  ],
+  "索引器连接帮助": [
+    "Indexer connection help",
+    "วิธีเชื่อมตัวค้นหา"
+  ],
+  "关注采集": [
+    "Following updates",
+    "อัปเดตการติดตาม"
+  ],
+  "自动检查更新": [
+    "Check for updates automatically",
+    "ตรวจอัปเดตอัตโนมัติ"
+  ],
+  "首次采集范围": [
+    "Initial collection range",
+    "ช่วงเก็บข้อมูลครั้งแรก"
+  ],
+  "最近 30 天": [
+    "Last 30 days",
+    "30 วันที่ผ่านมา"
+  ],
+  "分钟": [
+    "minutes",
+    "นาที"
+  ],
+  "云下载": [
+    "Cloud downloads",
+    "ดาวน์โหลดบนคลาวด์"
+  ],
+  "CloudDrive2 地址": [
+    "CloudDrive2 address",
+    "ที่อยู่ CloudDrive2"
+  ],
+  "CloudDrive2 API 令牌": [
+    "CloudDrive2 API token",
+    "โทเคน API ของ CloudDrive2"
+  ],
+  "115 目标目录": [
+    "115 destination folder",
+    "โฟลเดอร์ปลายทาง 115"
+  ],
+  "PikPak 目标目录": [
+    "PikPak destination folder",
+    "โฟลเดอร์ปลายทาง PikPak"
+  ],
+  "目录要已经存在。": [
+    "The folder must already exist.",
+    "ต้องมีโฟลเดอร์นี้อยู่แล้ว"
+  ],
+  "等待上限（小时）": [
+    "Maximum wait (hours)",
+    "เวลารอสูงสุด (ชั่วโมง)"
+  ],
+  "检查连接": [
+    "Check connection",
+    "ตรวจการเชื่อมต่อ"
+  ],
+  "PikPak 账号": [
+    "PikPak account",
+    "บัญชี PikPak"
+  ],
+  "账号": [
+    "Account",
+    "บัญชี"
+  ],
+  "密码": [
+    "Password",
+    "รหัสผ่าน"
+  ],
+  "登录方式": [
+    "Sign-in method",
+    "วิธีเข้าสู่ระบบ"
+  ],
+  "已登录": [
+    "Signed in",
+    "เข้าสู่ระบบแล้ว"
+  ],
+  "浏览器登录，由 Peach 续期": [
+    "Browser sign-in, renewed by Peach",
+    "เข้าสู่ระบบผ่านเบราว์เซอร์ ต่ออายุโดย Peach"
+  ],
+  "登出": [
+    "Sign out",
+    "ออกจากระบบ"
+  ],
+  "用浏览器登录": [
+    "Sign in with browser",
+    "เข้าสู่ระบบด้วยเบราว์เซอร์"
+  ],
+  "浏览器添加 JAV": [
+    "Add JAV from browser",
+    "เพิ่ม JAV จากเบราว์เซอร์"
+  ],
+  "安装 Peach 用户脚本": [
+    "Install Peach userscript",
+    "ติดตั้ง userscript ของ Peach"
+  ],
+  "浏览器添加的下载渠道": [
+    "Browser add download provider",
+    "ช่องทางดาวน์โหลดจากเบราว์เซอร์"
+  ],
+  "Peach 地址": [
+    "Peach address",
+    "ที่อยู่ Peach"
+  ],
+  "浏览器添加专用令牌": [
+    "Browser add token",
+    "โทเคนสำหรับเบราว์เซอร์"
+  ],
+  "复制专用令牌": [
+    "Copy token",
+    "คัดลอกโทเคน"
+  ],
+  "已启用": [
+    "Enabled",
+    "เปิดใช้งานแล้ว"
+  ],
+  "未启用": [
+    "Disabled",
+    "ยังไม่เปิดใช้งาน"
+  ],
+  "启用并生成令牌": [
+    "Enable and generate token",
+    "เปิดใช้งานและสร้างโทเคน"
+  ],
+  "更新渠道与令牌": [
+    "Update provider and token",
+    "อัปเดตช่องทางและโทเคน"
+  ],
+  "关闭浏览器添加": [
+    "Disable browser add",
+    "ปิดการเพิ่มจากเบราว์เซอร์"
+  ],
+  "数据上传": [
+    "Data sharing",
+    "การส่งข้อมูล"
+  ],
+  "开机自启": [
+    "Launch at login",
+    "เปิดเมื่อเข้าสู่ระบบ"
+  ],
+  "开机后启动 Peach": [
+    "Start Peach at login",
+    "เริ่ม Peach เมื่อเข้าสู่ระบบ"
+  ],
+  "只启动托盘，不打开网页": [
+    "Start in menu bar without opening browser",
+    "เปิดเฉพาะเมนูบาร์ ไม่เปิดหน้าเว็บ"
+  ],
+  "在桌面创建快捷方式": [
+    "Create desktop shortcut",
+    "สร้างทางลัดบนเดสก์ท็อป"
+  ],
+  "跳到正文": [
+    "Skip to content",
+    "ข้ามไปเนื้อหา"
+  ],
+  "收起侧栏": [
+    "Collapse sidebar",
+    "ย่อแถบด้านข้าง"
+  ],
+  "进入播放墙": [
+    "Open video wall",
+    "เปิดกำแพงวิดีโอ"
+  ],
+  "未设置访问密码": [
+    "No access password set",
+    "ยังไม่ได้ตั้งรหัสผ่าน"
+  ],
+  "关闭访问密码": [
+    "Disable access password",
+    "ปิดรหัสผ่านเข้าใช้งาน"
+  ],
+  "当前访问密码": [
+    "Current access password",
+    "รหัสผ่านปัจจุบัน"
+  ],
+  "确认访问密码": [
+    "Confirm access password",
+    "ยืนยันรหัสผ่าน"
+  ],
+  "访问范围": [
+    "Access scope",
+    "ขอบเขตการเข้าถึง"
+  ],
+  "保存后，能连接到 Peach 的设备将直接访问馆藏。": [
+    "After saving, devices that can connect to Peach can access the library directly.",
+    "หลังบันทึก อุปกรณ์ที่เชื่อมต่อ Peach ได้จะเข้าคลังได้โดยตรง"
+  ],
+  "挂载帮助": [
+    "Mount help",
+    "วิธีเมานต์ไดรฟ์"
+  ],
+  "缓存按所在硬盘和可用内存选起步值，再根据播放表现调整。": [
+    "Choose initial cache settings for your disk and available memory, then adjust for playback.",
+    "เลือกแคชตามดิสก์และหน่วยความจำที่ว่าง แล้วปรับตามการเล่น"
+  ],
+  "按缓存所在硬盘分档": [
+    "Cache disk profile",
+    "รูปแบบดิสก์สำหรับแคช"
+  ],
+  "完整配置与调优说明": [
+    "Configuration and tuning guide",
+    "คู่มือตั้งค่าและปรับแต่ง"
+  ],
+  "配置读取失败": [
+    "Could not load settings",
+    "โหลดการตั้งค่าไม่สำเร็จ"
+  ],
+  "配置分区": [
+    "Settings sections",
+    "หมวดการตั้งค่า"
+  ],
+  "留空自动查找": [
+    "Leave blank to detect automatically",
+    "เว้นว่างเพื่อตรวจหาอัตโนมัติ"
+  ],
+  "需要离线任务权限。": [
+    "Offline task permission is required.",
+    "ต้องมีสิทธิ์จัดการงานออฟไลน์"
+  ],
+  "留空时按推送发现自动填写": [
+    "Leave blank to use file discovery settings",
+    "เว้นว่างเพื่อใช้ค่าการตรวจพบไฟล์"
+  ],
+  "以 / 开头的网盘路径": [
+    "Cloud path starting with /",
+    "พาธคลาวด์ที่ขึ้นต้นด้วย /"
+  ],
+  "PikPak 根目录对应的媒体目录": [
+    "Media folder mapped to the PikPak root",
+    "โฟลเดอร์สื่อที่ตรงกับราก PikPak"
+  ],
+  "检查时按推送发现选": [
+    "Detect from file discovery",
+    "ตรวจจากการค้นพบไฟล์"
+  ],
+  "先在「媒体库与入库」添加 PikPak 挂载文件夹。": [
+    "Add a mounted PikPak folder under Library and importing first.",
+    "เพิ่มโฟลเดอร์ PikPak ที่เมานต์แล้วในหมวดคลังและการนำเข้าก่อน"
+  ],
+  "正在检查 CloudDrive2": [
+    "Checking CloudDrive2",
+    "กำลังตรวจ CloudDrive2"
+  ],
+  "新建这个目录": [
+    "Create this folder",
+    "สร้างโฟลเดอร์นี้"
+  ],
+  "PikPak 根目录": [
+    "PikPak root",
+    "ราก PikPak"
+  ],
+  "115 离线配额": [
+    "115 offline quota",
+    "โควตาออฟไลน์ 115"
+  ],
+  "邮箱或手机号": [
+    "Email or phone number",
+    "อีเมลหรือเบอร์โทรศัพท์"
+  ],
+  "保存密码，登录过期时自动重新登录": [
+    "Save password and sign in again when the session expires",
+    "บันทึกรหัสผ่านและเข้าสู่ระบบใหม่เมื่อหมดอายุ"
+  ],
+  "需要人机验证": [
+    "Verification required",
+    "ต้องยืนยันตัวตน"
+  ],
+  "打开 PikPak 验证页": [
+    "Open PikPak verification",
+    "เปิดหน้ายืนยัน PikPak"
+  ],
+  "在浏览器里完成验证后，回到这里再点一次「登录」。": [
+    "Complete verification in the browser, then return here and sign in again.",
+    "ยืนยันในเบราว์เซอร์แล้วกลับมากดเข้าสู่ระบบอีกครั้ง"
+  ],
+  "按挂载工具实际配置选择；代理流量保护会限制自动媒体读取。": [
+    "Match the mount configuration; metered protection limits automatic media reads.",
+    "เลือกตามการตั้งค่าเมานต์ การป้องกันข้อมูลจำกัดการอ่านสื่ออัตโนมัติ"
+  ],
+  "媒体目录路径": [
+    "Media folder path",
+    "พาธโฟลเดอร์สื่อ"
+  ],
+  "正在读取资源搜索设置": [
+    "Loading resource search settings",
+    "กำลังโหลดค่าค้นหาแหล่งไฟล์"
+  ],
+  "详细配置说明": [
+    "Configuration guide",
+    "คู่มือตั้งค่า"
+  ],
+  "索引器提供的 API 地址": [
+    "Indexer API address",
+    "ที่อยู่ API ของตัวค้นหา"
+  ],
+  "启用": [
+    "Enable",
+    "เปิดใช้งาน"
+  ],
+  "清除已保存的 API key": [
+    "Clear saved API key",
+    "ล้าง API key ที่บันทึก"
+  ],
+  "移除索引器": [
+    "Remove indexer",
+    "นำตัวค้นหาออก"
+  ],
+  "正在读取浏览器添加设置": [
+    "Loading browser add settings",
+    "กำลังโหลดค่าเพิ่มจากเบราว์เซอร์"
+  ],
+  "请先保存所选网盘的账号和目标目录。": [
+    "Save the selected cloud account and destination folder first.",
+    "บันทึกบัญชีคลาวด์และโฟลเดอร์ปลายทางก่อน"
+  ],
+  "选择媒体库图标": [
+    "Choose library icon",
+    "เลือกไอคอนคลัง"
+  ],
+  "可选图标": [
+    "Available icons",
+    "ไอคอนที่เลือกได้"
+  ],
+  "应用": [
+    "Apply",
+    "นำไปใช้"
+  ],
+  "上传馆藏与口味明细": [
+    "Upload library and preference details",
+    "ส่งรายละเอียดคลังและความชอบ"
+  ],
+  "上传服务未配置。": [
+    "Upload service is not configured.",
+    "ยังไม่ได้ตั้งค่าบริการส่งข้อมูล"
+  ],
+  "馆藏与口味上传失败，自动重试。": [
+    "Library and preference upload failed; retrying automatically.",
+    "ส่งคลังและความชอบไม่สำเร็จ จะลองใหม่อัตโนมัติ"
+  ],
+  "当前预览包含": [
+    "This preview contains",
+    "ตัวอย่างนี้ประกอบด้วย"
+  ],
+  "部有编号作品、": [
+    "coded titles,",
+    "ผลงานที่มีรหัส"
+  ],
+  "条无编号馆藏的汇总，约": [
+    "uncoded library summaries, approximately",
+    "สรุปรายการที่ไม่มีรหัส ประมาณ"
+  ],
+  "馆藏与口味上传预览": [
+    "Library and preference upload preview",
+    "ตัวอย่างข้อมูลคลังและความชอบที่จะส่ง"
+  ],
+  "显示前 24,000 个字符，下载可查看完整内容。": [
+    "Showing the first 24,000 characters. Download to view all.",
+    "แสดง 24,000 ตัวอักษรแรก ดาวน์โหลดเพื่อดูทั้งหมด"
+  ],
+  "下载完整预览": [
+    "Download full preview",
+    "ดาวน์โหลดตัวอย่างทั้งหมด"
+  ],
+  "我已查看上传预览，同意上传馆藏与口味明细": [
+    "I reviewed the preview and consent to uploading library and preference details",
+    "ฉันตรวจตัวอย่างแล้วและยินยอมส่งรายละเอียดคลังและความชอบ"
+  ],
+  "预览上传内容": [
+    "Preview upload",
+    "ดูตัวอย่างข้อมูลที่จะส่ง"
+  ],
+  "同意并开启上传": [
+    "Agree and enable uploads",
+    "ยินยอมและเปิดการส่งข้อมูล"
+  ],
+  "安装教程": [
+    "Setup tutorial",
+    "คู่มือตั้งค่าเริ่มต้น"
+  ],
+  "重新打开教程": [
+    "Reopen tutorial",
+    "เปิดคู่มืออีกครั้ง"
+  ],
+  "自动更新": [
+    "Automatic updates",
+    "อัปเดตอัตโนมัติ"
+  ],
+  "自动检查新版本": [
+    "Check for new versions automatically",
+    "ตรวจเวอร์ชันใหม่อัตโนมัติ"
+  ],
+  "自动下载更新": [
+    "Download updates automatically",
+    "ดาวน์โหลดอัปเดตอัตโนมัติ"
+  ],
+  "检查频率": [
+    "Check frequency",
+    "ความถี่ตรวจสอบ"
+  ],
+  "运行信息": [
+    "Runtime information",
+    "ข้อมูลการทำงาน"
+  ],
+  "卸载 Peach": [
+    "Uninstall Peach",
+    "ถอนการติดตั้ง Peach"
+  ],
+  "卸载移除 Peach 程序本身，原始媒体文件保留。": [
+    "Uninstalling removes Peach and keeps original media files.",
+    "การถอนการติดตั้งจะนำ Peach ออก แต่เก็บไฟล์สื่อต้นฉบับ"
+  ],
+  "完全卸载": [
+    "Complete uninstall",
+    "ถอนการติดตั้งทั้งหมด"
+  ],
+  "同时删除设置、本地数据库、观看记录、凭据和缓存": [
+    "Also delete settings, local database, watch history, credentials and cache",
+    "ลบการตั้งค่า ฐานข้อมูล ประวัติการดู ข้อมูลเข้าสู่ระบบ และแคชด้วย"
+  ],
+  "正在保存…": [
+    "Saving…",
+    "กำลังบันทึก…"
+  ],
+  "只读": [
+    "Read only",
+    "อ่านอย่างเดียว"
+  ],
+  "配置已保存": [
+    "Settings saved",
+    "บันทึกการตั้งค่าแล้ว"
+  ],
+  "Peach 正在重新启动。稍后自动跳转，或点击": [
+    "Peach is restarting. You will be redirected, or choose",
+    "Peach กำลังเริ่มใหม่ จะเปลี่ยนหน้าอัตโนมัติ หรือเลือก"
+  ],
+  "进入馆藏": [
+    "Open library",
+    "เปิดคลัง"
+  ],
+  "媒体库名称": [
+    "Library name",
+    "ชื่อคลัง"
+  ],
+  "未检测到": [
+    "Not detected",
+    "ตรวจไม่พบ"
+  ],
+  "下载": [
+    "Download",
+    "ดาวน์โหลด"
+  ],
+  "没有保存": [
+    "Not saved",
+    "ยังไม่บันทึก"
+  ],
+  "挂载状态": [
+    "Mount status",
+    "สถานะเมานต์"
+  ],
+  "刷新挂载状态": [
+    "Refresh mount status",
+    "รีเฟรชสถานะเมานต์"
+  ],
+  "Peach 代理": [
+    "Peach proxy",
+    "พร็อกซี Peach"
+  ],
+  "连接方式": [
+    "Connection method",
+    "วิธีเชื่อมต่อ"
+  ],
+  "代理地址": [
+    "Proxy address",
+    "ที่อยู่พร็อกซี"
+  ],
+  "需要选择连接方式": [
+    "Choose a connection method",
+    "เลือกวิธีเชื่อมต่อ"
+  ],
+  "已有来源的代理地址不同，请选择公共连接方式。": [
+    "Sources have different proxy addresses. Choose a shared connection method.",
+    "แหล่งข้อมูลใช้พร็อกซีต่างกัน โปรดเลือกวิธีเชื่อมต่อร่วม"
+  ],
+  "本机访问端口": [
+    "Local access port",
+    "พอร์ตเข้าใช้งานในเครื่อง"
+  ],
+  "Peach 正在重新启动。": [
+    "Peach is restarting.",
+    "Peach กำลังเริ่มใหม่"
+  ],
+  "端口": [
+    "Port",
+    "พอร์ต"
+  ],
+  "Webhook 配置": [
+    "Webhook settings",
+    "ตั้งค่า Webhook"
+  ],
+  "CloudDrive2 配置": [
+    "CloudDrive2 settings",
+    "ตั้งค่า CloudDrive2"
+  ],
+  "云端路径前缀": [
+    "Cloud path prefix",
+    "คำนำหน้าพาธคลาวด์"
+  ],
+  "移除这一条": [
+    "Remove this entry",
+    "นำรายการนี้ออก"
+  ],
+  "添加前缀": [
+    "Add prefix",
+    "เพิ่มคำนำหน้า"
+  ],
+  "更换密钥": [
+    "Replace secret",
+    "เปลี่ยนคีย์"
+  ],
+  "检查更新": [
+    "Check for updates",
+    "ตรวจอัปเดต"
+  ],
+  "本次更新包含媒体工具。": [
+    "This update includes media tools.",
+    "อัปเดตนี้มีเครื่องมือสื่อด้วย"
+  ],
+  "检查于": [
+    "Checked at",
+    "ตรวจเมื่อ"
+  ],
+  "有可用更新": [
+    "Update available",
+    "มีอัปเดต"
+  ],
+  "更新准备进度": [
+    "Update preparation",
+    "ความคืบหน้าการเตรียมอัปเดต"
+  ],
+  "下载 → 校验 → 解压 → 准备安装 ·": [
+    "Download → Verify → Extract → Prepare installation ·",
+    "ดาวน์โหลด → ตรวจสอบ → แตกไฟล์ → เตรียมติดตั้ง ·"
+  ],
+  "查看发布页": [
+    "View release",
+    "ดูหน้าเผยแพร่"
+  ],
+  "重启安装": [
+    "Restart and install",
+    "เริ่มใหม่และติดตั้ง"
+  ],
+  "下载并安装": [
+    "Download and install",
+    "ดาวน์โหลดและติดตั้ง"
+  ],
+  "发送版本统计与错误诊断（推荐）": [
+    "Send version statistics and error diagnostics (recommended)",
+    "ส่งสถิติเวอร์ชันและข้อมูลวินิจฉัยข้อผิดพลาด (แนะนำ)"
+  ],
+  "上传版本、系统信息、故障类型、代码位置与发生次数。": [
+    "Send version, system information, error type, code location and occurrence count.",
+    "ส่งเวอร์ชัน ข้อมูลระบบ ชนิดข้อผิดพลาด ตำแหน่งโค้ด และจำนวนครั้ง"
+  ],
+  "时间轴缩略图": [
+    "Timeline thumbnails",
+    "ภาพย่อไทม์ไลน์"
+  ],
+  "按所选间隔抽帧，仅处理本机磁盘上的视频。": [
+    "Extract frames at the selected interval from local videos only.",
+    "ดึงภาพตามช่วงที่เลือก เฉพาะวิดีโอบนดิสก์ในเครื่อง"
+  ],
+  "缩略图采集间隔": [
+    "Thumbnail interval",
+    "ช่วงเวลาภาพย่อ"
+  ],
+  "头像刷新": [
+    "Avatar refresh",
+    "รีเฟรชรูปประจำตัว"
+  ],
+  "每 3 个月": [
+    "Every 3 months",
+    "ทุก 3 เดือน"
+  ],
+  "favicon 刷新": [
+    "Site icon refresh",
+    "รีเฟรชไอคอนเว็บไซต์"
+  ],
+  "每年": [
+    "Yearly",
+    "ทุกปี"
+  ],
+  "自动检查间隔": [
+    "Automatic check interval",
+    "ช่วงเวลาตรวจอัตโนมัติ"
+  ],
+  "请输入 15–10080 的整数（分钟）。": [
+    "Enter an integer from 15 to 10080 minutes.",
+    "กรอกจำนวนเต็ม 15–10080 นาที"
+  ],
+  "采集来源与登录状态": [
+    "Sources and sign-in status",
+    "แหล่งข้อมูลและสถานะเข้าสู่ระบบ"
+  ],
+  "来源凭据未取得": [
+    "Source credentials unavailable",
+    "ไม่พบข้อมูลเข้าสู่ระบบแหล่งข้อมูล"
+  ],
+  "正在读取来源凭据": [
+    "Loading source credentials",
+    "กำลังโหลดข้อมูลเข้าสู่ระบบแหล่งข้อมูล"
+  ],
+  "Cloudflare 公网入口": [
+    "Cloudflare public access",
+    "ทางเข้าสาธารณะ Cloudflare"
+  ],
+  "公网入口的形态（二选一）": [
+    "Public access mode (choose one)",
+    "รูปแบบทางเข้าสาธารณะ (เลือกหนึ่ง)"
+  ],
+  "公开主机名": [
+    "Public hostname",
+    "ชื่อโฮสต์สาธารณะ"
+  ],
+  "隧道令牌": [
+    "Tunnel token",
+    "โทเคน Tunnel"
+  ],
+  "找不到 cloudflared": [
+    "cloudflared not found",
+    "ไม่พบ cloudflared"
+  ],
+  "公网地址": [
+    "Public address",
+    "ที่อยู่สาธารณะ"
+  ],
+  "正在连接": [
+    "Connecting",
+    "กำลังเชื่อมต่อ"
+  ],
+  "色系": [
+    "Palette",
+    "ชุดสี"
+  ],
+  "侧栏光晕参数": [
+    "Sidebar glow settings",
+    "ตั้งค่าแสงแถบด้านข้าง"
+  ],
+  "当前配色": [
+    "Current palette",
+    "ชุดสีปัจจุบัน"
+  ],
+  "光晕配色": [
+    "Glow palette",
+    "ชุดสีแสง"
+  ],
+  "这一档用每块玻璃自带的反光，颜色跟着明暗主题走。": [
+    "This mode uses each glass surface reflection and follows the theme.",
+    "โหมดนี้ใช้แสงสะท้อนของพื้นผิวตามธีม"
+  ],
+  "设置分区": [
+    "Settings sections",
+    "หมวดการตั้งค่า"
+  ],
+  "相关推荐数量": [
+    "Related recommendation count",
+    "จำนวนรายการแนะนำที่เกี่ยวข้อง"
+  ],
+  "口味与记录": [
+    "Preferences and history",
+    "ความชอบและประวัติ"
+  ],
+  "打开口味与记录": [
+    "Open preferences and history",
+    "เปิดความชอบและประวัติ"
+  ],
+  "SFW 模式": [
+    "SFW mode",
+    "โหมดปลอดภัยต่อที่ทำงาน"
+  ],
+  "隐藏敏感画面，停止悬停预览。": [
+    "Hide sensitive images and disable hover previews.",
+    "ซ่อนภาพละเอียดอ่อนและหยุดตัวอย่างเมื่อชี้เมาส์"
+  ],
+  "每批加载作品": [
+    "Titles per batch",
+    "ผลงานต่อชุด"
+  ],
+  "每批作品": [
+    "Batch size",
+    "ขนาดชุด"
+  ],
+  "默认排序": [
+    "Default sort",
+    "การเรียงเริ่มต้น"
+  ],
+  "默认排序方向": [
+    "Default sort direction",
+    "ทิศทางการเรียงเริ่มต้น"
+  ],
+  "视频卡片大小": [
+    "Video card size",
+    "ขนาดการ์ดวิดีโอ"
+  ],
+  "作品显示": [
+    "Title display",
+    "การแสดงผลงาน"
+  ],
+  "默认图片": [
+    "Default image",
+    "ภาพเริ่มต้น"
+  ],
+  "合并分卷与版本": [
+    "Group parts and versions",
+    "รวมพาร์ตและเวอร์ชัน"
+  ],
+  "新作显示": [
+    "New release display",
+    "การแสดงผลงานใหม่"
+  ],
+  "新作自动滚动": [
+    "Scroll new releases automatically",
+    "เลื่อนผลงานใหม่อัตโนมัติ"
+  ],
+  "悬停预览延迟": [
+    "Hover preview delay",
+    "หน่วงตัวอย่างเมื่อชี้เมาส์"
+  ],
+  "打开详情自动播放": [
+    "Autoplay details",
+    "เล่นอัตโนมัติเมื่อเปิดรายละเอียด"
+  ],
+  "离开详情后小窗播放": [
+    "Keep playing in mini player",
+    "เล่นต่อในหน้าต่างเล็ก"
+  ],
+  "快进 / 快退步长": [
+    "Seek step",
+    "ช่วงเลื่อนไปหน้าและหลัง"
+  ],
+  "快进 / 快退": [
+    "Seek forward / backward",
+    "เลื่อนไปหน้า / หลัง"
+  ],
+  "搜索记录数量": [
+    "Search history limit",
+    "จำนวนประวัติค้นหา"
+  ],
+  "搜索记录": [
+    "Search history",
+    "ประวัติค้นหา"
+  ],
+  "上移": [
+    "Move up",
+    "เลื่อนขึ้น"
+  ],
+  "下移": [
+    "Move down",
+    "เลื่อนลง"
+  ],
+  "隐藏": [
+    "Hide",
+    "ซ่อน"
+  ],
+  "全部页面都已显示": [
+    "All pages are visible",
+    "แสดงทุกหน้าแล้ว"
+  ],
+  "选择要添加的页面": [
+    "Choose a page to add",
+    "เลือกหน้าที่จะเพิ่ม"
+  ],
+  "筛选与排序": [
+    "Filter and sort",
+    "กรองและเรียง"
+  ],
+  "视图": [
+    "View",
+    "มุมมอง"
+  ],
+  "竖屏": [
+    "Portrait",
+    "แนวตั้ง"
+  ],
+  "全选本页作品": [
+    "Select all titles on this page",
+    "เลือกผลงานทั้งหมดในหน้านี้"
+  ],
+  "作品列表工具栏": [
+    "Title list toolbar",
+    "แถบเครื่องมือรายการผลงาน"
+  ],
+  "作品列表": [
+    "Title list",
+    "รายการผลงาน"
+  ],
+  "正在读取作品列表": [
+    "Loading titles",
+    "กำลังโหลดผลงาน"
+  ],
+  "无预览": [
+    "No preview",
+    "ไม่มีตัวอย่าง"
+  ],
+  "馆藏显示方式": [
+    "Library view",
+    "รูปแบบแสดงคลัง"
+  ],
+  "{0} 个符合 · 显示 {1}": [
+    "{0} matches · Showing {1}",
+    "ตรงเงื่อนไข {0} รายการ · แสดง {1}"
+  ],
+  "{0}及相似作品": [
+    "{0} and similar titles",
+    "{0} และผลงานที่คล้ายกัน"
+  ],
+  "这批作品没有封面": [
+    "These titles have no covers",
+    "ผลงานชุดนี้ยังไม่มีปก"
+  ],
+  "载入更多作品后继续浏览。": [
+    "Load more titles to continue browsing.",
+    "โหลดผลงานเพิ่มเติมเพื่อเรียกดูต่อ"
+  ],
+  "换个筛选范围再试。": [
+    "Try a different filter.",
+    "ลองเปลี่ยนตัวกรอง"
+  ],
+  "继续载入中…": [
+    "Loading more…",
+    "กำลังโหลดเพิ่มเติม…"
+  ],
+  "灰雾": [
+    "Ash mist",
+    "หมอกเทา"
+  ],
+  "钨丝暖阁": [
+    "Warm tungsten",
+    "แสงทังสเตนอุ่น"
+  ],
+  "夜樱": [
+    "Night cherry",
+    "ซากุระยามค่ำ"
+  ],
+  "深林": [
+    "Deep forest",
+    "ป่าลึก"
+  ],
+  "琉璃霞": [
+    "Iris glow",
+    "แสงไอริส"
+  ],
+  "蛋白石": [
+    "Opal",
+    "โอปอล"
+  ],
+  "潟湖": [
+    "Lagoon",
+    "ลากูน"
+  ],
+  "翡翠": [
+    "Jade",
+    "หยก"
+  ],
+  "耀斑": [
+    "Flare",
+    "แสงลุกโชน"
+  ],
+  "兰紫": [
+    "Orchid purple",
+    "ม่วงกล้วยไม้"
+  ],
+  "桃晕": [
+    "Peach glow",
+    "แสงพีช"
+  ],
+  "电蓝": [
+    "Electric blue",
+    "ฟ้าไฟฟ้า"
+  ],
+  "落日": [
+    "Sunset",
+    "อาทิตย์ตก"
+  ],
+  "薄荷冰": [
+    "Mint ice",
+    "น้ำแข็งมินต์"
+  ],
+  "夜昙": [
+    "Midnight bloom",
+    "ดอกไม้ยามค่ำ"
+  ],
+  "玫瑰金": [
+    "Rose gold",
+    "โรสโกลด์"
+  ],
+  "玻璃原色": [
+    "Native glass",
+    "สีแก้วดั้งเดิม"
+  ],
+  "自定义": [
+    "Custom",
+    "กำหนดเอง"
+  ],
+  "光晕一": [
+    "Glow 1",
+    "แสง 1"
+  ],
+  "光晕二": [
+    "Glow 2",
+    "แสง 2"
+  ],
+  "光晕三": [
+    "Glow 3",
+    "แสง 3"
+  ],
+  "灰": [
+    "Gray",
+    "เทา"
+  ],
+  "红": [
+    "Red",
+    "แดง"
+  ],
+  "黄": [
+    "Yellow",
+    "เหลือง"
+  ],
+  "绿": [
+    "Green",
+    "เขียว"
+  ],
+  "青": [
+    "Cyan",
+    "ฟ้าอมเขียว"
+  ],
+  "蓝": [
+    "Blue",
+    "น้ำเงิน"
+  ],
+  "紫": [
+    "Purple",
+    "ม่วง"
+  ],
+  "棕": [
+    "Brown",
+    "น้ำตาล"
+  ],
+  "云灰": [
+    "Cloud gray",
+    "เทาเมฆ"
+  ],
+  "雾灰": [
+    "Mist gray",
+    "เทาหมอก"
+  ],
+  "石灰": [
+    "Stone gray",
+    "เทาหิน"
+  ],
+  "铁灰": [
+    "Iron gray",
+    "เทาเหล็ก"
+  ],
+  "墨灰": [
+    "Ink gray",
+    "เทาหมึก"
+  ],
+  "深灰": [
+    "Dark gray",
+    "เทาเข้ม"
+  ],
+  "樱红": [
+    "Cherry red",
+    "แดงเชอร์รี"
+  ],
+  "珊瑚": [
+    "Coral",
+    "ปะการัง"
+  ],
+  "砖红": [
+    "Brick red",
+    "แดงอิฐ"
+  ],
+  "朱红": [
+    "Vermilion",
+    "แดงชาด"
+  ],
+  "酒红": [
+    "Wine red",
+    "แดงไวน์"
+  ],
+  "暗红": [
+    "Dark red",
+    "แดงเข้ม"
+  ],
+  "麦黄": [
+    "Wheat yellow",
+    "เหลืองข้าวสาลี"
+  ],
+  "琥珀": [
+    "Amber",
+    "อำพัน"
+  ],
+  "钨丝": [
+    "Tungsten",
+    "ทังสเตน"
+  ],
+  "金黄": [
+    "Golden yellow",
+    "เหลืองทอง"
+  ],
+  "姜黄": [
+    "Turmeric",
+    "ขมิ้น"
+  ],
+  "栗黄": [
+    "Chestnut yellow",
+    "เหลืองเกาลัด"
+  ],
+  "嫩芽": [
+    "Sprout",
+    "ยอดอ่อน"
+  ],
+  "叶绿": [
+    "Leaf green",
+    "เขียวใบไม้"
+  ],
+  "草绿": [
+    "Grass green",
+    "เขียวหญ้า"
+  ],
+  "森绿": [
+    "Forest green",
+    "เขียวป่า"
+  ],
+  "苔绿": [
+    "Moss green",
+    "เขียวมอส"
+  ],
+  "墨绿": [
+    "Deep green",
+    "เขียวเข้ม"
+  ],
+  "天蓝": [
+    "Sky blue",
+    "ฟ้าท้องฟ้า"
+  ],
+  "湖蓝": [
+    "Lake blue",
+    "ฟ้าทะเลสาบ"
+  ],
+  "靛蓝": [
+    "Indigo blue",
+    "น้ำเงินคราม"
+  ],
+  "宝蓝": [
+    "Royal blue",
+    "น้ำเงินรอยัล"
+  ],
+  "深蓝": [
+    "Dark blue",
+    "น้ำเงินเข้ม"
+  ],
+  "夜蓝": [
+    "Night blue",
+    "น้ำเงินยามค่ำ"
+  ],
+  "丁香": [
+    "Lilac",
+    "ไลแลค"
+  ],
+  "品红": [
+    "Magenta",
+    "ม่วงแดง"
+  ],
+  "薰衣草": [
+    "Lavender",
+    "ลาเวนเดอร์"
+  ],
+  "葡萄": [
+    "Grape",
+    "ม่วงองุ่น"
+  ],
+  "茄紫": [
+    "Aubergine",
+    "ม่วงมะเขือ"
+  ],
+  "深紫": [
+    "Dark purple",
+    "ม่วงเข้ม"
+  ],
+  "沙棕": [
+    "Sand brown",
+    "น้ำตาลทราย"
+  ],
+  "陶棕": [
+    "Clay brown",
+    "น้ำตาลดินเผา"
+  ],
+  "赭棕": [
+    "Ochre brown",
+    "น้ำตาลดินแดง"
+  ],
+  "栗棕": [
+    "Chestnut brown",
+    "น้ำตาลเกาลัด"
+  ],
+  "褐棕": [
+    "Umber",
+    "น้ำตาลไหม้"
+  ],
+  "深褐": [
+    "Dark brown",
+    "น้ำตาลเข้ม"
+  ],
+  "霞红": [
+    "Dawn red",
+    "แดงรุ่งอรุณ"
+  ],
+  "藕粉": [
+    "Lotus pink",
+    "ชมพูบัว"
+  ],
+  "火红": [
+    "Flame red",
+    "แดงเปลวไฟ"
+  ],
+  "桃红": [
+    "Peach pink",
+    "ชมพูพีช"
+  ],
+  "夕红": [
+    "Sunset red",
+    "แดงยามเย็น"
+  ],
+  "粉樱": [
+    "Cherry pink",
+    "ชมพูซากุระ"
+  ],
+  "玫粉": [
+    "Rose pink",
+    "ชมพูกุหลาบ"
+  ],
+  "阳黄": [
+    "Sunshine yellow",
+    "เหลืองแสงแดด"
+  ],
+  "橘黄": [
+    "Orange yellow",
+    "เหลืองส้ม"
+  ],
+  "玉绿": [
+    "Light jade",
+    "เขียวหยกอ่อน"
+  ],
+  "翠绿": [
+    "Emerald",
+    "เขียวมรกต"
+  ],
+  "深翠": [
+    "Deep emerald",
+    "เขียวมรกตเข้ม"
+  ],
+  "松绿": [
+    "Pine green",
+    "เขียวสน"
+  ],
+  "浅青": [
+    "Light cyan",
+    "ฟ้าอมเขียวอ่อน"
+  ],
+  "碧波": [
+    "Aqua",
+    "ฟ้าอควา"
+  ],
+  "孔雀": [
+    "Peacock",
+    "ฟ้านกยูง"
+  ],
+  "冰青": [
+    "Ice cyan",
+    "ฟ้าน้ำแข็ง"
+  ],
+  "薄荷": [
+    "Mint",
+    "มินต์"
+  ],
+  "碧绿": [
+    "Turquoise green",
+    "เขียวเทอร์ควอยซ์"
+  ],
+  "琉璃": [
+    "Lapis blue",
+    "น้ำเงินลาพิส"
+  ],
+  "藏蓝": [
+    "Navy",
+    "กรมท่า"
+  ],
+  "古紫": [
+    "Vintage purple",
+    "ม่วงวินเทจ"
+  ],
+  "紫藤": [
+    "Wisteria",
+    "วิสทีเรีย"
+  ],
+  "梅紫": [
+    "Plum",
+    "ม่วงพลัม"
+  ],
+  "兰粉": [
+    "Orchid pink",
+    "ชมพูกล้วยไม้"
+  ],
+  "靛紫": [
+    "Indigo purple",
+    "ม่วงคราม"
+  ],
+  "莓紫": [
+    "Berry",
+    "ม่วงเบอร์รี"
+  ],
+  "墨紫": [
+    "Ink purple",
+    "ม่วงหมึก"
+  ],
+  "暮紫": [
+    "Twilight purple",
+    "ม่วงพลบค่ำ"
+  ],
+  "夜紫": [
+    "Night purple",
+    "ม่วงยามค่ำ"
+  ],
+  "淡紫": [
+    "Light purple",
+    "ม่วงอ่อน"
+  ],
+  "玫紫": [
+    "Rose purple",
+    "ม่วงกุหลาบ"
+  ],
+  "杏橙": [
+    "Apricot orange",
+    "ส้มแอปริคอต"
+  ],
+  "浅杏": [
+    "Light apricot",
+    "แอปริคอตอ่อน"
+  ],
+  "霁蓝": [
+    "Clear sky blue",
+    "ฟ้าหลังฝน"
+  ],
+  "同步媒体库": [
+    "Sync library",
+    "ซิงก์คลังสื่อ"
+  ],
+  "同步这些影片": [
+    "Sync these videos",
+    "ซิงก์วิดีโอชุดนี้"
+  ],
+  "仅扫描文件": [
+    "Scan files only",
+    "สแกนเฉพาะไฟล์"
+  ],
+  "仅同步已入库影片": [
+    "Sync existing library videos only",
+    "ซิงก์เฉพาะวิดีโอในคลัง"
+  ],
+  "仅生成视频预览": [
+    "Generate previews only",
+    "สร้างเฉพาะตัวอย่างวิดีโอ"
+  ],
+  "仅补全资料": [
+    "Complete metadata only",
+    "เติมเฉพาะข้อมูล"
+  ],
+  "扫描媒体文件": [
+    "Scan media files",
+    "สแกนไฟล์สื่อ"
+  ],
+  "处理模式": [
+    "Processing mode",
+    "โหมดประมวลผล"
+  ],
+  "低占用": [
+    "Low resource usage",
+    "ใช้ทรัพยากรน้อย"
+  ],
+  "全速": [
+    "Full speed",
+    "เต็มความเร็ว"
+  ],
+  "生成视频预览会读取视频并占用处理器，可能让电脑变慢。需要同时使用电脑时，可选择低占用模式。": [
+    "Generating previews reads videos and uses the processor, which may slow the computer. Choose low resource usage when using other applications.",
+    "การสร้างตัวอย่างจะอ่านวิดีโอและใช้หน่วยประมวลผล ซึ่งอาจทำให้เครื่องช้าลง เลือกโหมดใช้ทรัพยากรน้อยหากต้องใช้โปรแกรมอื่นพร้อมกัน"
+  ],
+  "处理会读取媒体文件，可能让电脑变慢。需要同时使用电脑时，可选择低占用模式。": [
+    "Processing reads media files and may slow the computer. Choose low resource usage when using other applications.",
+    "การประมวลผลจะอ่านไฟล์สื่อและอาจทำให้เครื่องช้าลง เลือกโหมดใช้ทรัพยากรน้อยหากใช้โปรแกรมอื่นพร้อมกัน"
+  ],
+  "处理会读取媒体文件并下载资料，可能让电脑变慢。需要同时使用电脑时，可选择低占用模式。": [
+    "Processing reads media files and downloads metadata, which may slow the computer. Choose low resource usage when using other applications.",
+    "การประมวลผลจะอ่านไฟล์สื่อและดาวน์โหลดข้อมูล ซึ่งอาจทำให้เครื่องช้าลง เลือกโหมดใช้ทรัพยากรน้อยหากใช้โปรแกรมอื่นพร้อมกัน"
+  ],
+  "处理会读取媒体文件、下载资料并生成视频预览，可能让电脑变慢。需要同时使用电脑时，可选择低占用模式。": [
+    "Processing reads media files, downloads metadata and generates previews, which may slow the computer. Choose low resource usage when using other applications.",
+    "การประมวลผลจะอ่านไฟล์สื่อ ดาวน์โหลดข้อมูล และสร้างตัวอย่างวิดีโอ ซึ่งอาจทำให้เครื่องช้าลง เลือกโหมดใช้ทรัพยากรน้อยหากใช้โปรแกรมอื่นพร้อมกัน"
+  ],
+  "这批影片中有 {0} 部暂无预览，可补全资料与图片。": [
+    "{0} videos in this batch have no preview. Complete their metadata and artwork.",
+    "วิดีโอชุดนี้ {0} รายการยังไม่มีตัวอย่าง สามารถเติมข้อมูลและภาพได้"
+  ],
+  "补全完成：取得 {0} 张封面，生成 {1} 部视频预览。": [
+    "Completed: fetched {0} covers and generated {1} video previews.",
+    "เสร็จแล้ว: ได้ปก {0} ภาพ และสร้างตัวอย่างวิดีโอ {1} รายการ"
+  ],
+  "补全未完成": [
+    "Metadata completion failed",
+    "เติมข้อมูลไม่สำเร็จ"
+  ],
+  "正在启动补全…": [
+    "Starting metadata completion…",
+    "กำลังเริ่มเติมข้อมูล…"
+  ],
+  "正在处理": [
+    "Processing",
+    "กำลังประมวลผล"
+  ],
+  "未": [
+    "Unwatched",
+    "ยังไม่ได้ดู"
+  ],
+  "详情": [
+    "details",
+    "รายละเอียด"
+  ],
+  "版本": [
+    "versions",
+    "เวอร์ชัน"
+  ],
+  "分卷": [
+    "parts",
+    "พาร์ต"
+  ],
+  "资料": [
+    "profile",
+    "ข้อมูล"
+  ],
+  "女优": [
+    "Performers",
+    "นักแสดง"
+  ],
+  "提交内容有误，请检查输入后重试。": [
+    "Check your input and try again.",
+    "ตรวจข้อมูลที่กรอกแล้วลองอีกครั้ง"
+  ],
+  "登录已失效，请刷新页面重新登录。": [
+    "Your session expired. Refresh the page and sign in again.",
+    "เซสชันหมดอายุ โปรดรีเฟรชหน้าแล้วเข้าสู่ระบบอีกครั้ง"
+  ],
+  "当前设备没有执行此操作的权限，请在运行 Peach 的电脑上操作。": [
+    "This device cannot perform this action. Use the computer running Peach.",
+    "อุปกรณ์นี้ไม่มีสิทธิ์ทำรายการนี้ โปรดใช้คอมพิวเตอร์ที่รัน Peach"
+  ],
+  "请求的内容已不存在，请刷新列表。": [
+    "The requested item is no longer available. Refresh the list.",
+    "ไม่มีรายการที่ขอแล้ว โปรดรีเฟรชรายการ"
+  ],
+  "请求超时，请稍后重试。": [
+    "The request timed out. Try again later.",
+    "คำขอหมดเวลา โปรดลองภายหลัง"
+  ],
+  "当前状态不允许此操作，请刷新后重试。": [
+    "This action is unavailable in the current state. Refresh and retry.",
+    "สถานะปัจจุบันไม่อนุญาตให้ทำรายการนี้ โปรดรีเฟรชแล้วลองอีกครั้ง"
+  ],
+  "提交内容过大，请减少数量后重试。": [
+    "Too much data was submitted. Reduce the amount and retry.",
+    "ข้อมูลที่ส่งมากเกินไป โปรดลดจำนวนแล้วลองอีกครั้ง"
+  ],
+  "请求过于频繁，请稍后重试。": [
+    "Too many requests. Try again later.",
+    "ส่งคำขอบ่อยเกินไป โปรดลองภายหลัง"
+  ],
+  "Peach 服务处理失败，请重试；持续失败时查看托盘日志。": [
+    "Peach could not complete the request. Retry, or check the menu bar logs if it persists.",
+    "Peach ประมวลผลคำขอไม่สำเร็จ โปรดลองอีกครั้ง หากยังผิดพลาดให้ดูบันทึกจากเมนูบาร์"
+  ],
+  "Peach 服务没有取回结果，请稍后重试；持续失败时查看托盘日志。": [
+    "Peach could not fetch the result. Retry later, or check the menu bar logs if it persists.",
+    "Peach ดึงผลลัพธ์ไม่ได้ โปรดลองภายหลัง หากยังผิดพลาดให้ดูบันทึกจากเมนูบาร์"
+  ],
+  "Peach 服务暂时不可用，请稍后重试。": [
+    "Peach is temporarily unavailable. Try again later.",
+    "Peach ไม่พร้อมใช้งานชั่วคราว โปรดลองภายหลัง"
+  ],
+  "等待服务响应超时，请稍后重试。": [
+    "The server response timed out. Try again later.",
+    "หมดเวลารอเซิร์ฟเวอร์ โปรดลองภายหลัง"
+  ],
+  "无法连接到 Peach 服务，请确认网络连接和托盘服务已启动。": [
+    "Cannot connect to Peach. Check the network and that the menu bar service is running.",
+    "เชื่อมต่อ Peach ไม่ได้ โปรดตรวจเครือข่ายและตรวจว่าบริการเมนูบาร์ทำงานอยู่"
+  ],
+  "等待服务响应超时，请检查连接后重试。": [
+    "The server response timed out. Check your connection and retry.",
+    "หมดเวลารอเซิร์ฟเวอร์ โปรดตรวจการเชื่อมต่อแล้วลองอีกครั้ง"
+  ],
+  "操作未完成，请重试；持续失败时查看托盘日志。": [
+    "The action did not finish. Retry, or check the menu bar logs if it persists.",
+    "ทำรายการไม่สำเร็จ โปรดลองอีกครั้ง หากยังผิดพลาดให้ดูบันทึกจากเมนูบาร์"
+  ],
+  "尝试次数较多，请一分钟后重试": [
+    "Too many attempts. Try again in one minute.",
+    "ลองหลายครั้งเกินไป โปรดลองอีกครั้งในหนึ่งนาที"
+  ],
+  "所选记录": [
+    "Selected records",
+    "รายการที่เลือก"
+  ],
+  "未知": [
+    "Unknown",
+    "ไม่ทราบ"
+  ],
+  "未取得": [
+    "Unavailable",
+    "ยังไม่มีข้อมูล"
+  ],
+  "未配置": [
+    "Not configured",
+    "ยังไม่ตั้งค่า"
+  ],
+  "已配置": [
+    "Configured",
+    "ตั้งค่าแล้ว"
+  ],
+  "已安装": [
+    "Installed",
+    "ติดตั้งแล้ว"
+  ],
+  "源码运行": [
+    "Running from source",
+    "เรียกใช้จากซอร์สโค้ด"
+  ],
+  "源码部署": [
+    "Source deployment",
+    "ติดตั้งจากซอร์สโค้ด"
+  ],
+  "桌面版": [
+    "Desktop app",
+    "แอปเดสก์ท็อป"
+  ],
+  "开发版": [
+    "Development build",
+    "รุ่นพัฒนา"
+  ],
+  "最新": [
+    "Up to date",
+    "เป็นรุ่นล่าสุด"
+  ],
+  "未检查": [
+    "Not checked",
+    "ยังไม่ตรวจ"
+  ],
+  "直连": [
+    "Direct",
+    "เชื่อมต่อโดยตรง"
+  ],
+  "自动": [
+    "Automatic",
+    "อัตโนมัติ"
+  ],
+  "稳定版": [
+    "Stable",
+    "รุ่นเสถียร"
+  ],
+  "测试版": [
+    "Beta",
+    "รุ่นทดสอบ"
+  ],
+  "未登录": [
+    "Signed out",
+    "ยังไม่เข้าสู่ระบบ"
+  ],
+  "正常": [
+    "OK",
+    "ปกติ"
+  ],
+  "可用": [
+    "Available",
+    "พร้อมใช้งาน"
+  ],
+  "不可用": [
+    "Unavailable",
+    "ไม่พร้อมใช้งาน"
+  ],
+  "、": [
+    "; ",
+    " · "
+  ],
+  "计费": [
+    "Metered",
+    "คิดค่าบริการ"
+  ],
+  "天": [
+    "days",
+    "วัน"
+  ],
+  "小时": [
+    "hours",
+    "ชั่วโมง"
+  ],
+  "（粗估）": [
+    " (rough estimate)",
+    " (โดยประมาณ)"
+  ],
+  "已暂停，继续后更新预估": [
+    "Paused; the estimate will update after resuming",
+    "หยุดชั่วคราว ระบบจะประมาณเวลาใหม่เมื่อดำเนินการต่อ"
+  ],
+  "正在暂停，当前步骤结束后暂停": [
+    "Pausing after the current step",
+    "กำลังหยุดชั่วคราวหลังขั้นตอนปัจจุบันเสร็จ"
+  ],
+  "等待当前文件响应，剩余时间待更新": [
+    "Waiting for the current file; time remaining will update",
+    "กำลังรอไฟล์ปัจจุบัน ระบบจะปรับเวลาที่เหลืออีกครั้ง"
+  ],
+  "正在估算剩余时间…": [
+    "Estimating time remaining…",
+    "กำลังประมาณเวลาที่เหลือ…"
+  ],
+  "预计剩余不到 1 分钟": [
+    "Less than 1 minute remaining",
+    "เหลือเวลาประมาณไม่ถึง 1 นาที"
+  ],
+  "预计剩余约 {0} {1}{2}{3}": [
+    "About {0} {1} remaining{2}{3}",
+    "เหลือเวลาประมาณ {0} {1}{2}{3}"
+  ],
+  "{0} {1} 部": [
+    "{0}: {1} titles",
+    "{0}: {1} เรื่อง"
+  ],
+  "外部来源{0}，7 天内不再问。": [
+    "External sources: {0}. These will not be queried again for 7 days.",
+    "แหล่งข้อมูลภายนอก: {0} ระบบจะไม่ค้นรายการเหล่านี้ซ้ำภายใน 7 วัน"
+  ],
+  "检查配套文件": [
+    "Checking companion files",
+    "กำลังตรวจไฟล์ประกอบ"
+  ],
+  "读取配套图片": [
+    "Reading companion images",
+    "กำลังอ่านภาพประกอบ"
+  ],
+  "查询外部资料": [
+    "Querying external metadata",
+    "กำลังค้นข้อมูลจากภายนอก"
+  ],
+  "采集缺失封面": [
+    "Fetching missing covers",
+    "กำลังดึงปกที่ขาดอยู่"
+  ],
+  "保存待确认资料": [
+    "Saving metadata for review",
+    "กำลังบันทึกข้อมูลเพื่อรอตรวจสอบ"
+  ],
+  "没有资料": [
+    "No metadata",
+    "ไม่พบข้อมูล"
+  ],
+  "没有封面": [
+    "No cover",
+    "ไม่พบปก"
+  ],
+  "已等待 {0}": [
+    "Waiting for {0}",
+    "รอมาแล้ว {0}"
+  ],
+  "{0} 秒": [
+    "{0} s",
+    "{0} วินาที"
+  ],
+  "{0} 分 {1} 秒": [
+    "{0} min {1} s",
+    "{0} นาที {1} วินาที"
+  ],
+  "{0} 小时 {1} 分": [
+    "{0} hr {1} min",
+    "{0} ชั่วโมง {1} นาที"
+  ],
+  "{0} 天 {1} 小时": [
+    "{0} d {1} hr",
+    "{0} วัน {1} ชั่วโมง"
+  ],
+  "当前：{0} · {1}{2}": [
+    "Current: {0} · {1}{2}",
+    "ปัจจุบัน: {0} · {1}{2}"
+  ],
+  "{0} 项": [
+    "{0} items",
+    "{0} รายการ"
+  ],
+  "已发现 {0} 个文件": [
+    "{0} files found",
+    "พบแล้ว {0} ไฟล์"
+  ],
+  "问题清单：共 {0} 项，展开查看前 {1} 项": [
+    "{0} issues; expand to view the first {1}",
+    "พบปัญหา {0} รายการ ขยายเพื่อดู {1} รายการแรก"
+  ],
+  "问题清单：共 {0} 项": [
+    "Issues: {0}",
+    "ปัญหา: {0} รายการ"
+  ],
+  "视频 {0}": [
+    "Video {0}",
+    "วิดีโอ {0}"
+  ],
+  "连接中断，正在重新读取处理进度": [
+    "Connection interrupted; reloading processing progress",
+    "การเชื่อมต่อขัดข้อง กำลังอ่านความคืบหน้าใหม่"
+  ],
+  "这一项耗时较长，暂时没有新进展。任务结束后可以重试未完成的部分。": [
+    "This item is taking longer than expected. You can retry unfinished items after the task ends.",
+    "รายการนี้ใช้เวลานานและยังไม่มีความคืบหน้า เมื่องานจบแล้วสามารถลองรายการที่ยังไม่เสร็จอีกครั้งได้"
+  ],
+  "补齐女优资料：别名 {0} 个，头像 {1} 张": [
+    "Performer profiles updated: {0} aliases, {1} portraits",
+    "อัปเดตข้อมูลนักแสดง: ชื่ออื่น {0} ชื่อ ภาพ {1} ภาพ"
+  ],
+  "{0} 个同名冲突交回人工": [
+    "{0} name conflicts need manual review",
+    "ชื่อซ้ำ {0} รายการต้องตรวจสอบด้วยตนเอง"
+  ],
+  "{0} 张头像未取得": [
+    "{0} portraits could not be retrieved",
+    "ดึงภาพนักแสดงไม่ได้ {0} ภาพ"
+  ],
+  "已生成 {0} 部视频预览。": [
+    "Video previews generated: {0}.",
+    "สร้างตัวอย่างวิดีโอแล้ว {0} เรื่อง"
+  ],
+  "已扫描 {0} 个文件，识别 {1} 个番号，整理 {2} 组资料结果，自动保存 {3} 条。": [
+    "Scanned {0} files, identified {1} codes, grouped {2} metadata results, and automatically saved {3} records.",
+    "สแกน {0} ไฟล์ ระบุรหัสได้ {1} รหัส จัดกลุ่มข้อมูล {2} กลุ่ม และบันทึกอัตโนมัติ {3} รายการ"
+  ],
+  "扫描与资料采集已完成：识别 {0} 个番号，整理 {1} 组资料结果，自动保存 {2} 条": [
+    "Scan and metadata collection complete: {0} codes identified, {1} metadata groups, {2} records saved automatically",
+    "สแกนและรวบรวมข้อมูลเสร็จแล้ว: ระบุรหัส {0} รหัส จัดกลุ่มข้อมูล {1} กลุ่ม บันทึกอัตโนมัติ {2} รายการ"
+  ],
+  "，生成 {0} 部视频预览": [
+    "; generated {0} video previews",
+    " และสร้างตัวอย่างวิดีโอ {0} เรื่อง"
+  ],
+  "，": [
+    ", ",
+    " · "
+  ],
+  "。": [
+    ".",
+    "."
+  ],
+  "播放列表": [
+    "Playlists",
+    "เพลย์ลิสต์"
+  ],
+  "个": [
+    "items",
+    "รายการ"
+  ],
+  "秒": [
+    "seconds",
+    "วินาที"
+  ],
+  "条": [
+    "records",
+    "รายการ"
+  ],
+  "部作品": [
+    "titles",
+    "เรื่อง"
+  ],
+  "隐藏大合集": [
+    "Hide large compilations",
+    "ซ่อนชุดรวมขนาดใหญ่"
+  ],
+  "隐藏单人合集": [
+    "Hide solo compilations",
+    "ซ่อนชุดรวมรายบุคคล"
+  ],
+  "隐藏切片": [
+    "Hide clips",
+    "ซ่อนคลิปตัด"
+  ],
+  "这个部署由配置文件管理服务；在本机编辑下方的设置文件。": [
+    "This deployment is managed through a configuration file; edit the settings file below on this device.",
+    "การติดตั้งนี้จัดการบริการผ่านไฟล์ตั้งค่า ให้แก้ไฟล์ด้านล่างบนเครื่องนี้"
+  ],
+  "每 10 秒一张": [
+    "Every 10 seconds",
+    "ทุก 10 วินาที"
+  ],
+  "每 30 秒一张": [
+    "Every 30 seconds",
+    "ทุก 30 วินาที"
+  ],
+  "{0} 个待配置": [
+    "{0} need configuration",
+    "ต้องตั้งค่า {0} รายการ"
+  ],
+  "可选": [
+    "Optional",
+    "ไม่บังคับ"
+  ],
+  "需要": [
+    "Required",
+    "จำเป็น"
+  ],
+  "不需要": [
+    "Not required",
+    "ไม่จำเป็น"
+  ],
+  "缺 {0}": [
+    "Missing {0}",
+    "ขาด {0}"
+  ],
+  "修改凭据": [
+    "Edit credentials",
+    "แก้ข้อมูลเข้าสู่ระบบ"
+  ],
+  "未填写": [
+    "Not entered",
+    "ยังไม่ได้กรอก"
+  ],
+  "暂不支持": [
+    "Not supported yet",
+    "ยังไม่รองรับ"
+  ],
+  "发现更新不需要登录；只有取附件和 masked 下载链接才需要会话。": [
+    "Finding updates does not require sign-in; a session is only needed for attachments and masked download links.",
+    "การค้นหาอัปเดตไม่ต้องเข้าสู่ระบบ แต่การรับไฟล์แนบและลิงก์ดาวน์โหลดที่ซ่อนไว้ต้องใช้เซสชัน"
+  ],
+  "登录后从浏览器复制整条 Cookie 请求头，写进凭据文件的 cookie 字段。": [
+    "After signing in, copy the full Cookie request header from your browser into the credentials file's cookie field.",
+    "หลังเข้าสู่ระบบ ให้คัดลอกส่วนหัวคำขอ Cookie ทั้งหมดจากเบราว์เซอร์ลงช่อง cookie ในไฟล์ข้อมูลเข้าสู่ระบบ"
+  ],
+  "公开列表不需要登录；帖子详情被 FANBOX 验证页拦住时，可用浏览器会话取得正文、多图和外部资源链接。": [
+    "Public lists do not require sign-in. If FANBOX blocks post details with verification, a browser session can retrieve the text, images and external resource links.",
+    "รายการสาธารณะไม่ต้องเข้าสู่ระบบ หาก FANBOX แสดงหน้ายืนยันก่อนอ่านโพสต์ สามารถใช้เซสชันเบราว์เซอร์เพื่อรับข้อความ รูปภาพ และลิงก์ภายนอกได้"
+  ],
+  "登录 FANBOX 后，从一次成功的 api.fanbox.cc/post.info 请求复制整条 Cookie 请求头。": [
+    "After signing into FANBOX, copy the full Cookie header from a successful api.fanbox.cc/post.info request.",
+    "หลังเข้าสู่ FANBOX ให้คัดลอกส่วนหัว Cookie ทั้งหมดจากคำขอ api.fanbox.cc/post.info ที่สำเร็จ"
+  ],
+  "用于展开 Gofile 文件页，取得其中的图片和视频列表；Gofile 当前要求 Premium 才能读取 contents API，不配置仍会保留文件页链接。": [
+    "Expands Gofile pages into image and video lists. Gofile currently requires Premium for its contents API; without credentials, file-page links are still kept.",
+    "ใช้เปิดรายการรูปภาพและวิดีโอในหน้า Gofile ปัจจุบัน API เนื้อหาต้องใช้ Premium หากไม่ตั้งค่า ระบบยังเก็บลิงก์หน้าไฟล์ไว้"
+  ],
+  "登录 Premium Gofile 账户后，在个人资料页复制 API token。": [
+    "Sign into a Premium Gofile account and copy the API token from your profile.",
+    "เข้าสู่บัญชี Gofile Premium แล้วคัดลอก API token จากหน้าโปรไฟล์"
+  ],
+  "网页版挂了 Cloudflare 验证码，Peach 不绕验证码，只能走官方 API。": [
+    "The website uses Cloudflare verification. Peach does not bypass it and must use the official API.",
+    "เว็บไซต์มีการยืนยัน Cloudflare โดย Peach ไม่ข้ามการยืนยัน จึงต้องใช้ API ทางการ"
+  ],
+  "登录后在账号设置页生成 API key，把 user_id 和 api_key 写进凭据文件。": [
+    "After signing in, generate an API key in account settings and put user_id and api_key in the credentials file.",
+    "หลังเข้าสู่ระบบ ให้สร้าง API key ในการตั้งค่าบัญชี แล้วใส่ user_id และ api_key ในไฟล์ข้อมูลเข้าสู่ระบบ"
+  ],
+  "站点不让游客读帖，检查更新必须带登录会话；前面的 DDoS-Guard 对标准桌面浏览器标识不出质询，Peach 也不解任何质询，cookie 失效就原样报错。": [
+    "Guests cannot read posts, so update checks require a signed-in session. DDoS-Guard currently does not challenge the standard desktop browser identifier. Peach does not solve challenges; an expired cookie is reported as an error.",
+    "ผู้เยี่ยมชมอ่านโพสต์ไม่ได้ การตรวจอัปเดตจึงต้องใช้เซสชันที่เข้าสู่ระบบ DDoS-Guard ปัจจุบันไม่ท้าทายตัวระบุเบราว์เซอร์เดสก์ท็อปมาตรฐาน Peach ไม่แก้โจทย์ยืนยัน และจะแจ้งข้อผิดพลาดเมื่อ cookie หมดอายุ"
+  ],
+  "JavDB 或 MISSAV 打不开时，填一个能打开的镜像域名。": [
+    "If JavDB or MISSAV is unavailable, enter an accessible mirror domain.",
+    "หากเปิด JavDB หรือ MISSAV ไม่ได้ ให้ใส่โดเมนสำรองที่เข้าได้"
+  ],
+  "系统代理": [
+    "System proxy",
+    "พร็อกซีระบบ"
+  ],
+  "当前使用系统生成的访问口令。改设自己的密码，或关闭登录要求。": [
+    "A system-generated access password is in use. Set your own password or turn off sign-in.",
+    "ขณะนี้ใช้รหัสผ่านที่ระบบสร้างให้ สามารถตั้งรหัสของตนเองหรือปิดการเข้าสู่ระบบได้"
+  ],
+  "至少 8 个字符。保存后其他设备需要重新登录。": [
+    "At least 8 characters. Other devices must sign in again after saving.",
+    "อย่างน้อย 8 ตัวอักษร หลังบันทึก อุปกรณ์อื่นต้องเข้าสู่ระบบใหม่"
+  ],
+  "临时链接": [
+    "Temporary link",
+    "ลิงก์ชั่วคราว"
+  ],
+  "命名隧道": [
+    "Named tunnel",
+    "ทันเนลแบบตั้งชื่อ"
+  ],
+  "临时预览用，地址随机，重启后会变。启动前要先设置访问密码。": [
+    "For temporary previews. The random address changes after a restart. Set an access password before starting.",
+    "ใช้ดูชั่วคราว ที่อยู่สุ่มจะเปลี่ยนเมื่อเริ่มใหม่ ต้องตั้งรหัสผ่านก่อนเปิดใช้"
+  ],
+  "匿名处理后上传馆藏与各类偏好明细。": [
+    "Uploads anonymized library and preference details.",
+    "อัปโหลดรายละเอียดคลังและความชอบหลังทำให้ไม่ระบุตัวตน"
+  ],
+  "此系统未提供桌面快捷方式": [
+    "Desktop shortcuts are unavailable on this system",
+    "ระบบนี้ไม่รองรับทางลัดบนเดสก์ท็อป"
+  ],
+  "启动项状态未取得": [
+    "Startup status unavailable",
+    "ยังอ่านสถานะการเริ่มอัตโนมัติไม่ได้"
+  ],
+  "自动更新需要由托盘管理的服务。": [
+    "Automatic updates require a service managed by the tray app.",
+    "อัปเดตอัตโนมัติต้องใช้บริการที่จัดการโดยแอปถาดระบบ"
+  ],
+  "下载完成后在这里确认重启安装。": [
+    "After downloading, confirm the restart here to install.",
+    "ดาวน์โหลดเสร็จแล้วให้ยืนยันการเริ่มใหม่เพื่อติดตั้งที่นี่"
+  ],
+  "每天": [
+    "Daily",
+    "ทุกวัน"
+  ],
+  "每周": [
+    "Weekly",
+    "ทุกสัปดาห์"
+  ],
+  "每 6 小时": [
+    "Every 6 hours",
+    "ทุก 6 ชั่วโมง"
+  ],
+  "尚未检查": [
+    "Not checked yet",
+    "ยังไม่ได้ตรวจ"
+  ],
+  "操作系统": [
+    "Operating system",
+    "ระบบปฏิบัติการ"
+  ],
+  "设置文件": [
+    "Settings file",
+    "ไฟล์ตั้งค่า"
+  ],
+  "日志目录": [
+    "Log directory",
+    "โฟลเดอร์บันทึกเหตุการณ์"
+  ],
+  "未安装；缺索引的 MP4 需要它才修得了。解压到 {0}。": [
+    "Not installed. Required to repair MP4 files with missing indexes. Extract to {0}.",
+    "ยังไม่ได้ติดตั้ง ต้องใช้เพื่อซ่อม MP4 ที่ขาดดัชนี แตกไฟล์ไปที่ {0}"
+  ],
+  "下载 untrunc": [
+    "Download untrunc",
+    "ดาวน์โหลด untrunc"
+  ],
+  "这个系统上先退出 Peach，再手动移除程序与数据目录": [
+    "On this system, quit Peach, then manually remove the app and data directory",
+    "บนระบบนี้ ให้ออกจาก Peach แล้วลบแอปและโฟลเดอร์ข้อมูลด้วยตนเอง"
+  ],
+  "下载诊断报告": [
+    "Download diagnostic report",
+    "ดาวน์โหลดรายงานวินิจฉัย"
+  ],
+  "重新检查": [
+    "Check again",
+    "ตรวจอีกครั้ง"
+  ],
+  "库健康": [
+    "Library health",
+    "สภาพคลัง"
+  ],
+  "识别失败": [
+    "Identification failed",
+    "ระบุข้อมูลไม่สำเร็จ"
+  ],
+  "补资料失败": [
+    "Metadata retrieval failed",
+    "ดึงข้อมูลไม่สำเร็จ"
+  ],
+  "缺封面": [
+    "Missing covers",
+    "ขาดปก"
+  ],
+  "缺时长": [
+    "Missing durations",
+    "ขาดข้อมูลความยาว"
+  ],
+  "清单为空": [
+    "The list is empty",
+    "รายการว่าง"
+  ],
+  "没有需要处理的作品。": [
+    "No titles need attention.",
+    "ไม่มีผลงานที่ต้องจัดการ"
+  ],
+  "复制当前清单": [
+    "Copy current list",
+    "คัดลอกรายการปัจจุบัน"
+  ],
+  "作品清单": [
+    "Title list",
+    "รายการผลงาน"
+  ],
+  "作品": [
+    "Title",
+    "ผลงาน"
+  ],
+  "番号": [
+    "Code",
+    "รหัส"
+  ],
+  "媒体库": [
+    "Library",
+    "คลัง"
+  ],
+  "文件路径": [
+    "File path",
+    "เส้นทางไฟล์"
+  ],
+  "未识别": [
+    "Unidentified",
+    "ยังระบุไม่ได้"
+  ],
+  "系统检查": [
+    "System checks",
+    "ตรวจระบบ"
+  ],
+  "媒体库与挂载": [
+    "Libraries and mounts",
+    "คลังและการเมานต์"
+  ],
+  "媒体挂载": [
+    "Media mounts",
+    "การเมานต์สื่อ"
+  ],
+  "来源可读取": [
+    "The source is readable",
+    "อ่านแหล่งข้อมูลได้"
+  ],
+  "打开媒体库与入库": [
+    "Open library and importing",
+    "เปิดคลังและการนำเข้า"
+  ],
+  "临时写入与清理通过": [
+    "Temporary write and cleanup passed",
+    "ทดสอบเขียนและล้างไฟล์ชั่วคราวผ่าน"
+  ],
+  "数据库与迁移": [
+    "Database and migrations",
+    "ฐานข้อมูลและการย้ายโครงสร้าง"
+  ],
+  "数据库": [
+    "Database",
+    "ฐานข้อมูล"
+  ],
+  "数据库可读取": [
+    "The database is readable",
+    "อ่านฐานข้อมูลได้"
+  ],
+  "数据库迁移": [
+    "Database migrations",
+    "การย้ายโครงสร้างฐานข้อมูล"
+  ],
+  "迁移校验通过": [
+    "Migration validation passed",
+    "ตรวจสอบการย้ายโครงสร้างผ่าน"
+  ],
+  "工具": [
+    "Tools",
+    "เครื่องมือ"
+  ],
+  "媒体工具可执行，AV1 软件解码器可用": [
+    "Media tools are executable; the AV1 software decoder is available",
+    "เรียกใช้เครื่องมือสื่อได้ และมีตัวถอดรหัส AV1 แบบซอฟต์แวร์"
+  ],
+  "配置与访问": [
+    "Configuration and access",
+    "การตั้งค่าและการเข้าถึง"
+  ],
+  "配置": [
+    "Configuration",
+    "การตั้งค่า"
+  ],
+  "配置可读取": [
+    "Configuration is readable",
+    "อ่านการตั้งค่าได้"
+  ],
+  "访问安全": [
+    "Access security",
+    "ความปลอดภัยในการเข้าถึง"
+  ],
+  "仅监听本机": [
+    "Listening on this device only",
+    "รับการเชื่อมต่อเฉพาะเครื่องนี้"
+  ],
+  "服务端口": [
+    "Service port",
+    "พอร์ตบริการ"
+  ],
+  "端口正在使用": [
+    "The port is in use",
+    "พอร์ตกำลังใช้งาน"
+  ],
+  "后台任务": [
+    "Background tasks",
+    "งานเบื้องหลัง"
+  ],
+  "没有已记录的任务失败": [
+    "No recorded task failures",
+    "ไม่มีบันทึกงานที่ล้มเหลว"
+  ],
+  "来源会话": [
+    "Source sessions",
+    "เซสชันของแหล่งข้อมูล"
+  ],
+  "尚无记录": [
+    "No records yet",
+    "ยังไม่มีบันทึก"
+  ],
+  "尚无检查或解析记录，可在来源和凭证中检查连接": [
+    "No check or parsing records yet. Check the connection under Sources and credentials.",
+    "ยังไม่มีบันทึกการตรวจหรือประมวลผล สามารถตรวจการเชื่อมต่อในแหล่งข้อมูลและข้อมูลเข้าสู่ระบบได้"
+  ],
+  "上次解析成功": [
+    "Last successful parse",
+    "ประมวลผลสำเร็จล่าสุด"
+  ],
+  "尚无成功记录": [
+    "No successful records yet",
+    "ยังไม่มีบันทึกที่สำเร็จ"
+  ],
+  "冷却截止": [
+    "Cooldown ends",
+    "สิ้นสุดการพัก"
+  ],
+  "未在冷却": [
+    "Not cooling down",
+    "ไม่ได้พักการเรียกใช้"
+  ],
+  "一本道": [
+    "1Pondo",
+    "1Pondo"
+  ],
+  "打开来源和凭证": [
+    "Open sources and credentials",
+    "เปิดแหล่งข้อมูลและข้อมูลเข้าสู่ระบบ"
+  ],
+  "沉浸模式 · 随机连播": [
+    "Immersive mode · Shuffle play",
+    "โหมดเต็มอารมณ์ · เล่นสุ่มต่อเนื่อง"
+  ],
+  "播放墙": [
+    "Video wall",
+    "ผนังวิดีโอ"
+  ],
+  "多选（Ctrl 单项，Shift 连续）": [
+    "Select multiple (Ctrl for individual, Shift for range)",
+    "เลือกหลายรายการ (Ctrl เลือกทีละรายการ Shift เลือกช่วง)"
+  ],
+  "首页卡片版式": [
+    "Home card layout",
+    "รูปแบบการ์ดหน้าแรก"
+  ],
+  "正在读取作品": [
+    "Loading titles",
+    "กำลังโหลดผลงาน"
+  ],
+  "按评分从高到低排序": [
+    "Sort by rating, highest first",
+    "เรียงคะแนนจากมากไปน้อย"
+  ],
+  "按高潮计数从多到少排序": [
+    "Sort by climax count, highest first",
+    "เรียงจำนวนจุดสุดยอดจากมากไปน้อย"
+  ],
+  "按观看次数从多到少排序": [
+    "Sort by view count, highest first",
+    "เรียงจำนวนการดูจากมากไปน้อย"
+  ],
+  "按时长从长到短排序": [
+    "Sort by duration, longest first",
+    "เรียงความยาวจากยาวไปสั้น"
+  ],
+  "按体积从大到小排序": [
+    "Sort by size, largest first",
+    "เรียงขนาดจากใหญ่ไปเล็ก"
+  ],
+  "按入库时间从新到旧排序": [
+    "Sort by date added, newest first",
+    "เรียงวันที่เพิ่มจากใหม่ไปเก่า"
+  ],
+  "按观看时间从近到远排序": [
+    "Sort by last watched, newest first",
+    "เรียงวันที่ดูล่าสุดจากใหม่ไปเก่า"
+  ],
+  "切换为小图": [
+    "Switch to small images",
+    "เปลี่ยนเป็นภาพเล็ก"
+  ],
+  "当前：大图": [
+    "Current: large images",
+    "ปัจจุบัน: ภาพใหญ่"
+  ],
+  "处理建议：": [
+    "Suggested action: ",
+    "คำแนะนำ: "
+  ],
+  "打开{0}": [
+    "Open {0}",
+    "เปิด{0}"
+  ],
+  "正在读取系统诊断": [
+    "Loading system diagnostics",
+    "กำลังอ่านข้อมูลวินิจฉัยระบบ"
+  ],
+  "诊断读取失败": [
+    "Could not load diagnostics",
+    "อ่านข้อมูลวินิจฉัยไม่สำเร็จ"
+  ],
+  "诊断报告未取得。": [
+    "Diagnostic report unavailable.",
+    "ยังไม่มีรายงานวินิจฉัย"
+  ],
+  "需要关注 · {0} 项": [
+    "Needs attention · {0} items",
+    "ต้องตรวจสอบ · {0} รายการ"
+  ],
+  "处理记录 ·": [
+    "Processing history ·",
+    "ประวัติการประมวลผล ·"
+  ],
+  "其他检查 · {0} 项": [
+    "Other checks · {0} items",
+    "การตรวจอื่น · {0} รายการ"
+  ],
+  "上次检查": [
+    "Last check",
+    "ตรวจล่าสุด"
+  ],
+  " · {0} 秒": [
+    " · {0} s",
+    " · {0} วินาที"
+  ],
+  "清单未取得，请重新检查。": [
+    "List unavailable. Check again.",
+    "อ่านรายการไม่ได้ โปรดตรวจอีกครั้ง"
+  ],
+  "已载入": [
+    "Loaded",
+    "โหลดแล้ว"
+  ],
+  "清除": [
+    "Clear",
+    "ล้าง"
+  ],
+  "{0} 是从共享副本回填的，本机没有单独存。清除会把两边一起删。": [
+    "{0} came from the shared copy and are not stored separately on this device. Clearing removes them from both copies.",
+    "{0} มาจากสำเนาที่แชร์และไม่ได้แยกเก็บบนเครื่องนี้ การล้างจะลบทั้งสองฝั่ง"
+  ],
+  "凭据文件权限过宽": [
+    "Credentials file permissions are too broad",
+    "สิทธิ์ไฟล์ข้อมูลเข้าสู่ระบบกว้างเกินไป"
+  ],
+  "没有可配置的来源": [
+    "No configurable sources",
+    "ไม่มีแหล่งข้อมูลที่ตั้งค่าได้"
+  ],
+  "已接入的站点及其凭据状态会显示在这里。": [
+    "Connected sites and their credential status appear here.",
+    "เว็บไซต์ที่เชื่อมต่อและสถานะข้อมูลเข้าสู่ระบบจะแสดงที่นี่"
+  ],
+  "来自共享，留空表示不改": [
+    "From shared copy; leave blank to keep",
+    "จากสำเนาที่แชร์ เว้นว่างเพื่อคงเดิม"
+  ],
+  "已保存，留空表示不改": [
+    "Saved; leave blank to keep",
+    "บันทึกแล้ว เว้นว่างเพื่อคงเดิม"
+  ],
+  "文件权限过宽。在运行 Peach 的 POSIX 主机上收紧为 0600。": [
+    "File permissions are too broad. Restrict them to 0600 on the POSIX host running Peach.",
+    "สิทธิ์ไฟล์กว้างเกินไป ให้จำกัดเป็น 0600 บนเครื่อง POSIX ที่เรียกใช้ Peach"
+  ],
+  "将清除这个来源在本机和共享副本中的登录凭据。": [
+    "This clears this source's sign-in credentials from this device and the shared copy.",
+    "การดำเนินการนี้จะล้างข้อมูลเข้าสู่ระบบของแหล่งนี้จากเครื่องและสำเนาที่แชร์"
+  ],
+  "没有填写内容": [
+    "Nothing entered",
+    "ยังไม่ได้กรอกข้อมูล"
+  ],
+  "已保存来源凭据": [
+    "Source credentials saved",
+    "บันทึกข้อมูลเข้าสู่ระบบของแหล่งข้อมูลแล้ว"
+  ],
+  "已清除来源凭据": [
+    "Source credentials cleared",
+    "ล้างข้อมูลเข้าสู่ระบบของแหล่งข้อมูลแล้ว"
+  ],
+  "访问设置无法读取，请在本机检查配置文件。": [
+    "Could not read access settings. Check the configuration file on this device.",
+    "อ่านการตั้งค่าการเข้าถึงไม่ได้ โปรดตรวจไฟล์ตั้งค่าบนเครื่องนี้"
+  ],
+  "已设置密码。新设备需要登录，登录时勾选「保持登录」可保持 30 天。": [
+    "A password is set. New devices must sign in. Choose Stay signed in to keep the session for 30 days.",
+    "ตั้งรหัสผ่านแล้ว อุปกรณ์ใหม่ต้องเข้าสู่ระบบ เลือกคงการเข้าสู่ระบบเพื่อใช้ต่อได้ 30 วัน"
+  ],
+  "关闭访问密码时无需填写。": [
+    "Not required when turning off the access password.",
+    "ไม่ต้องกรอกเมื่อปิดรหัสผ่านเข้าใช้งาน"
+  ],
+  "需检查": [
+    "Check needed",
+    "ต้องตรวจสอบ"
+  ],
+  "需处理": [
+    "Action needed",
+    "ต้องจัดการ"
+  ],
+  "待复查": [
+    "Recheck needed",
+    "ต้องตรวจซ้ำ"
+  ],
+  "打开相关页面": [
+    "Open related page",
+    "เปิดหน้าที่เกี่ยวข้อง"
+  ],
+  "{0} 天": [
+    "{0} days",
+    "{0} วัน"
+  ],
+  "约 {0} 天": [
+    "About {0} days",
+    "ประมาณ {0} วัน"
+  ],
+  "切换为大图": [
+    "Switch to large images",
+    "เปลี่ยนเป็นภาพใหญ่"
+  ],
+  "当前：小图": [
+    "Current: small images",
+    "ปัจจุบัน: ภาพเล็ก"
+  ],
+  "展开侧栏": [
+    "Expand sidebar",
+    "ขยายแถบด้านข้าง"
+  ],
+  "搜索": [
+    "Search",
+    "ค้นหา"
+  ],
+  "已更换共享密钥": [
+    "Shared key replaced",
+    "เปลี่ยนกุญแจที่แชร์แล้ว"
+  ],
+  "没有运行": [
+    "Not running",
+    "ไม่ได้ทำงาน"
+  ],
+  "已复制 CloudDrive2 配置": [
+    "CloudDrive2 configuration copied",
+    "คัดลอกการตั้งค่า CloudDrive2 แล้ว"
+  ],
+  "已关闭浏览器添加": [
+    "Browser Add turned off",
+    "ปิดการเพิ่มจากเบราว์เซอร์แล้ว"
+  ],
+  "已生成专用令牌": [
+    "Dedicated token generated",
+    "สร้างโทเคนเฉพาะแล้ว"
+  ],
+  "已复制专用令牌": [
+    "Dedicated token copied",
+    "คัดลอกโทเคนเฉพาะแล้ว"
+  ],
+  "自动识别": [
+    "Automatic",
+    "ตรวจอัตโนมัติ"
+  ],
+  "磁盘": [
+    "Disk",
+    "ดิสก์"
+  ],
+  "资料库": [
+    "Archive",
+    "คลังข้อมูล"
+  ],
+  "心动": [
+    "Heartbeat",
+    "ใจเต้น"
+  ],
+  "亲密": [
+    "Intimacy",
+    "ใกล้ชิด"
+  ],
+  "热情": [
+    "Passion",
+    "เร่าร้อน"
+  ],
+  "樱桃": [
+    "Cherry",
+    "เชอร์รี่"
+  ],
+  "甜心": [
+    "Sweetheart",
+    "หวานใจ"
+  ],
+  "糖果": [
+    "Candy",
+    "ลูกกวาด"
+  ],
+  "香蕉": [
+    "Banana",
+    "กล้วย"
+  ],
+  "湿润": [
+    "Water drops",
+    "หยดน้ำ"
+  ],
+  "女性": [
+    "Female",
+    "หญิง"
+  ],
+  "男性": [
+    "Male",
+    "ชาย"
+  ],
+  "情侣": [
+    "Couple",
+    "คู่รัก"
+  ],
+  "精选": [
+    "Featured",
+    "คัดสรร"
+  ],
+  "女王": [
+    "Queen",
+    "ราชินี"
+  ],
+  "丝带": [
+    "Ribbon",
+    "ริบบิ้น"
+  ],
+  "制服": [
+    "Uniform",
+    "เครื่องแบบ"
+  ],
+  "学生": [
+    "Student",
+    "นักเรียน"
+  ],
+  "护士": [
+    "Nurse",
+    "พยาบาล"
+  ],
+  "眼镜": [
+    "Glasses",
+    "แว่นตา"
+  ],
+  "足迹": [
+    "Footprints",
+    "รอยเท้า"
+  ],
+  "手部": [
+    "Hand",
+    "มือ"
+  ],
+  "花朵": [
+    "Flower",
+    "ดอกไม้"
+  ],
+  "角色扮演": [
+    "Role play",
+    "สวมบทบาท"
+  ],
+  "兔女郎": [
+    "Bunny",
+    "กระต่าย"
+  ],
+  "兽耳": [
+    "Animal ears",
+    "หูสัตว์"
+  ],
+  "健身": [
+    "Fitness",
+    "ฟิตเนส"
+  ],
+  "卧室": [
+    "Bedroom",
+    "ห้องนอน"
+  ],
+  "浴室": [
+    "Bathroom",
+    "ห้องน้ำ"
+  ],
+  "私密": [
+    "Private",
+    "ส่วนตัว"
+  ],
+  "微醺": [
+    "Wine",
+    "ไวน์"
+  ],
+  "烟": [
+    "Smoke",
+    "ควัน"
+  ],
+  "夜色": [
+    "Night",
+    "กลางคืน"
+  ],
+  "幻想": [
+    "Fantasy",
+    "จินตนาการ"
+  ],
+  "写真": [
+    "Portraits",
+    "ภาพถ่าย"
+  ],
+  "影片": [
+    "Videos",
+    "วิดีโอ"
+  ],
+  "电影": [
+    "Movies",
+    "ภาพยนตร์"
+  ],
+  "图集": [
+    "Photo album",
+    "อัลบั้มภาพ"
+  ],
+  "游戏": [
+    "Games",
+    "เกม"
+  ],
+  "收藏": [
+    "Favorites",
+    "รายการโปรด"
+  ],
+  "默认": [
+    "Default",
+    "เริ่มต้น"
+  ],
+  "已新建目录": [
+    "Folder created",
+    "สร้างโฟลเดอร์แล้ว"
+  ],
+  "先新建这个目录，或填写已有目录。": [
+    "Create this folder first or enter an existing folder.",
+    "สร้างโฟลเดอร์นี้ก่อน หรือใส่โฟลเดอร์ที่มีอยู่แล้ว"
+  ],
+  "这个目录不存在。": [
+    "This folder does not exist.",
+    "ไม่มีโฟลเดอร์นี้"
+  ],
+  "已登录 PikPak": [
+    "Signed into PikPak",
+    "เข้าสู่ PikPak แล้ว"
+  ],
+  "已登出 PikPak": [
+    "Signed out of PikPak",
+    "ออกจาก PikPak แล้ว"
+  ],
+  "更新已准备好": [
+    "Update ready",
+    "อัปเดตพร้อมแล้ว"
+  ],
+  "立即重启": [
+    "Restart now",
+    "เริ่มใหม่ตอนนี้"
+  ],
+  "稍后": [
+    "Later",
+    "ภายหลัง"
+  ],
+  "已是最新测试版。": [
+    "The latest beta is already installed.",
+    "ใช้รุ่นทดสอบล่าสุดแล้ว"
+  ],
+  "尚未连接到 Peach，请检查托盘后刷新页面。": [
+    "Not connected to Peach. Check the tray app, then refresh.",
+    "ยังไม่ได้เชื่อมต่อ Peach ให้ตรวจแอปถาดระบบแล้วรีเฟรชหน้า"
+  ],
+  "独立测试包": [
+    "Standalone test build",
+    "ชุดทดสอบแยก"
+  ],
+  "请输入当前访问密码": [
+    "Enter the current access password",
+    "กรอกรหัสผ่านเข้าใช้งานปัจจุบัน"
+  ],
+  "访问密码需为 8–256 个字符": [
+    "The access password must contain 8–256 characters",
+    "รหัสผ่านต้องมี 8–256 ตัวอักษร"
+  ],
+  "两次输入的密码不一致": [
+    "Passwords do not match",
+    "รหัสผ่านทั้งสองช่องไม่ตรงกัน"
+  ],
+  "已关闭访问密码": [
+    "Access password turned off",
+    "ปิดรหัสผ่านเข้าใช้งานแล้ว"
+  ],
+  "请选择媒体读取策略": [
+    "Choose a media reading policy",
+    "เลือกนโยบายการอ่านสื่อ"
+  ],
+  "已保存诊断选项": [
+    "Diagnostic preferences saved",
+    "บันทึกตัวเลือกการวินิจฉัยแล้ว"
+  ],
+  "已关闭视频预览生成": [
+    "Video preview generation turned off",
+    "ปิดการสร้างตัวอย่างวิดีโอแล้ว"
+  ],
+  "已开启视频预览生成": [
+    "Video preview generation turned on",
+    "เปิดการสร้างตัวอย่างวิดีโอแล้ว"
+  ],
+  "已保存索引器": [
+    "Indexer saved",
+    "บันทึกตัวค้นหาแล้ว"
+  ],
+  "已重新打开安装教程": [
+    "Setup guide reopened",
+    "เปิดคู่มือติดตั้งอีกครั้งแล้ว"
+  ],
+  "将退出 Peach，移除程序、开机自启、桌面图标、设置、本地数据库、观看记录、凭据和缓存。原始媒体文件保留。": [
+    "Peach will quit and remove the app, startup entry, desktop icon, settings, local database, viewing history, credentials and cache. Original media files are kept.",
+    "Peach จะปิดและลบแอป รายการเริ่มอัตโนมัติ ไอคอนเดสก์ท็อป การตั้งค่า ฐานข้อมูลในเครื่อง ประวัติการดู ข้อมูลเข้าสู่ระบบ และแคช โดยเก็บไฟล์สื่อต้นฉบับไว้"
+  ],
+  "将退出 Peach 并移除程序、开机自启和桌面图标。设置、本地数据库、观看记录与缓存保留。": [
+    "Peach will quit and remove the app, startup entry and desktop icon. Settings, the local database, viewing history and cache are kept.",
+    "Peach จะปิดและลบแอป รายการเริ่มอัตโนมัติ และไอคอนเดสก์ท็อป โดยเก็บการตั้งค่า ฐานข้อมูลในเครื่อง ประวัติการดู และแคชไว้"
+  ],
+  "机械硬盘，或内存 8 GB 以内": [
+    "Hard drive, or up to 8 GB RAM",
+    "ฮาร์ดดิสก์ หรือ RAM ไม่เกิน 8 GB"
+  ],
+  "1 个": [
+    "1",
+    "1 รายการ"
+  ],
+  "SATA SSD，内存 8–16 GB": [
+    "SATA SSD, 8–16 GB RAM",
+    "SATA SSD และ RAM 8–16 GB"
+  ],
+  "1–2 个": [
+    "1–2",
+    "1–2 รายการ"
+  ],
+  "NVMe SSD，内存 16 GB 以上": [
+    "NVMe SSD, more than 16 GB RAM",
+    "NVMe SSD และ RAM มากกว่า 16 GB"
+  ],
+  "2 个起步": [
+    "Start with 2",
+    "เริ่มที่ 2 รายการ"
+  ],
+  "缓存上限": [
+    "Cache limit",
+    "ขีดจำกัดแคช"
+  ],
+  "读取长度（默认 / 最小）": [
+    "Read length (default / minimum)",
+    "ความยาวการอ่าน (เริ่มต้น / ต่ำสุด)"
+  ],
+  "同时处理视频": [
+    "Concurrent videos",
+    "วิดีโอที่ประมวลผลพร้อมกัน"
+  ],
+  "使用你在 Cloudflare 绑定的固定域名。启动前要先设置访问密码。": [
+    "Use the fixed domain linked in Cloudflare. Set an access password before starting.",
+    "ใช้โดเมนถาวรที่ผูกกับ Cloudflare และตั้งรหัสผ่านก่อนเปิดใช้"
+  ],
+  "公网入口已启动": [
+    "Public access started",
+    "เปิดการเข้าถึงจากภายนอกแล้ว"
+  ],
+  "公网入口已停止": [
+    "Public access stopped",
+    "หยุดการเข้าถึงจากภายนอกแล้ว"
+  ],
+  "已保存首次采集范围": [
+    "Initial collection range saved",
+    "บันทึกช่วงการรวบรวมครั้งแรกแล้ว"
+  ],
+  "已保存馆藏与口味上传选项": [
+    "Library and preference upload settings saved",
+    "บันทึกตัวเลือกอัปโหลดคลังและความชอบแล้ว"
+  ],
+  "大合集": [
+    "Large compilations",
+    "ชุดรวมขนาดใหญ่"
+  ],
+  "单人合集": [
+    "Solo compilations",
+    "ชุดรวมรายบุคคล"
+  ],
+  "切片": [
+    "Clips",
+    "คลิปตัด"
+  ],
+  "发行时间": [
+    "Release date",
+    "วันที่เผยแพร่"
+  ],
+  "作品列表未取得": [
+    "Title list unavailable",
+    "อ่านรายการผลงานไม่ได้"
+  ],
+  "没有符合的作品": [
+    "No matching titles",
+    "ไม่มีผลงานที่ตรงเงื่อนไข"
+  ],
+  "未命名作品": [
+    "Untitled",
+    "ผลงานไม่มีชื่อ"
+  ],
+  "封面": [
+    "Cover",
+    "ปก"
+  ],
+  "正片": [
+    "Main video",
+    "วิดีโอหลัก"
+  ],
+  "调整播放顺序": [
+    "Reorder playback",
+    "จัดลำดับการเล่น"
+  ],
+  "已调整播放顺序": [
+    "Playback order updated",
+    "ปรับลำดับการเล่นแล้ว"
+  ],
+  "移出播放列表": [
+    "Remove from playlist",
+    "นำออกจากเพลย์ลิสต์"
+  ],
+  "这个视频将从播放列表移除，视频文件保留。": [
+    "This video will be removed from the playlist. The video file is kept.",
+    "นำวิดีโอนี้ออกจากเพลย์ลิสต์ โดยเก็บไฟล์วิดีโอไว้"
+  ],
+  "已移出播放列表": [
+    "Removed from playlist",
+    "นำออกจากเพลย์ลิสต์แล้ว"
+  ],
+  "已标记寻找更好版本": [
+    "Marked for a better version",
+    "ทำเครื่องหมายค้นหารุ่นที่ดีกว่าแล้ว"
+  ],
+  "正在核对目录…": [
+    "Checking the catalog…",
+    "กำลังตรวจสอบแคตตาล็อก…"
+  ],
+  "正在定位": [
+    "Locating",
+    "กำลังค้นหาตำแหน่ง"
+  ],
+  "片商": [
+    "Studio",
+    "สตูดิโอ"
+  ],
+  "卖家": [
+    "Seller",
+    "ผู้ขาย"
+  ],
+  "创作者": [
+    "Creator",
+    "ผู้สร้าง"
+  ],
+  "正在提交喜爱理由": [
+    "Submitting favorite reasons",
+    "กำลังส่งเหตุผลที่ชอบ"
+  ],
+  "已取消评分": [
+    "Rating cleared",
+    "ล้างคะแนนแล้ว"
+  ],
+  "操作": [
+    "Actions",
+    "การดำเนินการ"
+  ],
+  "更新稍后看": [
+    "Update Watch later",
+    "อัปเดตดูภายหลัง"
+  ],
+  "已加入稍后看": [
+    "Added to Watch later",
+    "เพิ่มในดูภายหลังแล้ว"
+  ],
+  "已移出稍后看": [
+    "Removed from Watch later",
+    "นำออกจากดูภายหลังแล้ว"
+  ],
+  "更新版本需求": [
+    "Update version preference",
+    "อัปเดตความต้องการรุ่น"
+  ],
+  "已取消寻找更好版本": [
+    "Better version request cleared",
+    "ยกเลิกการค้นหารุ่นที่ดีกว่าแล้ว"
+  ],
+  "保存喜欢偏好": [
+    "Save favorite preferences",
+    "บันทึกความชอบ"
+  ],
+  "保存中…": [
+    "Saving…",
+    "กำลังบันทึก…"
+  ],
+  "保存失败 · 请重试": [
+    "Save failed · Try again",
+    "บันทึกไม่สำเร็จ · ลองอีกครั้ง"
+  ],
+  "已保存": [
+    "Saved",
+    "บันทึกแล้ว"
+  ],
+  "已保存喜欢偏好": [
+    "Favorite preferences saved",
+    "บันทึกความชอบแล้ว"
+  ],
+  "已取消喜欢": [
+    "Removed from favorites",
+    "นำออกจากรายการโปรดแล้ว"
+  ],
+  "删除标签": [
+    "Delete tag",
+    "ลบแท็ก"
+  ],
+  "标签未删除": [
+    "Tag was not deleted",
+    "ยังไม่ได้ลบแท็ก"
+  ],
+  "这一组已不存在": [
+    "This group no longer exists",
+    "ไม่มีกลุ่มนี้แล้ว"
+  ],
+  "未评分": [
+    "Unrated",
+    "ยังไม่ได้ให้คะแนน"
+  ],
+  "已标记不合口味": [
+    "Marked as not interested",
+    "ทำเครื่องหมายไม่สนใจแล้ว"
+  ],
+  "已取消不合口味": [
+    "Not interested mark cleared",
+    "ยกเลิกเครื่องหมายไม่สนใจแล้ว"
+  ],
+  "已标记看过": [
+    "Marked as watched",
+    "ทำเครื่องหมายดูแล้ว"
+  ],
+  "已取消看过": [
+    "Watched mark cleared",
+    "ยกเลิกเครื่องหมายดูแล้ว"
+  ],
+  "已移入回收站": [
+    "Moved to trash",
+    "ย้ายไปถังขยะแล้ว"
+  ],
+  "已移出回收站": [
+    "Restored from trash",
+    "กู้คืนจากถังขยะแล้ว"
+  ],
+  "已记录一次高潮": [
+    "Climax recorded",
+    "บันทึกจุดสุดยอดแล้ว"
+  ],
+  "M3U 播放列表": [
+    "M3U playlist",
+    "เพลย์ลิสต์ M3U"
+  ],
+  "扫描与资料采集未完成": [
+    "Scan and metadata collection incomplete",
+    "สแกนและรวบรวมข้อมูลยังไม่เสร็จ"
+  ],
+  "扫描与采集已暂停": [
+    "Scan and collection paused",
+    "หยุดสแกนและรวบรวมชั่วคราวแล้ว"
+  ],
+  "请查看并处理未完成项": [
+    "Review and handle unfinished items",
+    "โปรดตรวจสอบและจัดการรายการที่ยังไม่เสร็จ"
+  ],
+  "继续": [
+    "Resume",
+    "ดำเนินการต่อ"
+  ],
+  "正在暂停": [
+    "Pausing",
+    "กำลังหยุดชั่วคราว"
+  ],
+  "暂停": [
+    "Pause",
+    "หยุดชั่วคราว"
+  ],
+  "扫描文件": [
+    "Scanning files",
+    "กำลังสแกนไฟล์"
+  ],
+  "媒体来源": [
+    "Media source",
+    "แหล่งสื่อ"
+  ],
+  "视频预览已生成：{0} 部": [
+    "Video previews generated: {0}",
+    "สร้างตัวอย่างวิดีโอแล้ว {0} เรื่อง"
+  ],
+  "查看归属冲突": [
+    "View ownership conflicts",
+    "ดูข้อขัดแย้งเจ้าของ"
+  ],
+  "尚未添加媒体目录": [
+    "No media folders added",
+    "ยังไม่ได้เพิ่มโฟลเดอร์สื่อ"
+  ],
+  "在媒体库设置中添加目录并扫描。": [
+    "Add folders in library settings, then scan.",
+    "เพิ่มโฟลเดอร์ในการตั้งค่าคลัง แล้วสแกน"
+  ],
+  "复制所选": [
+    "Copy selected",
+    "คัดลอกที่เลือก"
+  ],
+  "状态": [
+    "Status",
+    "สถานะ"
+  ],
+  "观看状态": [
+    "Watch status",
+    "สถานะการดู"
+  ],
+  "重试未完成项": [
+    "Retry unfinished items",
+    "ลองรายการที่ยังไม่เสร็จอีกครั้ง"
+  ],
+  "来源和凭证": [
+    "Sources and credentials",
+    "แหล่งข้อมูลและข้อมูลเข้าสู่ระบบ"
+  ],
+  "复核资料": [
+    "Review metadata",
+    "ตรวจสอบข้อมูล"
+  ],
+  "当前：密集": [
+    "Current: compact",
+    "ปัจจุบัน: แบบกระชับ"
+  ]
 }

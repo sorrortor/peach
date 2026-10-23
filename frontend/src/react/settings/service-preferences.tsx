@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* Peach 配置中的采集档位与来源更新偏好，读写复用设置接口和查询缓存。 */
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -38,7 +39,7 @@ export function VideoThumbnailControls({ epoch = 0, disabled = false }: { epoch?
             <Select aria-label="缩略图采集间隔" selectedKey={data?.mode || 'off'}
               isDisabled={disabled || !data || status.isFetching || save.isPending}
               onSelectionChange={(key) => { if (key !== null) save.mutate(String(key)) }}>
-              {THUMBNAIL_OPTIONS.map(([key, label]) => <SelectItem key={key} id={key}>{label}</SelectItem>)}
+              {THUMBNAIL_OPTIONS.map(([key, label]) => <SelectItem key={key} id={key}>{translate(label)}</SelectItem>)}
             </Select>
           </div>
         </SettingsRow>
@@ -74,7 +75,7 @@ export function FollowPreferenceRows({ receipt }: { receipt(message: string): vo
                   receipt('已保存首次采集范围');
                 } });
               }}>
-              {FOLLOW_INITIAL_RANGE_OPTIONS.map(([key, label]) => <SelectItem key={key} id={key}>{label}</SelectItem>)}
+              {FOLLOW_INITIAL_RANGE_OPTIONS.map(([key, label]) => <SelectItem key={key} id={key}>{translate(label)}</SelectItem>)}
             </Select>
           </div>
         </SettingsRow>

@@ -1,3 +1,4 @@
+import { translate } from '../i18n';
 /* receipts 域控制器：本域状态与动作，启动由 Application 的生命周期统一安装。 */
 import { $, esc, icon, newSeed, seededRank } from '../core';
 import { playUiSound } from '../ui-kit/sounds';
@@ -12,14 +13,14 @@ export function installReceipts6() {
 mountToaster($('#toasts'),{success:icon('check'),error:icon('circle-alert')});
 receiptsState.toastBody = message=>message&&typeof message==='object'&&'html' in message
   ? String(message.html)
-  : esc(message&&typeof message==='object'?(message.text??''):message??'');
+  : esc(translate(String(message&&typeof message==='object'?(message.text??''):message??'')));
 receiptsState.toastSeq = 0;
 receiptsState.toast = (message,{timeout=6000,warn=false,action=null,sound=null}={})=>{
   const id=`toast-${++receiptsState.toastSeq}`;
   const show=(body,alert,duration,next)=>{
     playUiSound(sound||(alert?'error':'success'));
     showToast($('#toasts'),{success:icon('check'),error:icon('circle-alert')},id,{html:body,alert:!!alert,timeout:duration,
-      action:next&&!alert?{label:next.label,run:button=>{setActionBusy(button);next.run()}}:null});
+      action:next&&!alert?{label:translate(next.label),run:button=>{setActionBusy(button);next.run()}}:null});
   };
   show(receiptsState.toastBody(message),warn,timeout,action);
   /* 结果就写在同一条 toast 上（同一个 id）。「关掉回执 + 另发一条已撤销」会让两条在同一个

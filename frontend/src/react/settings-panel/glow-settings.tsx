@@ -20,6 +20,7 @@ import { GlowPresetGrid } from '../components/glow-preset-grid';
 import type { SettingsPanelHost } from './settings-panel-api';
 import { Icon } from './icon';
 import { DialRow } from './legacy-controls';
+import { translate } from '../../i18n';
 
 type Field = 'strength' | 'noise' | 'speed' | 'soften' | 'size';
 type Spot = 'spot1' | 'spot2' | 'spot3';
@@ -30,7 +31,7 @@ const FIELDS: readonly [Field, string, number][] = [
 
 
 function StopRow({ host, spot, index, glow }: { host: SettingsPanelHost; spot: Spot; index: number; glow: HomeGlow }) {
-  const label = GLOW_SPOT_LABELS[index];
+  const label = translate(GLOW_SPOT_LABELS[index]);
   const row = useRef<HTMLDivElement | null>(null);
   const toggle = useRef<HTMLButtonElement | null>(null);
   const pop = useRef<HTMLDivElement | null>(null);
@@ -64,14 +65,14 @@ function StopRow({ host, spot, index, glow }: { host: SettingsPanelHost; spot: S
         <div data-glow-pills="" role="group" aria-label="色系">
           {GLOW_SWATCH_FAMILIES.map(([key, name]) => (
             <button type="button" key={key} data-glow-pill={key} aria-pressed={key === family}
-              onClick={() => setFamily(key)}>{name}</button>
+              onClick={() => setFamily(key)}>{translate(name)}</button>
           ))}
         </div>
         <div data-glow-palette="" role="radiogroup" aria-label={`${label}颜色`}>
           {GLOW_SWATCHES.map(([swatchFamily, name, hex]) => (
             <button type="button" key={hex} role="radio" aria-checked={hex === color} data-glow-swatch={hex}
               data-glow-family={swatchFamily} style={{ '--glow-swatch': hex } as CSSProperties}
-              title={name} aria-label={name} hidden={family !== 'all' && swatchFamily !== family}
+              title={translate(name)} aria-label={translate(name)} hidden={family !== 'all' && swatchFamily !== family}
               onClick={() => pick(hex)} />
           ))}
         </div>
@@ -86,7 +87,7 @@ export function GlowSettings({ host }: { host: SettingsPanelHost }) {
   return (
     <section data-glow-setting="" id="homeGlowControls" aria-label="侧栏光晕参数" hidden={!glow.on}>
       <section data-glow-group=""><h4>配色</h4>
-        <p data-glow-current="">当前配色<b data-glow-preset-name="">{glowPresetName(glow.preset)}</b></p>
+        <p data-glow-current="">当前配色<b data-glow-preset-name="">{translate(glowPresetName(glow.preset))}</b></p>
         <GlowPresetGrid store={host.store} label="光晕配色" />
         <p data-glow-native-note="" hidden={!native}>这一档用每块玻璃自带的反光，颜色跟着明暗主题走。</p>
         <div data-glow-fields="">

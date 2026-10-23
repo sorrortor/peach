@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 import { cardClass } from './card';
 import { LoadingDots } from './loading-dots';
 import { Progress } from './progress';
@@ -6,6 +7,7 @@ import { Progress } from './progress';
 export function TaskProgress({ label, value = 0, total, embedded = false }: {
   label: string; value?: number; total?: number | null; embedded?: boolean;
 }) {
+  label = translate(label);
   return (
     <div data-task-progress className={embedded ? 'flex flex-col gap-1.5' : cardClass({
       variant: 'outlined', padding: 'none', className: 'flex flex-col gap-1.5 px-4 py-3.5',

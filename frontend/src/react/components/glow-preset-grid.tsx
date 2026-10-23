@@ -7,6 +7,7 @@
  *
  * 样式在 `./glow-preset-grid.css`。 */
 import type { CSSProperties } from 'react';
+import { translate } from '../../i18n';
 
 import { chooseGlowPreset, glowChips, type GlowSettings } from '@peach/appearance';
 
@@ -21,7 +22,7 @@ export function GlowPresetGrid({ store, label, hidden }: {
     <div data-glow-grid="" role="group" aria-label={label} hidden={hidden}>
       {glowChips(glow).map((chip) => (
         <button type="button" key={chip.key} data-glow-chip="" data-glow-preset={chip.key}
-          aria-pressed={chip.key === glow.preset} title={chip.label} aria-label={chip.label}
+          aria-pressed={chip.key === glow.preset} title={translate(chip.label)} aria-label={translate(chip.label)}
           onClick={() => chooseGlowPreset(chip.key, store)}>
           <span data-glow-ball="" aria-hidden="true" data-glow-native={chip.native ? '' : undefined}
             style={chip.native ? undefined : { '--glow-chip': chip.fill } as CSSProperties} />

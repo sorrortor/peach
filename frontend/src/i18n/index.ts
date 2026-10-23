@@ -5,6 +5,15 @@ export type Language = typeof LANGUAGES[number];
 export const LANGUAGE_KEY = 'peach.language.v1';
 const catalog: Record<string, readonly string[]> = messages;
 let currentLanguage: Language | undefined;
+const templates = Object.keys(catalog).filter(key => /\{\d+\}/.test(key))
+  .sort((a, b) => b.replace(/\{\d+\}/g, '').length - a.replace(/\{\d+\}/g, '').length).map(key => {
+  const indices: number[] = [];
+  const escaped = key.split(/(\{\d+\})/).map(part => {
+    if (/^\{\d+\}$/.test(part)) { indices.push(Number(part.slice(1, -1))); return '(.*?)'; }
+    return part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }).join('');
+  return { key, indices, pattern: new RegExp(`^${escaped}$`, 'su') };
+});
 
 export function language(): Language {
   try {
@@ -16,7 +25,25 @@ export function language(): Language {
 
 export function translate(text: string, locale: Language = currentLanguage ?? (currentLanguage = language())): string {
   if (locale === 'zh-CN') return text;
-  return catalog[text]?.[locale === 'en' ? 0 : 1] ?? text;
+  const column = locale === 'en' ? 0 : 1;
+  const exact = catalog[text]?.[column];
+  if (exact !== undefined) return exact;
+  if (text.length <= 8192 && /\p{Script=Han}/u.test(text)) {
+    for (const template of templates) {
+      const match = template.pattern.exec(text);
+      if (!match) continue;
+      const values = new Map(template.indices.map((index, at) => [index, match[at + 1] ?? '']));
+      return (catalog[template.key]?.[column] ?? template.key).replace(/\{(\d+)\}/g,
+        (placeholder, index: string) => values.get(Number(index)) ?? placeholder);
+    }
+  }
+  return text;
+}
+
+/** 插值只替换模板占位，名称、路径、错误详情等值不参与字串匹配。 */
+export function format(template: string, ...values: unknown[]): string {
+  return translate(template).replace(/\{(\d+)\}/g, (placeholder, index: string) =>
+    Number(index) < values.length ? String(values[Number(index)] ?? '') : placeholder);
 }
 
 export function saveLanguage(locale: string): boolean {

@@ -1,9 +1,11 @@
+import { readFileSync, readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import messages from '../src/i18n/messages.json';
-import { LANGUAGE_KEY, initializeLanguage, language, saveLanguage, translate } from '../src/i18n';
-import { localizeJsx } from '../i18n-plugin';
+import { LANGUAGE_KEY, initializeLanguage, language, saveLanguage, translate, format } from '../src/i18n';
+import { localizeJsx, displayMessages, localizedAreas } from '../i18n-plugin';
 
-afterEach(() => { localStorage.clear(); vi.restoreAllMocks(); });
+afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); localStorage.clear(); });
 
 describe('界面语言', () => {
   it('persists supported languages and keeps unknown content intact', () => {
@@ -31,8 +33,7 @@ describe('界面语言', () => {
   });
 
   it('handles unavailable browser storage', () => {
-    vi.spyOn(localStorage, 'getItem').mockImplementation(() => { throw new Error('blocked'); });
-    vi.spyOn(localStorage, 'setItem').mockImplementation(() => { throw new Error('blocked'); });
+    vi.stubGlobal('localStorage', { getItem() { throw new Error('blocked') }, setItem() { throw new Error('blocked') } });
     expect(language()).toBe('zh-CN');
     expect(saveLanguage('en')).toBe(false);
   });
@@ -54,4 +55,42 @@ describe('界面语言', () => {
     expect(localizeJsx('const node=<p>Private title</p>', 'sample.tsx')).toBeNull();
     expect(localizeJsx('const node=<p>登录 {name}</p>', 'sample.tsx')).toContain('__peachTranslate("登录") + " "');
   });
+  it('preserves private interpolation values and localizes dynamic status messages', () => {
+    expect(saveLanguage('en')).toBe(true);
+    const name = '保存配置 中文 ไทย <script> $& {1}.mp4';
+    expect(format('当前：{0} · {1}{2}', name, 'Scanning', '')).toBe(`Current: ${name} · Scanning`);
+    expect(translate('已发现 12 个文件')).toBe('12 files found');
+    expect(translate('2 小时 3 分')).toBe('2 hr 3 min');
+    saveLanguage('th');
+    expect(format('已发现 {0} 个文件', 12)).toBe('พบแล้ว 12 ไฟล์');
+    expect(format('当前：{0} · {1}{2}', name, 'Scanning', '')).toContain(name);
+  });
+
+  it('only transforms display branches and preserves template expressions', () => {
+    const source = 'const node=<button value={x === "登录" ? "登录" : "保存配置"} title={x === "登录" ? "登录" : "保存配置"}>{`已发现 ${name} 个文件`}</button>';
+    const code = localizeJsx(source, 'sample.tsx');
+    expect(code).toContain('value={x === "登录" ? "登录" : "保存配置"}');
+    expect(code).toContain('title={x === "登录" ? __peachTranslate("登录") : __peachTranslate("保存配置")}');
+    expect(code).toContain('__peachFormat("已发现 {0} 个文件", (name))');
+    const nested = localizeJsx('const node=<Panel top={<div aria-label="视图">登录</div>} onClick={() => save("登录")} />;', 'sample.tsx');
+    expect(nested).toContain('aria-label={__peachTranslate("视图")}');
+    expect(nested).toContain('save("登录")');
+  });
+
+  it('covers every display message in the localized surfaces and preserves placeholders', () => {
+    const root = resolve(process.cwd(), 'src/react');
+    const missing: Record<string, string[]> = {};
+    for (const entry of readdirSync(root, { recursive: true, withFileTypes: true })) {
+      const path = resolve(entry.parentPath, entry.name);
+      if (!entry.isFile() || !path.endsWith('.tsx') || !localizedAreas.test(path)) continue;
+      const gaps = displayMessages(readFileSync(path, 'utf8'), path).filter(key => !Object.hasOwn(messages, key));
+      if (gaps.length) missing[path.slice(root.length + 1)] = gaps;
+    }
+    expect(missing).toEqual({});
+    const slots = (text: string) => [...new Set(text.match(/\{\d+\}/g) ?? [])].sort();
+    for (const [key, pair] of Object.entries(messages)) {
+      for (const value of pair) expect(slots(value), key).toEqual(slots(key));
+    }
+  });
+
 });

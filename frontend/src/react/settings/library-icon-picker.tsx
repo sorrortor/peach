@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 媒体库图标：触发键显示当前字形，点开是一块七列网格的单选面板，按「应用」才提交。
  *
  * 注册表里没有网格单选的弹出面板，用 React Aria 的 `Popover`、`Dialog`、`RadioGroup` 组合，
@@ -43,9 +44,9 @@ export function LibraryIconPicker({ value, label, kind = 'local', onChange }: {
 
   return (
     <>
-      <Button ref={trigger} variant="secondary" className="self-start" aria-label={label} aria-haspopup="dialog"
+      <Button ref={trigger} variant="secondary" className="self-start" aria-label={translate(label)} aria-haspopup="dialog"
         aria-expanded={open} onClick={() => { setDraft(value); setOpen(true); }}>
-        <span data-icon-choice className="flex items-center gap-2"><SourceMark mark={value || autoMark} />{nameOf(value)}</span>
+        <span data-icon-choice className="flex items-center gap-2"><SourceMark mark={value || autoMark} />{translate(nameOf(value))}</span>
       </Button>
       <Popover triggerRef={trigger} isOpen={open} onOpenChange={setOpen} placement="bottom start" offset={4}
         className={MENU_POPOVER_SURFACE}>
@@ -55,7 +56,7 @@ export function LibraryIconPicker({ value, label, kind = 'local', onChange }: {
           <RadioGroup aria-label="可选图标" value={draft || AUTO} onChange={(next) => setDraft(next === AUTO ? '' : next)}
             className="inline-grid grid-cols-7 gap-1">
             {LIBRARY_ICON_CHOICES.map(([key, name]) => (
-              <Radio key={key || AUTO} value={key || AUTO} aria-label={key ? name : autoLabel}
+              <Radio key={key || AUTO} value={key || AUTO} aria-label={translate(key ? name : autoLabel)}
                 className="flex h-10 cursor-pointer items-center justify-center rounded-lg text-foreground-icon-secondary outline-none hover:bg-dropdown-item-hover-background focus-visible:ring-2 focus-visible:ring-border-focus-ring data-selected:bg-dropdown-item-hover-background data-selected:text-text-primary">
                 <SourceMark mark={key || autoMark} />
               </Radio>

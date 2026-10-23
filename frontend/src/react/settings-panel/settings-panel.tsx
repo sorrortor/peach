@@ -261,7 +261,7 @@ function ToggleRow({ id, title, description, describedBy = `${id.replace(/Settin
 }) {
   return (
     <label data-setting-row="">
-      <span><b>{title}</b>{description ? <small id={describedBy}>{description}</small> : null}</span>
+      <span><b>{translate(title)}</b>{description ? <small id={describedBy}>{translate(description)}</small> : null}</span>
       <input data-toggle="" type="checkbox" id={id} role="switch" aria-describedby={description ? describedBy : undefined}
         checked={checked} onChange={(event) => onToggle(event.target.checked)} />
     </label>
@@ -274,7 +274,7 @@ function Row({ title, description, kind, children }: {
   return (
     <div data-setting-row="" data-setting-sort={kind === 'sort' ? '' : undefined}
       data-setting-related={kind === 'related' ? '' : undefined}>
-      <span><b>{title}</b>{typeof description === 'string' ? <small>{description}</small> : description}</span>
+      <span><b>{translate(title)}</b>{typeof description === 'string' ? <small>{translate(description)}</small> : description}</span>
       {children}
     </div>
   );
@@ -482,7 +482,7 @@ function CompilationToggle({ host: current, id, settingKey, label, title }: {
   };
   return (
     <label data-setting-row="">
-      <span><b>{title}</b></span>
+      <span><b>{translate(title)}</b></span>
       <input data-toggle="" type="checkbox" id={id} role="switch" ref={box}
         checked={pending ?? settings[settingKey]} onChange={(event) => toggle(event.target.checked)} />
     </label>

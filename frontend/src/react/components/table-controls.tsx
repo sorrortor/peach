@@ -9,6 +9,7 @@ export function DataTableSort({ label, options, sorting, onChange }: {
   label: string; options: { id: string; label: string }[]; sorting: SortingState;
   onChange(next: SortingState): void;
 }) {
+  label = translate(label);
   const current = sorting[0];
   return <span className="flex items-center gap-2">
     <Select aria-label={`${label}排序`} selectedKey={current?.id ?? 'default'}
@@ -20,7 +21,7 @@ export function DataTableSort({ label, options, sorting, onChange }: {
     </Select>
     <Button variant="secondary" iconOnly disabled={!current}
       leadingIcon={current?.desc ? RiArrowDownLine : RiArrowUpLine}
-      aria-label={`${label}改为${current?.desc ? '升序' : '降序'}`}
+      aria-label={`${label}改为${translate(current?.desc ? '升序' : '降序')}`}
       onClick={() => { if (current) onChange([{ ...current, desc: !current.desc }]); }} />
   </span>;
 }
@@ -31,6 +32,7 @@ export function DataTableFooter({ label, total, pagination, onChange, unit = '�
   onChange(next: { pageIndex: number; pageSize: number }): void;
   unit?: string; pageUnit?: string;
 }) {
+  label = translate(label); unit = translate(unit); pageUnit = translate(pageUnit);
   const pages = Math.max(1, Math.ceil(total / pagination.pageSize));
   const pageIndex = Math.min(pagination.pageIndex, pages - 1);
   const start = total ? pageIndex * pagination.pageSize + 1 : 0;

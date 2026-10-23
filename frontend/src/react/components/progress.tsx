@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 已知总量的进度条。更新下载、任务活动与统计页的覆盖率、容量共用这一份。
  *
  * 注册表里没有进度组件，用 SVG 矩形画：宽度按比例写进 `rect` 的属性，不用内联样式，
@@ -17,7 +18,7 @@ export function Progress({ label, value, max = 100, stops = [] }: { label: strin
   const share = (at: number) => (clamp(at) / total) * SCALE;
   /* 读屏值同画面一样夹在 [0, max]：超额完成读成「150 / 100」会被当成算错。 */
   return (
-    <svg role="progressbar" aria-label={label} aria-valuemin={0} aria-valuemax={total} aria-valuenow={clamp(value)}
+    <svg role="progressbar" aria-label={translate(label)} aria-valuemin={0} aria-valuemax={total} aria-valuenow={clamp(value)}
       viewBox={`0 0 ${SCALE} 1`} preserveAspectRatio="none" className="h-1.5 w-full overflow-hidden rounded-full">
       <rect width={SCALE} height={1} className="fill-background-tertiary-default" />
       <rect width={share(value)} height={1} className="fill-border-focus-ring" />

@@ -9,6 +9,7 @@ import { preferencesState } from './preferences.js';
 import { applyTheme } from './../appearance/theme';
 import { wireGlowButton } from './../appearance/glow';
 import { loadGlowPicker } from '../react/application-residents';
+import { translate } from '../i18n';
 export const chromeState = {  };
 
 
@@ -68,11 +69,11 @@ effects.listen(libraryPicker, 'toggle', event=>{if(event.newState==='open'){
 effects.listen(libraryPicker, 'keydown', event=>{if(event.key==='Escape'){event.stopPropagation();libraryFloating.setOpen(false);boardBrand.focus()}});
 api('/api/libraries',{signal:effects.signal}).then(data=>{
   if(!effects.isActive)return;
-  const choices=[['','全部媒体库','database'],...data.libraries.map(row=>[row.id,row.name,row.icon||'database'])];
+  const choices=[['',translate('全部媒体库'),'database'],...data.libraries.map(row=>[row.id,row.name,row.icon||'database'])];
   const selected=sessionStorage.getItem('peach.library')||'';
   if(!choices.some(row=>row[0]===selected)){sessionStorage.removeItem('peach.library');location.reload();return}
   const current=sessionStorage.getItem('peach.library')||'';
-  boardBrand.querySelector('h1').textContent=current||'全部媒体库';
+  boardBrand.querySelector('h1').textContent=current||translate('全部媒体库');
   const libraryMark=glyph=>MEDIA_SOURCE_ICONS[glyph]?.startsWith('data:')?`<img src="${MEDIA_SOURCE_ICONS[glyph]}" alt="">`:icon(MEDIA_SOURCE_ICONS[glyph]||glyph);
   const mark=document.createElement('span');mark.className='mark';mark.setAttribute('aria-hidden','true');
   mark.innerHTML=libraryMark(choices.find(row=>row[0]===current)?.[2]||'database');boardBrand.querySelector('.mark').replaceWith(mark);
@@ -134,7 +135,7 @@ function placeBrand(){
   if(!effects.isActive)return;
   const head=document.querySelector('#drawerScroll > [data-sidebar-head]'),drawer=document.querySelector('#drawer');
   if(!head)return;
-  boardBrand.setAttribute('aria-label','选择媒体库');
+  boardBrand.setAttribute('aria-label',translate('选择媒体库'));
   if(boardBrand.parentElement!==head)head.prepend(boardBrand);
   const expanded=drawer.classList.contains('open'),desktop=!narrowShell();
   if(desktop||expanded){if(boardToggle.parentElement!==head)head.append(boardToggle)}else if(boardToggle.parentElement!==toggleHome.parentElement)toggleHome.after(boardToggle);

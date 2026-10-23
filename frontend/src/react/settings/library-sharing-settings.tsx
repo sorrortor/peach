@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 import { useMemo, useState } from 'react';
 
 import { SettingsRow } from '@/components/application/settings/settings-rows';
@@ -41,7 +42,7 @@ export function LibrarySharingSettings({ initial, receipt }: {
     }
   };
   return <>
-    <Rows><SettingsRow label="上传馆藏与口味明细" description={value.notice}>
+    <Rows><SettingsRow label="上传馆藏与口味明细" description={translate(value.notice)}>
       <Switch aria-label="上传馆藏与口味明细" isSelected={value.enabled}
         onChange={(enabled) => enabled ? setReviewing(true) : save(false)}
         {...busyProps(action.busy === 'save')} />

@@ -14,6 +14,7 @@ import { requestErrorMessage } from '@peach/legacy/core';
 import { emptyStateHtml, loadingDotsHtml } from '@peach/legacy/ui';
 
 import { apiGet } from '../../api';
+import { format, translate } from '../../i18n';
 import { RetryNote, useSkeletonReveal } from '../components/grid-reveal';
 import { cardRatio, MediaCard, type MediaCardVariant } from '../components/media-card';
 import { MIX_FLIP_FACES, MixCard } from '../components/mix-card';
@@ -144,7 +145,7 @@ function GridBody(props: CatalogGridProps) {
       error={!result.data && !result.isPending ? requestErrorMessage(result.error) : ''}
       retry={() => void result.refetch()}
       emptyHtml={result.data && !wallPool.length ? tiles.length
-        ? emptyStateHtml('image', '这批作品没有封面', result.hasNextPage ? '载入更多作品后继续浏览。' : '换个筛选范围再试。')
+        ? emptyStateHtml('image', translate('这批作品没有封面'), translate(result.hasNextPage ? '载入更多作品后继续浏览。' : '换个筛选范围再试。'))
         : props.emptyHtml?.({ trash, libraryEmpty:!!result.data.pages[0]?.libraryEmpty }) : ''}
       loadMore={loadNext} actions={actions} helpers={helpers} javImage={layout.javImage} />;
     if (result.isPending) return null;
@@ -227,7 +228,7 @@ export function LoadMore({ entity, load, enabled, children }: {
         ? <button ref={attach} type="button" data-entity-more="" {...aria} onClick={() => void run(true)}>{children ?? '载入更多'}</button>
         /* 失败时只留下面那条重试：哨兵收起但不卸下，重试接上之后照旧由它续页。 */
         : <div ref={attach} data-load-more="" {...aria} hidden={Boolean(state.error)} onClick={() => void run(true)}
-          dangerouslySetInnerHTML={{ __html: loadingDotsHtml('继续载入中…') }} />}
+          dangerouslySetInnerHTML={{ __html: loadingDotsHtml(translate('继续载入中…')) }} />}
       {state.error ? <RetryNote message={state.error} onRetry={() => void run(true)} /> : null}
     </>
   );
@@ -328,7 +329,7 @@ function HomeMix({ seed, layout, helpers, actions }: {
   const artwork = mixFace(seed, layout, false);
   return (
     <MixCard data-mix-seed={String(seed.id)} name={`Mix · ${label}`}
-      caption={`${helpers.displayName(seed, seed.name || '')}及相似作品`} count={0} badge="Mix" glyph wholeCard
+      caption={format('{0}及相似作品', helpers.displayName(seed, seed.name || ''))} count={0} badge="Mix" glyph wholeCard
       poster={null} artwork={artwork}
       artworkIdentity={size === 'small' ? artwork.html : mixFace(seed, { ...layout, size: 'small' }, false).html}
       relayoutArt={(root) => relayoutCovers(root, size)}

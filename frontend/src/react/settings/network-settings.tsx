@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 「网络与访问」分组：本机端口、Peach 代理、访问密码与公网入口。 */
 import { useState, type FormEvent } from 'react';
 
@@ -46,7 +47,7 @@ export function PeachProxy({ initial, receipt }: { initial: PeachProxyState; rec
       <Rows>
         <SettingsRow label="连接方式">
           <Select aria-label="连接方式" selectedKey={mode} onSelectionChange={(key) => { if (key !== null) setMode(String(key)); }}>
-            {PROXY_MODES.map(([key, name]) => <SelectItem key={key} id={key}>{name}</SelectItem>)}
+            {PROXY_MODES.map(([key, name]) => <SelectItem key={key} id={key}>{translate(name)}</SelectItem>)}
           </Select>
         </SettingsRow>
       </Rows>

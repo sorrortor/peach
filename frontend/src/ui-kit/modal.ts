@@ -1,6 +1,7 @@
 /* Geist Modal 的两种正文：一句待确认的话（`confirmModal`）与要填的一份表单（`formModal`）。
    由共享源码直接引用，随 `peach-app.js` 发出；壳与 React 子树打开的是同一份，
    标题 id 的序号因此全页连续。 */
+import { translate } from '../i18n';
 import { setActionBusy } from './controls';
 import { noteHtml } from './markup';
 import { playUiSound } from './sounds';
@@ -19,6 +20,10 @@ export function formModal({title,description='',body='',confirmLabel,cancelLabel
   title?: string; description?: string; body?: string; confirmLabel?: string; cancelLabel?: string;
   onConfirm?: (()=>unknown)|null; confirmDisabled?: boolean;
 }={}):{dialog:HTMLDialogElement;confirmButton:any;done:Promise<{confirmed:boolean;result?:unknown}>;close:()=>void}{
+  title=title === undefined ? title : translate(title);
+  confirmLabel=confirmLabel === undefined ? confirmLabel : translate(confirmLabel);
+  cancelLabel=translate(cancelLabel);
+  description=translate(description);
   const trigger=document.activeElement;
   const dialog=document.createElement('dialog');
   dialog.className='ui-geist-modal';
@@ -90,6 +95,10 @@ export function confirmModal({title,body,items=[],confirmLabel,cancelLabel='取�
   items?: readonly string[];
   onConfirm?: (()=>unknown)|null;
 }={}):Promise<{confirmed:boolean;result?:unknown}>{
+  title=title === undefined ? title : translate(title);
+  confirmLabel=confirmLabel === undefined ? confirmLabel : translate(confirmLabel);
+  cancelLabel=translate(cancelLabel);
+  body=body === undefined ? body : translate(body);
   const trigger=document.activeElement;
   const dialog=document.createElement('dialog');
   dialog.className='ui-geist-modal';
@@ -108,7 +117,7 @@ export function confirmModal({title,body,items=[],confirmLabel,cancelLabel='取�
     const host=document.createElement('div');
     host.className='ui-geist-modal-list';
     list=document.createElement('ul');
-    list.setAttribute('aria-label','所选记录');
+    list.setAttribute('aria-label',translate('所选记录'));
     list.tabIndex=0;
     for(const text of items){
       const item=document.createElement('li');

@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 /* 「外部入口」：人物资料页上通向 みんなのAV、JavDB 与 MISSAV 的那几枚直达入口。
  *
  * 这里只有 JavDB 与 MISSAV 两个地址框，这两站主域名连不上时在这里换成能打开的镜像；
@@ -48,7 +49,7 @@ export function EntryLinksForm({ initial, receipt }: {
             autoComplete="off" maxLength={100} value={site.host}
             placeholder={site.default_host}
             onChange={(host) => change(site.key, host)}
-            validationBehavior="aria" hint={ENTRY_LINKS_HINT} />
+            validationBehavior="aria" hint={translate(ENTRY_LINKS_HINT)} />
         ))}
         {action.error ? <ErrorText>{action.error}</ErrorText> : null}
       </Stack>

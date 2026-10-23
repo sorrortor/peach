@@ -1,3 +1,4 @@
+import { translate } from '../../i18n';
 import { useMemo, useState, type ReactNode } from 'react';
 import {
   createColumnHelper, createPaginatedRowModel, createSortedRowModel, flexRender,
@@ -46,6 +47,7 @@ interface DataTableProps<T> {
 /** 数据表共用排序、跨页选择与分页；业务动作只接收仍在清单里的所选行。 */
 export function DataTable<T extends RowData>({ label, items, columns, rowId, rowLabel, selected, onSelected, actions,
   title = label, titleId, description, footerActions, panel = true, unit = '条记录' }: DataTableProps<T>) {
+  label = translate(label); title = translate(title); unit = translate(unit);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
   const activateSelection = useTableSelection(() => onSelected([]));
@@ -63,7 +65,7 @@ export function DataTable<T extends RowData>({ label, items, columns, rowId, row
           onChange={(on) => row.toggleSelected(on)} />
       ) }),
       ...columns.map((column) => helper.accessor((item: T) => column.value?.(item) ?? '', {
-        id: column.id, header: column.label, enableSorting: Boolean(column.value),
+        id: column.id, header: translate(column.label), enableSorting: Boolean(column.value),
         sortFn: (a, b) => {
           const first = column.value!(a.original), second = column.value!(b.original);
           return typeof first === 'number' && typeof second === 'number'
