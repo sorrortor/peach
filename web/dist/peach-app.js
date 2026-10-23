@@ -1238,8 +1238,10 @@ function y(e) {
 }
 function b() {
 	m = g(), document.documentElement.lang = m, document.documentElement.setAttribute("translate", "no"), document.title = _(document.title);
-	let e = document.querySelector("#catalogPageHeading [data-page-title]");
+	let e = document.querySelector("a[href=\"#main\"]");
 	e?.textContent && (e.textContent = _(e.textContent));
+	let t = document.querySelector("#catalogPageHeading [data-page-title]");
+	t?.textContent && (t.textContent = _(t.textContent));
 	for (let e of document.querySelectorAll("[title], [aria-label], [placeholder]")) for (let t of [
 		"title",
 		"aria-label",
