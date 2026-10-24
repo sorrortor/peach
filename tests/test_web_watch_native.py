@@ -9,6 +9,64 @@ from unittest.mock import patch
 @unittest.skipUnless(sys.platform == 'darwin' and os.environ.get('PEACH_WEB_WATCH_NATIVE') == '1',
                      '需要显式启用 macOS WebKit 实证')
 class NativeWebWatchTests(unittest.TestCase):
+    def test_fwip_document_start_filter_preserves_normal_playback(self):
+        import json
+        import Foundation
+        from peach.web_watch_macos import create_window
+
+        app, window, view, delegate = create_window({'url': 'https://example.org/', 'language': 'en'})
+
+        def pump(until, seconds=10):
+            deadline = time.monotonic() + seconds
+            while time.monotonic() < deadline:
+                Foundation.NSRunLoop.currentRunLoop().runUntilDate_(
+                    Foundation.NSDate.dateWithTimeIntervalSinceNow_(0.05))
+                if until():
+                    return
+            self.fail('FWIP WebKit 实证超时')
+
+        def evaluate(script):
+            result = []
+            view.evaluateJavaScript_completionHandler_(script, lambda value, error: result.append((value, error)))
+            pump(lambda: bool(result), 5)
+            self.assertIsNone(result[0][1])
+            return result[0][0]
+
+        fixture = '''<div id="movie-ads-header">banner</div>
+<div data-movie-player><button data-player-play disabled aria-label="Play video">Play</button>
+<div data-player-ad>gate</div><div data-player-preroll data-preroll-ads='[{"ad":1}]'></div>
+<div data-player-side-ads>side</div><div data-player-frame></div></div>
+<div class="movie-floating-ad">overlay</div><div id="moive_pop">popup</div>
+<script type="module">
+const ads = JSON.parse(document.querySelector('[data-player-preroll]')?.dataset.prerollAds || '[]');
+window.adCount = ads.length;
+document.querySelector('[data-player-play]').addEventListener('click', () => {
+  const frame = document.createElement('iframe'); frame.src = 'about:blank';
+  document.querySelector('[data-player-frame]').append(frame);
+});
+document.title = 'fixture-ready';
+</script>'''
+        try:
+            pump(lambda: view.URL() is not None and not view.isLoading(), 30)
+            view.setNavigationDelegate_(None)
+            view.loadHTMLString_baseURL_(fixture, Foundation.NSURL.URLWithString_('https://fwip-tv.com/'))
+            pump(lambda: evaluate('document.title') == 'fixture-ready')
+            self.assertEqual(evaluate('window.adCount'), 0)
+            from peach.web_watch_fwip import AD_SELECTOR
+            self.assertEqual(evaluate(f'document.querySelectorAll({json.dumps(AD_SELECTOR)}).length'), 0)
+            self.assertFalse(evaluate('document.querySelector("[data-player-play]").disabled'))
+            self.assertEqual(evaluate('document.querySelector("[data-player-play]").getAttribute("aria-label")'), 'Play video')
+            evaluate('document.querySelector("[data-player-play]").click(); true')
+            pump(lambda: evaluate('document.querySelectorAll("[data-player-frame] iframe").length') == 1)
+            evaluate('document.querySelector("[data-player-play]").disabled=true; const ad=document.createElement("div"); ad.className="movie-floating-ad"; document.body.append(ad); true')
+            pump(lambda: evaluate('document.querySelector(".movie-floating-ad") === null'))
+            self.assertTrue(evaluate('document.querySelector("[data-player-play]").disabled'))
+            self.assertEqual(evaluate('document.querySelectorAll("[data-player-frame] iframe").length'), 1)
+        finally:
+            view.stopLoading()
+            window.close()
+            _ = app, delegate
+
     def test_native_bundle_keeps_venv_and_has_unique_application_identity(self):
         import json
         from pathlib import Path

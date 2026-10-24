@@ -11,6 +11,66 @@ from peach.web_watch import (AD_DOMAINS, WatchSession, blocked_host, clean_url,
 
 
 class WebWatchTests(unittest.TestCase):
+    def test_fwip_filter_removes_ad_gates_before_player_boot_and_handles_late_ads(self):
+        from peach.settings_file import PROJECT_ROOT
+        from peach.web_watch_fwip import user_script
+        harness = r'''
+import {Window} from 'happy-dom';
+import assert from 'node:assert/strict';
+const script=SCRIPT;
+for(const host of ['fwip-tv.com','www.fwip-tv.com','example.org','fwip-tv.com.example.org']) {
+  const window=new Window({url:`https://${host}/episode`});
+  const doc=window.document;
+  window.eval(script);
+  doc.body.innerHTML='<div id="movie-ads-header">ad</div><div id="moive_pop">ad</div>'+
+    '<section data-movie-player data-embed-url="https://example.org/player">'+
+    '<button data-player-play disabled aria-label="Play episode">Play</button>'+
+    '<div data-player-ad><div data-player-side-ads>ad</div></div>'+
+    '<div data-player-preroll data-preroll-ads=\'[{"mp4_url":"https://example.org/ad.mp4"}]\'></div>'+
+    '<div data-player-frame></div></section>';
+  await window.happyDOM.waitUntilComplete();
+  const filtered=['fwip-tv.com','www.fwip-tv.com'].includes(host);
+  const player=doc.querySelector('[data-movie-player]');
+  assert.equal(player.querySelector('[data-player-preroll]')===null,filtered);
+  assert.equal(player.querySelector('[data-player-ad]')===null,filtered);
+  assert.equal(doc.querySelector('#moive_pop')===null,filtered);
+  assert.equal(doc.querySelector('#movie-ads-header')===null,filtered);
+  assert.equal(player.querySelector('button').disabled,!filtered);
+  assert.equal(player.dataset.embedUrl,'https://example.org/player');
+  assert.equal(player.querySelector('button').getAttribute('aria-label'),'Play episode');
+  if(filtered) {
+    const adRequests=[];
+    const ads=JSON.parse(player.querySelector('[data-player-preroll]')?.dataset.prerollAds || '[]');
+    player.querySelector('button').addEventListener('click',()=>{
+      for(const ad of ads)adRequests.push(ad.mp4_url);
+      const frame=doc.createElement('iframe');
+      frame.src='about:blank'; player.querySelector('[data-player-frame]').append(frame);
+    });
+    player.querySelector('button').click();
+    assert.equal(player.querySelectorAll('iframe').length,1);
+    assert.equal(adRequests.length,0);
+    // 广告过滤不能重新启用播放器自身的加载锁。
+    player.querySelector('button').disabled=true;
+    doc.body.insertAdjacentHTML('beforeend','<div class="movie-floating-ad">late ad</div>');
+    await window.happyDOM.waitUntilComplete();
+    assert.equal(doc.querySelector('.movie-floating-ad'),null);
+    assert.equal(player.querySelector('button').disabled,true);
+    assert.equal(player.querySelectorAll('iframe').length,1);
+  }
+  await window.happyDOM.close();
+}
+'''.replace('SCRIPT', json.dumps(user_script()))
+        result = subprocess.run(['node', '--input-type=module', '-'], input=harness,
+                                cwd=PROJECT_ROOT / 'frontend', capture_output=True, text=True,
+                                encoding='utf-8', timeout=20)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_fwip_cosmetic_rules_are_scoped_to_exact_site_hosts(self):
+        from peach.web_watch_fwip import HOSTS, AD_SELECTOR
+        rule = content_rules()[-1]
+        self.assertEqual(rule['trigger']['if-domain'], list(HOSTS))
+        self.assertEqual(rule['action'], {'type': 'css-display-none', 'selector': AD_SELECTOR})
+
     def test_bundle_failure_is_reported_without_starting_a_viewer(self):
         session = WatchSession()
         with patch.object(session, 'snapshot', return_value={'available': True}), \

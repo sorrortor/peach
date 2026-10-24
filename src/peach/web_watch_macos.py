@@ -86,6 +86,7 @@ def create_window(options):
     import Foundation
     import WebKit
     from .web_watch_youtube import user_script
+    from .web_watch_fwip import user_script as fwip_script
 
     url = clean_url(options["url"])
     origin = urlsplit(url).hostname
@@ -118,6 +119,9 @@ def create_window(options):
     config.userContentController().addUserScript_(
         WebKit.WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly_(
             user_script(), WebKit.WKUserScriptInjectionTimeAtDocumentStart, False))
+    config.userContentController().addUserScript_(
+        WebKit.WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly_(
+            fwip_script(), WebKit.WKUserScriptInjectionTimeAtDocumentStart, False))
     view = WebKit.WKWebView.alloc().initWithFrame_configuration_(Foundation.NSMakeRect(0, 0, 1080, 674), config)
     view.setAutoresizingMask_(AppKit.NSViewWidthSizable | AppKit.NSViewHeightSizable)
     view.setNavigationDelegate_(delegate)

@@ -58,9 +58,10 @@ def blocked_host(host: str) -> bool:
 def content_rules() -> list[dict]:
     """WebKit 编译域名边界规则；不按视频扩展名拦截。"""
     import re
+    from .web_watch_fwip import cosmetic_rule
     return [{"trigger": {"url-filter": r"^https?://([^/]+\.)?" + re.escape(domain) + r"[:/]",
                          "url-filter-is-case-sensitive": False},
-             "action": {"type": "block"}} for domain in AD_DOMAINS]
+             "action": {"type": "block"}} for domain in AD_DOMAINS] + [cosmetic_rule()]
 
 
 def navigation_allowed(url: str, origin: str, *, main: bool, clicked: bool) -> bool:

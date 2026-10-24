@@ -80,7 +80,8 @@ class InterfaceLanguagesBrowserTests(unittest.TestCase):
                     result = subprocess.run(
                         e2e_command(node, 1, files), cwd=ROOT / 'frontend',
                         env=dict(os.environ, PEACH_E2E_ORIGIN=origin, PEACH_E2E_CHROME=chrome),
-                        capture_output=True, text=True, encoding='utf-8', timeout=300)
+                        # 一批包含桌面与手机各 240 秒的用例，外层沿用浏览器批次 600 秒预算。
+                        capture_output=True, text=True, encoding='utf-8', timeout=600)
                     self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 finally:
                     server.terminate()
