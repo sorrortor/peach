@@ -2806,6 +2806,79 @@ class LibraryPreviewCompletionTests(unittest.TestCase):
         self.assertEqual([(step['id'], step['status']) for step in result['steps']],
                          [('sources', 'complete'), ('media', 'complete')])
 
+    def test_missing_media_has_one_retryable_issue_and_advances_local_progress(self):
+        (self.media / 'clip-1.mp4').unlink()
+        reports = []
+        with patch('peach.library_processing._generate_preview') as preview, \
+                patch('peach.library_processing._finish_collection', return_value={}):
+            result = self.run_processing(stage='collect', asset_ids=[1], report=reports.append)
+        preview.assert_not_called()
+        self.assertEqual(result['status'], 'failed')
+        self.assertEqual(result['issue_count'], 1)
+        self.assertEqual(result['retryable_asset_ids'], [1])
+        issues = [json.loads(line) for line in Path(result['issues_log']).read_text().splitlines()]
+        self.assertEqual(issues[0]['failed_action'], 'reading_local')
+        self.assertTrue(any(row.get('stage') == '检查配套文件' and row.get('checked') == 1
+                            and row.get('total') == 1 for row in reports))
+        with self.database.read_connection() as connection:
+            row = connection.execute('SELECT path,disposal FROM asset WHERE id=1').fetchone()
+        self.assertEqual(row['path'], str(self.media / 'clip-1.mp4'))
+        self.assertIsNone(row['disposal'])
+
+    def test_directory_omission_does_not_reject_a_present_video(self):
+        with patch('peach.library_processing._DirectoryIndex.files', return_value={}), \
+                patch('peach.library_processing._generate_preview', return_value=False), \
+                patch('peach.library_processing._finish_collection', return_value={}):
+            result = self.run_processing(stage='collect', asset_ids=[1])
+        self.assertEqual(result['status'], 'complete')
+        self.assertEqual(result['issue_count'], 0)
+
+    def test_returned_file_can_be_retried_after_a_missing_media_failure(self):
+        video = self.media / 'clip-1.mp4'
+        video.unlink()
+        with patch('peach.library_processing._generate_preview', return_value=False) as preview, \
+                patch('peach.library_processing._finish_collection', return_value={}):
+            first = self.run_processing(stage='collect', asset_ids=[1])
+            video.write_bytes(b'video')
+            result = self.run_processing(stage='collect', retry_ids=first['retryable_asset_ids'])
+        self.assertEqual(first['issue_count'], 1)
+        self.assertEqual(result['status'], 'complete')
+        self.assertEqual(result['issue_count'], 0)
+        self.assertEqual(result['retryable_asset_ids'], [])
+        self.assertEqual(preview.call_count, 1)
+
+    def test_unreadable_stat_retains_a_retryable_failure(self):
+        from peach.library_processing import _read_local_metadata
+        video = Mock(name='unreadable-video')
+        video.name = 'clip-1.mp4'
+        video.is_file.side_effect = PermissionError('permission denied')
+        listing = Mock()
+        listing.files.return_value = {}
+        issue = Mock()
+        row = {'id': 1, 'path': str(self.media / 'clip-1.mp4')}
+        with patch('peach.library_processing.translate_ledger_path', return_value=video):
+            result = _read_local_metadata(self.config, self.db, row, self.root / 'covers',
+                                          listing, {}, Mock(), issue, [])
+        self.assertIsNone(result)
+        issue.assert_called_once_with(row, '媒体文件不可访问', action='reading_local', retryable=True)
+
+    def test_unreadable_directory_retains_failure_without_reading_sidecars(self):
+        from peach.library_processing import _read_local_metadata
+        video = Mock(name='present-video')
+        video.name = 'clip-1.mp4'
+        video.is_file.return_value = True
+        listing = Mock()
+        listing.files.side_effect = PermissionError('permission denied')
+        issue = Mock()
+        row = {'id': 1, 'path': str(self.media / 'clip-1.mp4')}
+        with patch('peach.library_processing.translate_ledger_path', return_value=video):
+            result = _read_local_metadata(self.config, self.db, row, self.root / 'covers',
+                                          listing, {}, Mock(), issue, [])
+        self.assertIsNone(result)
+        video.is_file.assert_not_called()
+        listing.sidecars.assert_not_called()
+        issue.assert_called_once_with(row, '媒体文件不可访问', action='reading_local', retryable=True)
+
     def test_missing_ffmpeg_is_retryable_and_collection_can_finish_its_work(self):
         self.resolver.ffmpeg.return_value = None
         with patch('peach.library_processing.FFmpegResolver', return_value=self.resolver), \
