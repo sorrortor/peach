@@ -116,7 +116,8 @@ class WatchSession:
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                 text=True, encoding="utf-8",
             )
-            self.process.stdin.write(json.dumps({"url": url, "language": language}) + "\n")
+            self.process.stdin.write(json.dumps({"url": url, "language": language,
+                                                "filter_cache": str(STATE_DIR / 'web-watch-filters')}) + "\n")
             self.process.stdin.close()
             threading.Thread(target=self._observe, args=(self.process,), daemon=True).start()
             return self.snapshot()

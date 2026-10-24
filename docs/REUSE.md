@@ -2,6 +2,12 @@
 
 ## 本机网页观看
 
+通用广告过滤复用 [SafariConverterLib 4.3.1](https://github.com/AdguardTeam/SafariConverterLib/tree/v4.3.1)（GPL-3.0，2026-10-15 发布）及 AdGuard Base/EasyList、Popups 的 Safari 优化订阅。固定官方 arm64 ConverterTool 的 SHA-256，约 2.2 MB；它静态包含 Swift 依赖，PSL 资源按上游 lock 的 revision 与独立 SHA-256 取得，约 0.5 MB（MIT）。官方单文件发布缺少资源 bundle 的失败已实证，必须补齐同版本数据目录；用 opensrc 检查 Swift 实现，二进制资源直接取固定上游 URL，避免文本缓存改变字节。随包保存约 4.3 万条转换规则、压缩原始输入、校验信息与许可证，合计约 3 MB。Safari 15 原生格式在实际 WebKit 编译、请求拦截和 CSS 隐藏中验证。
+
+Peach 仅保留固定来源下载、大小与时间限制、工具完整性、24 小时更新间隔、文件锁、原子缓存与失败恢复。Apple Silicon Mac 在窗口打开后后台更新，下次会话读取；Intel Mac 使用离线快照。规则不包含远程可执行脚本；只接收 block、css-display-none、ignore-previous-rules 动作。本机策略与订阅分开编译，订阅例外不能关闭 Peach 的导航、下载和弹窗边界。Node、Xcode 与浏览器扩展不是运行前提，也不新增 Python/npm 依赖。工具及 PSL 固定版本由维护者审阅升级，订阅数据自动更新。
+
+没有采用自行解析 EasyList、维护网站选择器表或猜测视频广告 DOM，因为成熟转换器完整处理网络条件、隐藏规则及例外。Chromium DNR 转换器不输出 WebKit 规则；Swift 转换器的高级脚本路径需要另外的扩展运行时，本入口保留现有 YouTube/FWIP 适配，不执行动态订阅脚本。原生夹具在三个无专用适配的主机验证通用隐藏，并用实际本机 HTTP 请求确认广告未到服务器、普通内容可达；公开视频验证播放推进与弹窗拒绝。更新、坏缓存及不可信工具用临时目录验证，不写真实 ledger。
+
 macOS 源码部署复用系统 WebKit 的 WKWebView、WKContentRuleListStore、WKUIDelegate 与 WKNavigationDelegate，经 PyObjC WebKit 12.2.2（MIT，精确依赖；依赖 Cocoa、Quartz 桥接）调用。系统引擎随 macOS 更新，桥接包沿用项目 Cocoa 版本；不下载 Chromium。官方 API 依据为 [Apple 内容规则](https://developer.apple.com/documentation/webkit/wkcontentruleliststore)及[新窗口委托](https://developer.apple.com/documentation/webkit/wkuidelegate)，桥接维护状态见 [PyObjC 更新记录](https://pyobjc.readthedocs.io/en/latest/changelog.html)。包体积由平台 wheel 决定，WebKit 引擎由系统提供。
 
 观看窗口的应用身份复用项目 macOS bundle 约定、当前 CPython Framework 原生宿主（PSF 许可证，不新增解释器下载）和 macOS codesign。Peach 只生成独立的 bundle 标识与缓存信息，约 120 KB 的本机宿主副本位于数据目录，链接系统已有 Framework；通过 CPython 的 `__PYVENV_LAUNCHER__` 保留 venv。公开依据为 [Apple CFBundleIdentifier](https://developer.apple.com/documentation/bundleresources/information-property-list/cfbundleidentifier)与 [CPython macOS Framework 说明](https://github.com/python/cpython/blob/3.14/Mac/README.rst)。签名失败不发布 bundle，启动前校验签名与 plist，关闭仍由父服务持有的 PID 管理。脚本 exec 外壳不能稳定提供 Cocoa 身份，完整 PyInstaller 包引入不必要的打包开销，因此不采用。Framework 缺失时明确失败，不改用不可识别的宿主。没有新增第三方依赖、权限或数据写入入口。

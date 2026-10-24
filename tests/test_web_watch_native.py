@@ -9,6 +9,53 @@ from unittest.mock import patch
 @unittest.skipUnless(sys.platform == 'darwin' and os.environ.get('PEACH_WEB_WATCH_NATIVE') == '1',
                      '需要显式启用 macOS WebKit 实证')
 class NativeWebWatchTests(unittest.TestCase):
+    def test_invalid_cached_general_rule_uses_bundled_filter(self):
+        import tempfile
+        from pathlib import Path
+        import Foundation
+        from peach.web_watch_filters import encode_snapshot
+        from peach.web_watch_macos import create_window
+
+        def pump(until, seconds=30):
+            deadline = time.monotonic() + seconds
+            while time.monotonic() < deadline:
+                Foundation.NSRunLoop.currentRunLoop().runUntilDate_(
+                    Foundation.NSDate.dateWithTimeIntervalSinceNow_(0.05))
+                if until():
+                    return
+            self.fail('通用过滤回退实证超时')
+
+        with tempfile.TemporaryDirectory() as temporary, \
+                patch('peach.web_watch_filters.start_update') as update:
+            cache = Path(temporary).resolve()
+            (cache / 'rules.json.gz').write_bytes(encode_snapshot([
+                {'trigger': {'url-filter': '('}, 'action': {'type': 'block'}}]))
+            app, window, view, delegate = create_window({
+                'url': 'https://example.org/', 'language': 'en', 'filter_cache': str(cache),
+            })
+
+            def evaluate(script):
+                result = []
+                view.evaluateJavaScript_completionHandler_(script, lambda value, error: result.append((value, error)))
+                pump(lambda: bool(result), 5)
+                self.assertIsNone(result[0][1])
+                return result[0][0]
+
+            try:
+                pump(lambda: view.URL() is not None and not view.isLoading())
+                self.assertEqual(view.URL().host(), 'example.org')
+                self.assertEqual(delegate.status.stringValue(), delegate.labels[4])
+                update.assert_called_once_with(cache)
+                view.loadHTMLString_baseURL_('<div class="adsbygoogle-wrapper">ad</div><main>content</main>',
+                                            Foundation.NSURL.URLWithString_('https://example.org/'))
+                pump(lambda: evaluate('!!document.querySelector("main")'))
+                self.assertEqual(evaluate('getComputedStyle(document.querySelector(".adsbygoogle-wrapper")).display'), 'none')
+                self.assertNotEqual(evaluate('getComputedStyle(document.querySelector("main")).display'), 'none')
+            finally:
+                view.stopLoading()
+                window.close()
+                _ = app, delegate
+
     def test_fwip_document_start_filter_preserves_normal_playback(self):
         import json
         import Foundation
@@ -219,11 +266,59 @@ new Response('{"adSlots":[{}],"streamingData":{"formats":[1]}}').json().then(val
             self.assertFalse(view.configuration().websiteDataStore().isPersistent())
             self.assertFalse(view.configuration().preferences().javaScriptCanOpenWindowsAutomatically())
             self.assertTrue(evaluate('JSON.parse(\'{"adSlots":[1]}\').adSlots[0] === 1'))
+            self._check_general_filters(view, pump, evaluate, delegate)
             self._check_network_filter(view, pump, evaluate, delegate)
         finally:
             view.stopLoading()
             window.close()
             _ = delegate
+
+    def _check_general_filters(self, view, pump, evaluate, delegate):
+        """同一订阅在三个无专用适配的主机隐藏横幅、拦截广告请求并保留内容。"""
+        import base64
+        from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+        import threading
+        from Foundation import NSURL
+
+        requests = []
+        class Pixel(BaseHTTPRequestHandler):
+            def do_GET(self):
+                requests.append(self.path)
+                body = base64.b64decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+                self.send_response(200)
+                self.send_header('Content-Type', 'image/gif')
+                self.send_header('Content-Length', str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, *_args):
+                pass
+
+        with ThreadingHTTPServer(('127.0.0.1', 0), Pixel) as server:
+            worker = threading.Thread(target=server.serve_forever, daemon=True)
+            worker.start()
+            origin = f'http://127.0.0.1:{server.server_port}'
+            view.setNavigationDelegate_(None)
+            try:
+                for host in ('example.org', 'example.net', 'example.com'):
+                    fixture = ('<div class="adsbygoogle-wrapper">advertisement</div>'
+                               '<main id="content">Video content<video controls></video></main>')
+                    view.loadHTMLString_baseURL_(fixture, NSURL.URLWithString_(f'http://{host}/'))
+                    pump(lambda host=host: evaluate(f'location.hostname === "{host}" && document.querySelector("#content") !== null'))
+                    self.assertEqual(evaluate('getComputedStyle(document.querySelector(".adsbygoogle-wrapper")).display'), 'none')
+                    self.assertNotEqual(evaluate('getComputedStyle(document.querySelector("#content")).display'), 'none')
+                    self.assertEqual(evaluate('document.querySelectorAll("video[controls]").length'), 1)
+                fixture = (f'<img id="control" src="{origin}/control.gif" onload="document.title=\'control-ready\'">'
+                           f'<img id="ad" src="{origin}/ads/banners/advertisement.gif" '
+                           'onerror="document.body.dataset.blocked=\'yes\'">')
+                view.loadHTMLString_baseURL_(fixture, NSURL.URLWithString_(origin))
+                pump(lambda: evaluate('document.title === "control-ready" && document.body.dataset.blocked === "yes"'))
+                self.assertEqual(evaluate('document.querySelector("#control").naturalWidth'), 1)
+                self.assertEqual(requests, ['/control.gif'])
+            finally:
+                view.setNavigationDelegate_(delegate)
+                server.shutdown()
+                worker.join(timeout=3)
 
     def _check_network_filter(self, view, pump, evaluate, delegate):
         """同一合成请求先命中本机服务器，再由实际 WebKit 规则阻断。"""
@@ -264,6 +359,14 @@ new Response('{"adSlots":[{}],"streamingData":{"formats":[1]}}').json().then(val
                 pump(lambda: bool(compiled))
                 self.assertIsNone(compiled[0][1])
                 view.configuration().userContentController().addContentRuleList_(compiled[0][0])
+                exceptions = []
+                WebKit.WKContentRuleListStore.defaultStore().compileContentRuleListForIdentifier_encodedContentRuleList_completionHandler_(
+                    'peach-subscription-exception-test', json.dumps([
+                        {'trigger': {'url-filter': '.*'}, 'action': {'type': 'ignore-previous-rules'}}
+                    ]), lambda rules, error: exceptions.append((rules, error)))
+                pump(lambda: bool(exceptions))
+                self.assertIsNone(exceptions[0][1])
+                view.configuration().userContentController().addContentRuleList_(exceptions[0][0])
                 view.loadHTMLString_baseURL_(f'<img src="{base}/blocked.gif" onerror="document.title=\'blocked\'">', NSURL.URLWithString_(base))
                 pump(lambda: evaluate('document.title') == 'blocked')
                 self.assertEqual(requests, ['/control.gif'])
