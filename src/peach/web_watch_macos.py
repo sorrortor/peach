@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import sys
+from functools import lru_cache
 from urllib.parse import urlsplit
 
 from .web_watch import clean_url, content_rules, navigation_allowed
@@ -12,26 +13,17 @@ def emit(event):
     print(json.dumps({"event": event}), flush=True)
 
 
-def create_window(options):
-    import AppKit
+@lru_cache(maxsize=1)
+def _delegate_class():
     import Foundation
     import WebKit
-
-    url = clean_url(options["url"])
-    origin = urlsplit(url).hostname
-    language = options.get("language", "en")
-    labels = {
-        "en": ("Peach · Watch the web", "Back", "Reload", "Loading…", "Ready · Ad filter on · New windows blocked", "Unable to load this page", "Pop-up blocked"),
-        "th": ("Peach · ดูจากเว็บ", "ย้อนกลับ", "โหลดใหม่", "กำลังโหลด…", "พร้อม · เปิดตัวกรองโฆษณา · บล็อกหน้าต่างใหม่", "โหลดหน้านี้ไม่สำเร็จ", "บล็อกป๊อปอัปแล้ว"),
-        "zh": ("Peach · 网页观看", "后退", "刷新", "正在加载…", "就绪 · 广告过滤已启用 · 新窗口已阻止", "网页加载失败", "已拦截弹窗"),
-    }[language]
 
     class WatchDelegate(Foundation.NSObject):
         def applicationShouldTerminateAfterLastWindowClosed_(self, _application):
             return True
 
         def webView_createWebViewWithConfiguration_forNavigationAction_windowFeatures_(self, _view, _config, _action, _features):
-            status.setStringValue_(labels[6])
+            self.status.setStringValue_(self.labels[6])
             emit("popup")
             return None
 
@@ -44,10 +36,10 @@ def create_window(options):
                 emit("popup")
                 decide(WebKit.WKNavigationActionPolicyCancel)
                 return
-            allowed = navigation_allowed(str(action.request().URL().absoluteString()), origin,
+            allowed = navigation_allowed(str(action.request().URL().absoluteString()), self.origin,
                                          main=bool(target.isMainFrame()), clicked=False)
             if not allowed and target.isMainFrame():
-                status.setStringValue_(labels[5])
+                self.status.setStringValue_(self.labels[5])
                 emit("error")
             decide(WebKit.WKNavigationActionPolicyAllow if allowed else WebKit.WKNavigationActionPolicyCancel)
 
@@ -56,11 +48,11 @@ def create_window(options):
             decide(WebKit.WKNavigationResponsePolicyAllow if response.canShowMIMEType() or media else WebKit.WKNavigationResponsePolicyCancel)
 
         def webView_didStartProvisionalNavigation_(self, _view, _navigation):
-            status.setStringValue_(labels[3])
+            self.status.setStringValue_(self.labels[3])
             emit("loading")
 
         def webView_didFinishNavigation_(self, _view, _navigation):
-            status.setStringValue_(labels[4])
+            self.status.setStringValue_(self.labels[4])
             emit("ready")
 
         def webView_didFailProvisionalNavigation_withError_(self, _view, _navigation, error):
@@ -69,7 +61,7 @@ def create_window(options):
                 self.webView_didFinishNavigation_(_view, _navigation)
                 return
             if error.code() != -999:
-                status.setStringValue_(labels[5])
+                self.status.setStringValue_(self.labels[5])
                 print(json.dumps({"event": "error", "code": error.code(),
                                   "domain": str(error.domain())}), flush=True)
 
@@ -77,18 +69,38 @@ def create_window(options):
             self.webView_didFailProvisionalNavigation_withError_(view, navigation, error)
 
         def webViewWebContentProcessDidTerminate_(self, _view):
-            status.setStringValue_(labels[5])
+            self.status.setStringValue_(self.labels[5])
             emit("error")
 
         def back_(self, _sender):
-            view.goBack()
+            self.view.goBack()
 
         def reload_(self, _sender):
-            view.reload()
+            self.view.reload()
+
+    return WatchDelegate
+
+
+def create_window(options):
+    import AppKit
+    import Foundation
+    import WebKit
+    from .web_watch_youtube import user_script
+
+    url = clean_url(options["url"])
+    origin = urlsplit(url).hostname
+    language = options.get("language", "en")
+    labels = {
+        "en": ("Peach · Watch the web", "Back", "Reload", "Loading…", "Ready · Ad filter on · New windows blocked", "Unable to load this page", "Pop-up blocked"),
+        "th": ("Peach · ดูจากเว็บ", "ย้อนกลับ", "โหลดใหม่", "กำลังโหลด…", "พร้อม · เปิดตัวกรองโฆษณา · บล็อกหน้าต่างใหม่", "โหลดหน้านี้ไม่สำเร็จ", "บล็อกป๊อปอัปแล้ว"),
+        "zh": ("Peach · 网页观看", "后退", "刷新", "正在加载…", "就绪 · 广告过滤已启用 · 新窗口已阻止", "网页加载失败", "已拦截弹窗"),
+    }[language]
 
     app = AppKit.NSApplication.sharedApplication()
     app.setActivationPolicy_(AppKit.NSApplicationActivationPolicyRegular)
-    delegate = WatchDelegate.alloc().init()
+    delegate = _delegate_class().alloc().init()
+    delegate.origin = origin
+    delegate.labels = labels
     app.setDelegate_(delegate)
     window = AppKit.NSWindow.alloc().initWithContentRect_styleMask_backing_defer_(
         Foundation.NSMakeRect(100, 100, 1080, 760),
@@ -103,10 +115,14 @@ def create_window(options):
     config.setWebsiteDataStore_(WebKit.WKWebsiteDataStore.nonPersistentDataStore())
     config.preferences().setJavaScriptCanOpenWindowsAutomatically_(False)
     config.setMediaTypesRequiringUserActionForPlayback_(WebKit.WKAudiovisualMediaTypeAll)
+    config.userContentController().addUserScript_(
+        WebKit.WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly_(
+            user_script(), WebKit.WKUserScriptInjectionTimeAtDocumentStart, False))
     view = WebKit.WKWebView.alloc().initWithFrame_configuration_(Foundation.NSMakeRect(0, 0, 1080, 674), config)
     view.setAutoresizingMask_(AppKit.NSViewWidthSizable | AppKit.NSViewHeightSizable)
     view.setNavigationDelegate_(delegate)
     view.setUIDelegate_(delegate)
+    delegate.view = view
     root.addSubview_(view)
     for index, selector in enumerate(("back:", "reload:")):
         button = AppKit.NSButton.alloc().initWithFrame_(Foundation.NSMakeRect(12 + index * 100, 718, 94, 30))
@@ -125,6 +141,7 @@ def create_window(options):
     status.setFrame_(Foundation.NSMakeRect(16, 682, 1030, 22))
     status.setAutoresizingMask_(AppKit.NSViewMinYMargin | AppKit.NSViewWidthSizable)
     root.addSubview_(status)
+    delegate.status = status
 
     def compiled(rules, error):
         if error is not None or rules is None:

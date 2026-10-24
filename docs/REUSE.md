@@ -6,7 +6,11 @@ macOS 源码部署复用系统 WebKit 的 WKWebView、WKContentRuleListStore、W
 
 Peach 保留公开 HTTPS 地址校验、有限广告域名表、同主机顶层导航、禁止新窗口和外部协议、仅内存会话及单窗口进程所有权。编译拦截规则完成后才加载网页，失败留在错误态；媒体由 WebKit 播放，不代理网页、不读取 Chrome profile、不写 ledger、不提交下载。iframe 无法跨域过滤且站点可拒绝嵌入；现有 Chromium 传输是隐藏采集器并拦截媒体；浏览器扩展需要额外安装，因此均不采用。
 
-W3C 公开视频页的 macOS 显式实证通过统一测试入口检查真实视频 readyState、时长、静音播放推进、新窗口拒绝与非持久会话。纯函数验证广告域名边界、规则和私网地址拒绝。首版只支持 Mac 源码运行；Windows、Linux 和冻结安装包显示不可用。广告表不是完整过滤订阅，第一方广告、视频内广告和需跨主机导航的站点属于已知限制。
+YouTube 广告元数据处理复用 [AdGuard Scriptlets 2.5.1](https://github.com/AdguardTeam/Scriptlets/tree/v2.5.1)（GPL-3.0，与项目 AGPL-3.0 分发兼容）。维护中的上游同时提供源码和固定 npm 发布；从官方 `scriptlets.corelibs.json` 原样选取 json-prune、json-prune-fetch-response、json-prune-xhr-response、set-constant 四个自包含实现，约 100 KB，许可证和来源哈希随包保存。开发工具依赖只用于固定资源生成，不执行其转换器或 YAML 解析器；浏览器和 Python 运行时不加载这些 npm 依赖。根 manifest 将未使用的转换器依赖限定为 js-yaml 3.15.2 和 Zod 4.6.7，避免安装存在已知高危问题的版本；此配置仅支持读取静态资源，不支持调用上游转换器。依赖由根 manifest、lock 和 Dependabot 管理，`vendor:web` 重建，`check:vendor` 校验。
+
+Peach 只保留 YouTube 精确主机作用域、广告字段路径和原生文档开始注入策略，不自研 fetch/XHR/JSON 代理。页面不获得本机桥接权限。过滤清理 adPlacements、playerAds、adSlots，保留媒体、时长、播放状态、字幕和原有错误。未采用 uBlock 扩展路径，因为 WebKit 宿主不能直接运行 Chromium 扩展；未采用媒体提取器，因为网页播放不需要提取或下载媒体。过滤脚本支持 WebKit 的现代 JavaScript，不增加 Python 或浏览器引擎依赖。
+
+W3C 公开视频页的 macOS 显式实证通过统一测试入口检查真实视频 readyState、时长、静音播放推进、新窗口拒绝与非持久会话。YouTube 联网实证需同时设置 `PEACH_WEB_WATCH_NATIVE=1` 与 `PEACH_WEB_WATCH_YOUTUBE=1`；公开视频的实际播放推进和受控广告数据过滤分开验证，未收到真实广告时不能宣称验证了真实广告拦截。Node 隔离上下文验证 JSON、fetch、初始播放器对象的广告清理及其他主机不受影响；原生 WebKit 夹具验证文档开始注入和下载拒绝。纯函数验证广告域名边界、规则和私网地址拒绝。只支持 Mac 源码运行；Windows、Linux 和冻结安装包显示不可用。广告表不是完整过滤订阅，站点改版、反过滤检测、服务端拼接广告和需跨主机导航的站点属于已知限制。
 
 ## 界面语言
 
