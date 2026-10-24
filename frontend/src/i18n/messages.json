@@ -1,4 +1,22 @@
 {
+  "正在读取状态": ["Reading status", "กำลังอ่านสถานะ"],
+  "网页观看": ["Watch the web", "ดูจากเว็บ"],
+  "在这台 Mac 的独立窗口观看网页视频，拦截常见广告域名和新窗口。": ["Watch web videos in a separate window on this Mac, with common ad domains and new windows blocked.", "ดูวิดีโอจากเว็บในหน้าต่างแยกบน Mac เครื่องนี้ พร้อมบล็อกโดเมนโฆษณาที่พบบ่อยและหน้าต่างใหม่"],
+  "当前页面内导航限于输入的网站。视频内嵌广告可能仍会显示。": ["Navigation stays on the entered website. Ads embedded in the video may still appear.", "การนำทางจำกัดอยู่ในเว็บไซต์ที่กรอก โฆษณาที่ฝังในวิดีโออาจยังแสดงอยู่"],
+  "网页地址": ["Web address", "ที่อยู่เว็บ"],
+  "打开观看窗口": ["Open viewing window", "เปิดหน้าต่างดูเว็บ"],
+  "关闭观看窗口": ["Close viewing window", "ปิดหน้าต่างดูเว็บ"],
+  "尚未打开观看窗口": ["Viewing window is closed", "ยังไม่เปิดหน้าต่างดูเว็บ"],
+  "正在打开观看窗口": ["Opening viewing window", "กำลังเปิดหน้าต่างดูเว็บ"],
+  "正在加载网页": ["Loading web page", "กำลังโหลดหน้าเว็บ"],
+  "观看窗口已就绪": ["Viewing window is ready", "หน้าต่างดูเว็บพร้อมใช้งาน"],
+  "网页观看窗口加载失败，请关闭后重试": ["The viewing window could not load. Close it and try again.", "โหลดหน้าต่างดูเว็บไม่สำเร็จ กรุณาปิดแล้วลองใหม่"],
+  "网页观看目前支持安装了 WebKit 组件的 Mac。": ["Web viewing currently supports Macs with the WebKit component installed.", "โหมดดูจากเว็บรองรับ Mac ที่ติดตั้งส่วนประกอบ WebKit แล้ว"],
+  "请输入公开 HTTPS 网页地址": ["Enter a public HTTPS web address", "กรุณากรอกที่อยู่เว็บ HTTPS สาธารณะ"],
+  "网页观看需要 macOS WebKit 组件": ["Web viewing requires the macOS WebKit component", "โหมดดูจากเว็บต้องใช้ส่วนประกอบ WebKit ของ macOS"],
+  "请先关闭当前网页观看窗口": ["Close the current viewing window first", "กรุณาปิดหน้าต่างดูเว็บปัจจุบันก่อน"],
+  "网页观看操作无效": ["Invalid web viewing action", "คำสั่งดูจากเว็บไม่ถูกต้อง"],
+  "网页观看语言无效": ["Invalid web viewing language", "ภาษาของโหมดดูจากเว็บไม่ถูกต้อง"],
   "视图与标签": [
     "Views and tags",
     "มุมมองและแท็ก"

@@ -94,6 +94,8 @@ class DependencyPolicyTests(unittest.TestCase):
         owners = {
             "tldextract": "tldextract",
             "AppKit": "pyobjc-framework-Cocoa",
+            "Foundation": "pyobjc-framework-Cocoa",
+            "WebKit": "pyobjc-framework-WebKit",
             "PIL": "pillow",
             "PyObjCTools": "pyobjc-framework-Cocoa",
             "apscheduler": "APScheduler",
