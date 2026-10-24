@@ -101,9 +101,17 @@ class WatchSession:
                 raise ValueError("网页观看需要 macOS WebKit 组件")
             if self.process is not None and self.process.poll() is None:
                 raise ValueError("请先关闭当前网页观看窗口")
+            from .config import STATE_DIR
+            from .web_watch_bundle import launch_command
+            try:
+                command, environment = launch_command(STATE_DIR / 'web-watch')
+            except (OSError, ValueError, subprocess.SubprocessError) as exc:
+                self.state = 'error'
+                LOGGER.exception('网页观看应用宿主准备失败')
+                raise ValueError('网页观看窗口加载失败，请关闭后重试') from exc
             self.state, self.popups = "opening", 0
             self.process = subprocess.Popen(
-                [sys.executable, "-m", "peach.web_watch_macos"],
+                command, env=environment,
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                 text=True, encoding="utf-8",
             )

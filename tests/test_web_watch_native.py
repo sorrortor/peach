@@ -9,6 +9,23 @@ from unittest.mock import patch
 @unittest.skipUnless(sys.platform == 'darwin' and os.environ.get('PEACH_WEB_WATCH_NATIVE') == '1',
                      '需要显式启用 macOS WebKit 实证')
 class NativeWebWatchTests(unittest.TestCase):
+    def test_native_bundle_keeps_venv_and_has_unique_application_identity(self):
+        import json
+        from pathlib import Path
+        import subprocess
+        import tempfile
+        from peach.web_watch_bundle import BUNDLE_ID, launch_command
+        with tempfile.TemporaryDirectory() as temporary:
+            command, environment = launch_command(Path(temporary).resolve())
+            code = ('import json,sys,Foundation; print(json.dumps([sys.prefix,'
+                    'Foundation.NSBundle.mainBundle().bundleIdentifier()]))')
+            result = subprocess.run([command[0], '-c', code], env=environment,
+                                    capture_output=True, text=True, encoding='utf-8', timeout=20)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            prefix, bundle_id = json.loads(result.stdout)
+            self.assertEqual(Path(prefix).resolve(), Path(sys.prefix).resolve())
+            self.assertEqual(bundle_id, BUNDLE_ID)
+
     @unittest.skipUnless(os.environ.get('PEACH_WEB_WATCH_YOUTUBE') == '1',
                          '需要显式启用 YouTube 联网实证')
     def test_youtube_playback(self):
