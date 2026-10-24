@@ -1,14 +1,71 @@
 """网页观看的地址、拦截边界与生命周期。"""
 import json
 import subprocess
+import tempfile
+from pathlib import Path
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 from peach.web_watch import (AD_DOMAINS, WatchSession, blocked_host, clean_url,
                              content_rules, navigation_allowed, w_web_watch)
 
 
 class WebWatchTests(unittest.TestCase):
+    def test_bundle_failure_is_reported_without_starting_a_viewer(self):
+        session = WatchSession()
+        with patch.object(session, 'snapshot', return_value={'available': True}), \
+                patch('peach.web_watch_bundle.launch_command', side_effect=OSError('fixture failure')), \
+                patch('peach.web_watch.subprocess.Popen') as popen, \
+                self.assertLogs('peach.web_watch', level='ERROR'), self.assertRaises(ValueError):
+            session.open('https://example.org/')
+        self.assertEqual(session.state, 'error')
+        self.assertIsNone(session.process)
+        popen.assert_not_called()
+
+    def test_viewer_bundle_identity_signature_and_venv_are_preserved(self):
+        import plistlib
+        from peach.web_watch_bundle import BUNDLE_ID, launch_command
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            framework = root / 'framework'
+            source = framework / 'Resources/Python.app/Contents/MacOS/Python'
+            source.parent.mkdir(parents=True)
+            source.write_bytes(b'native-host-fixture')
+            with patch('peach.web_watch_bundle.subprocess.run') as run:
+                command, env = launch_command(root / 'cache', executable='/test/venv/bin/python', prefix=str(framework))
+                binary = Path(command[0])
+                info = plistlib.loads((binary.parent.parent / 'Info.plist').read_bytes())
+                self.assertEqual(info['CFBundleIdentifier'], BUNDLE_ID)
+                self.assertEqual(info['CFBundleName'], 'Peach Web')
+                self.assertEqual(info['CFBundleExecutable'], binary.name)
+                self.assertFalse(info['LSUIElement'])
+                self.assertEqual(env['__PYVENV_LAUNCHER__'], '/test/venv/bin/python')
+                self.assertEqual(command[1:], ['-m', 'peach.web_watch_macos'])
+                self.assertEqual(source.read_bytes(), b'native-host-fixture')
+                self.assertEqual(run.call_count, 2)
+                self.assertIn('--sign', run.call_args_list[0].args[0])
+                self.assertIn('--verify', run.call_args_list[1].args[0])
+                again, _ = launch_command(root / 'cache', executable='/test/venv/bin/python', prefix=str(framework))
+                self.assertEqual(again, command)
+                self.assertEqual(run.call_count, 3)
+                (binary.parent.parent / 'Info.plist').write_bytes(b'corrupt')
+                with self.assertRaises(ValueError):
+                    launch_command(root / 'cache', executable='/test/venv/bin/python', prefix=str(framework))
+
+    def test_viewer_bundle_signing_failure_does_not_publish_an_app(self):
+        from peach.web_watch_bundle import launch_command
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            source = root / 'framework/Resources/Python.app/Contents/MacOS/Python'
+            source.parent.mkdir(parents=True)
+            source.write_bytes(b'native-host-fixture')
+            with patch('peach.web_watch_bundle.subprocess.run', side_effect=subprocess.CalledProcessError(1, 'codesign')):
+                with self.assertRaises(subprocess.CalledProcessError):
+                    launch_command(root / 'cache', prefix=str(root / 'framework'))
+            self.assertEqual(list((root / 'cache').glob('*/Peach Web.app')), [])
+            with self.assertRaises(ValueError):
+                launch_command(root / 'other', prefix=str(root / 'missing'))
+
     def test_youtube_filters_prune_ads_and_preserve_media_and_other_sites(self):
         from peach.web_watch_youtube import user_script
         script = user_script()
