@@ -1956,12 +1956,13 @@ def _generate_preview(config, row, database, resolver, *, progress):
 
 
 def _generate_previews(config, rows, database, *, update, issue, guard,
-                       completed=(), checkpoint=lambda row: None, initial_made=0):
+                       completed=(), checkpoint=lambda row: None, initial_made=0, unavailable_ids=()):
     """只读本机视频；来源失败与抽帧失败各自保留可重试项目。"""
     from .previews import PreviewUnavailable
     if database is None:
         return 0
-    rows = [row for row in rows if row['location'] == 'local' and not skip_background_read(row['path'])]
+    rows = [row for row in rows if row['location'] == 'local' and row['id'] not in unavailable_ids
+            and not skip_background_read(row['path'])]
     base_done = sum(_checkpoint_key(row) in completed for row in rows)
     rows = [row for row in rows if _checkpoint_key(row) not in completed]
     resolver = FFmpegResolver(config.directory('tools') / 'ffmpeg')
@@ -2070,8 +2071,12 @@ def _read_local_metadata(config, db_path, row, cover_root, listing, state, updat
     try:
         files = listing.files(video.parent)
     except OSError:
-        files = {}
-    if video.name.casefold() not in files:
+        files = None
+    try:
+        available = files is not None and (video.name.casefold() in files or video.is_file())
+    except OSError:
+        available = False
+    if not available:
         issue(row, '媒体文件不可访问', action='reading_local', retryable=True)
         return None
     code = _provider_code(row['code']) or release_code_from_filename(row['name'])
@@ -2170,6 +2175,7 @@ class _LocalEvidenceCache:
     def __init__(self, config, db_path, cover_root, listing, state, path):
         self.config, self.db_path, self.cover_root = config, db_path, cover_root
         self.listing, self.state, self.path = listing, state, path
+        self.unavailable_ids = set()
 
     def read(self, row, update, issue, poster_jobs):
         key = _checkpoint_key(row)
@@ -2186,6 +2192,8 @@ class _LocalEvidenceCache:
         offset, issues_before = len(poster_jobs), self.state['issue_count']
         local = _read_local_metadata(self.config, self.db_path, row, self.cover_root, self.listing,
                                      self.state, update, issue, poster_jobs)
+        if local is None:
+            self.unavailable_ids.add(row['id'])
         if local is not None and self.state['issue_count'] == issues_before:
             code, verify, payload, entries = local
             record = dict(local=[code, verify, payload, [(source, document, str(path)) for source, document, path in entries]],
@@ -2392,6 +2400,7 @@ def process_library(config, db_path, candidate_root, cover_root, *, location='co
                        current_deadline_at=None)
                 local = local_evidence.read(row, update, issue, poster_jobs)
                 if local is None:
+                    update(checked=completed_count + index + 1)
                     continue
                 code, verify_existing, payload, entries = local
                 local_fields = _fields(payload, genre_decisions) if payload else {}
@@ -2420,6 +2429,7 @@ def process_library(config, db_path, candidate_root, cover_root, *, location='co
                 update(estimate_pending=dict(pending), stage='准备生成预览', checked=0, total=0)
                 if not metadata_only(config.directory('state')):
                     _generate_previews(config, rows, database, update=update, issue=issue, guard=guard,
+                        unavailable_ids=local_evidence.unavailable_ids,
                         completed=checkpoints.completed['completed_previews'],
                         initial_made=state['previews'],
                         checkpoint=lambda row: checkpoints.mark('completed_previews', row, flush_state))
