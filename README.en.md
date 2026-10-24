@@ -33,6 +33,8 @@ https://github.com/user-attachments/assets/a5610874-e611-41bb-be22-7d99f0d64b62
 
 ## Features
 
+- **Watch the web (Mac source deployment)**: enter a public HTTPS page under Settings → Browsing and playback to open a separate WebKit viewing window. Common ad domains and new windows are blocked. No cloud account or userscript is needed; ads embedded in the video may remain.
+
 - **Interface languages**: choose 中文, English or ไทย on the sign-in, first-time setup or error page, or under Settings → Appearance and navigation. The browser remembers the choice across reloads and reopening. Navigation, settings, the library, following, video details, statistics, taste, data management, Tasks, manual review, duplicate files and trash include translated help, hints, preset names, scan progress and follow status. JAV discovery and wanted titles, people and company directories, profile facts, playlists, junk files, quality goals, source configuration, search, image viewing and cropping, and the video wall use the same language. Chart units, summaries, download states, review labels, retention rules, previews, confirmations, loading messages and accessibility labels are included, as are player settings, speed, quality, subtitles and the mini player. Titles, filenames, candidate values, original tags, user input, subtitle content and unrecognized external error details retain their original text. Switching reloads the page, so save forms first.
 - **Local and cloud together**: browse hard drives and mounted cloud drives, including 115, PikPak and OneDrive, in one library.
 - **Pick from the video wall**: drag through a full-screen cover wall and play in place, with versions and parts of the same title grouped together.

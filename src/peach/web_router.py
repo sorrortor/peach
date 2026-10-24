@@ -90,6 +90,7 @@ from .web_organize import (
 )
 from .web_orphan_records import q_orphan_records, w_orphan_attach
 from .web_playlists import q_playlist, q_playlists, w_playlist
+from .web_watch import q_web_watch, w_web_watch
 from .web_custom_metadata import q_custom_metadata, w_custom_metadata
 from .web_resource_sync import w_purge_missing, w_resource_sync_apply, w_resource_sync_scan
 from .web_review import q_review, w_review_decision, w_review_genre
@@ -317,6 +318,7 @@ def _post_empty_trash(contract, _body):
 
 
 GET_HANDLERS = {
+    "/api/web-watch": q_web_watch,
     "/api/media-processing": q_media_processing,
     "/api/folders": q_folders,
     "/api/tasks": q_tasks,
@@ -384,6 +386,7 @@ GET_HANDLERS = {
 }
 
 POST_HANDLERS = {
+    "/api/web-watch": w_web_watch,
     "/api/media-processing": w_media_processing,
     "/api/folders/preview": w_folder_preview,
     "/api/folders/rule": w_folder_rule,
@@ -451,6 +454,7 @@ POST_HANDLERS = {
 #: 不该拦它们——「查找」只联网、「存凭据」只写本机 secrets 文件，都不碰账本。
 #: 追更的「查找」在只读端被拦成 409 是实测踩到的。
 READ_ONLY_POST_ROUTES = frozenset({
+    "/api/web-watch",
     "/api/media-processing",
     "/api/folders/preview",
     "/api/custom-metadata",

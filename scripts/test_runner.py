@@ -132,6 +132,7 @@ SCOPES: dict[str, tuple[str, ...]] = {
     # 所以本域也要登记它们：改了 `web/app.js` 却漏跑读它的测试，`test_test_planning.py`
     # 的域映射门槛会在本地就红。
     "web": ("test_frontend_build.py", "test_web_ui.py", "test_web_js.py", "test_web_e2e.py",
+            "test_web_watch.py", "test_web_watch_native.py", "test_web_watch_ui.py",
             "test_interface_languages_browser.py",
             "test_subtitle_search.py",
             "test_legacy_shell_routes.py",

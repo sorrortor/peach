@@ -1,5 +1,13 @@
 # 复用清单
 
+## 本机网页观看
+
+macOS 源码部署复用系统 WebKit 的 WKWebView、WKContentRuleListStore、WKUIDelegate 与 WKNavigationDelegate，经 PyObjC WebKit 12.2.2（MIT，精确依赖；依赖 Cocoa、Quartz 桥接）调用。系统引擎随 macOS 更新，桥接包沿用项目 Cocoa 版本；不下载 Chromium。官方 API 依据为 [Apple 内容规则](https://developer.apple.com/documentation/webkit/wkcontentruleliststore)及[新窗口委托](https://developer.apple.com/documentation/webkit/wkuidelegate)，桥接维护状态见 [PyObjC 更新记录](https://pyobjc.readthedocs.io/en/latest/changelog.html)。包体积由平台 wheel 决定，WebKit 引擎由系统提供。
+
+Peach 保留公开 HTTPS 地址校验、有限广告域名表、同主机顶层导航、禁止新窗口和外部协议、仅内存会话及单窗口进程所有权。编译拦截规则完成后才加载网页，失败留在错误态；媒体由 WebKit 播放，不代理网页、不读取 Chrome profile、不写 ledger、不提交下载。iframe 无法跨域过滤且站点可拒绝嵌入；现有 Chromium 传输是隐藏采集器并拦截媒体；浏览器扩展需要额外安装，因此均不采用。
+
+W3C 公开视频页的 macOS 显式实证通过统一测试入口检查真实视频 readyState、时长、静音播放推进、新窗口拒绝与非持久会话。纯函数验证广告域名边界、规则和私网地址拒绝。首版只支持 Mac 源码运行；Windows、Linux 和冻结安装包显示不可用。广告表不是完整过滤订阅，第一方广告、视频内广告和需跨主机导航的站点属于已知限制。
+
 ## 界面语言
 
 界面语言复用浏览器 localStorage 与现有 OXC Parser 0.154.0（MIT，前端开发依赖）和 Vite 构建入口。中文展示字串作为目录键，英语与泰语随包提供，不请求外部翻译服务。构建转换只触及 JSX 文本与展示属性的值分支、条件结果及插值模板，条件本身和插值数据不转换；动态标签在渲染边界显式翻译；数据值、路由键、表单提交和用户内容保持原样。登录页与主包使用同一目录和存储键，切换保存成功后刷新，存储失败在原表单播报。

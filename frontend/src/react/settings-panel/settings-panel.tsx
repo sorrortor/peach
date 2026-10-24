@@ -34,6 +34,7 @@ import { NumberSetting } from './number-setting';
 import type { Choice, PanelSettings, SettingsPanelApi, SettingsPanelHost } from './settings-panel-api';
 import { refreshPanelData, useSaveSettings } from './settings-data';
 import { SidebarOrder } from './sidebar-order';
+import { WebWatchPanel } from './web-watch';
 import { SettingsDialogClose } from '../components/settings-dialog-close';
 
 /* 左栏的分区，顺序即右边各组的顺序。字形按条目自己的名字取：整列取自 Remix，一家画的笔画
@@ -494,6 +495,7 @@ function PlaybackRows({ host: current, epoch }: Omit<GroupProps, 'tab'>) {
   const save = () => current.store.save();
   return (
     <>
+      <WebWatchPanel />
       <Row title="悬停预览延迟">
         <div id="hoverDelaySetting">
           <NumberSetting key={epoch} id="hoverDelaySetting" label="悬停预览延迟" value={settings.hoverDelaySeconds}
