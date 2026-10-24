@@ -1,0 +1,25 @@
+{
+  "converter": "4.3.1",
+  "converter_sha256": "2a02d7fc6adc74198b0572cd7012d0371e608c2330969210c3dc53ecca47d865",
+  "psl_revision": "7ccee9d576d4ca45219440e346f61117f44c816f",
+  "psl_sha256": {
+    "common.bin": "846cfcb325b59596fe4daf1bb35791275d3cc80b7aff3166f51b3c620bf38717",
+    "negated.bin": "7bbb0cd0f4bbbf48567726988596e29d740a9575827bb26be1e86c1d6e2298cc",
+    "asterisk.bin": "29828cce98558f779cc0d98c30012567453a484df8fc1da84bfef67c52816c02"
+  },
+  "safari_version": 15,
+  "snapshot_sha256": "12ac8de610de0adbdd0a6437cfa384cabb04375e29564fdd754ecbeb42797638",
+  "source_sha256": "efda717285469a99527ccaa953f75e53b0de532f4079af9744c4545037a812bf",
+  "rules": 42744,
+  "generated": 1792823265.9861372,
+  "sources": [
+    {
+      "url": "https://filters.adtidy.org/extension/safari/filters/2_optimized.txt",
+      "sha256": "794d1cb6da9a7e1434db87c62b5af34ca81577e9aad6765a3d21175274eae587"
+    },
+    {
+      "url": "https://filters.adtidy.org/extension/safari/filters/19_optimized.txt",
+      "sha256": "a0c0aba2654235ecadbb49ab759569be6f297758470fa5e43170ebd41d3bf265"
+    }
+  ]
+}

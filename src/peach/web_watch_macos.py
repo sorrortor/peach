@@ -87,6 +87,8 @@ def create_window(options):
     import WebKit
     from .web_watch_youtube import user_script
     from .web_watch_fwip import user_script as fwip_script
+    from .web_watch_filters import bundled_rules, load_rules, start_update
+    from pathlib import Path
 
     url = clean_url(options["url"])
     origin = urlsplit(url).hostname
@@ -147,13 +149,38 @@ def create_window(options):
     root.addSubview_(status)
     delegate.status = status
 
+    cache = Path(options['filter_cache']) if options.get('filter_cache') else None
+    general_rules, cached = load_rules(cache)
+    store = WebKit.WKContentRuleListStore.defaultStore()
+
+    def general_compiled(rules, error):
+        if error is not None or rules is None:
+            if cached:
+                # 缓存规则编译失败时明确使用随包快照，保留独立的本机策略规则。
+                store.compileContentRuleListForIdentifier_encodedContentRuleList_completionHandler_(
+                    'peach-web-general-bundled-v1', json.dumps(bundled_rules()), fallback_compiled)
+                return
+            fallback_compiled(rules, error)
+            return
+        fallback_compiled(rules, error)
+
+    def fallback_compiled(rules, error):
+        if error is not None or rules is None:
+            status.setStringValue_(labels[5])
+            emit('error')
+            return
+        config.userContentController().addContentRuleList_(rules)
+        view.loadRequest_(Foundation.NSURLRequest.requestWithURL_(Foundation.NSURL.URLWithString_(url)))
+        start_update(cache)
+
     def compiled(rules, error):
         if error is not None or rules is None:
             status.setStringValue_(labels[5])
             emit("error")
             return
         view.configuration().userContentController().addContentRuleList_(rules)
-        view.loadRequest_(Foundation.NSURLRequest.requestWithURL_(Foundation.NSURL.URLWithString_(url)))
+        store.compileContentRuleListForIdentifier_encodedContentRuleList_completionHandler_(
+            'peach-web-general-v1', json.dumps(general_rules), general_compiled)
 
     WebKit.WKContentRuleListStore.defaultStore().compileContentRuleListForIdentifier_encodedContentRuleList_completionHandler_(
         "peach-web-watch-v1", json.dumps(content_rules()), compiled)

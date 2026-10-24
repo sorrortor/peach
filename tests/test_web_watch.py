@@ -11,6 +11,65 @@ from peach.web_watch import (AD_DOMAINS, WatchSession, blocked_host, clean_url,
 
 
 class WebWatchTests(unittest.TestCase):
+    def test_general_snapshot_is_verified_and_has_network_cosmetic_and_exception_rules(self):
+        from peach.web_watch_filters import bundled_rules
+        rules = bundled_rules()
+        self.assertGreater(len(rules), 10_000)
+        self.assertEqual({r['action']['type'] for r in rules},
+                         {'block', 'css-display-none', 'ignore-previous-rules'})
+
+    def test_general_snapshot_rejects_unsafe_actions_and_bounds_decompression(self):
+        import gzip
+        from peach import web_watch_filters as filters
+        for value in ([], {}, [{'trigger': {'url-filter': '.*'}, 'action': {'type': 'redirect'}}],
+                      [{'trigger': {}, 'action': {'type': 'block'}}]):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                filters.validate_rules(value)
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary).resolve() / 'rules.json.gz'
+            path.write_bytes(gzip.compress(b'x' * 101))
+            with patch.object(filters, 'MAX_JSON', 100), self.assertRaises(ValueError):
+                filters.read_snapshot(path)
+
+    def test_general_cache_falls_back_and_never_executes_unverified_tools(self):
+        from peach import web_watch_filters as filters
+        with tempfile.TemporaryDirectory() as temporary:
+            cache = Path(temporary).resolve()
+            (cache / 'rules.json.gz').write_bytes(b'bad gzip')
+            rules, cached = filters.load_rules(cache)
+            self.assertFalse(cached)
+            self.assertGreater(len(rules), 10_000)
+            (cache / 'rules.json.gz').write_bytes(filters.encode_snapshot(rules[:1]))
+            self.assertEqual(filters.load_rules(cache), (rules[:1], True))
+            with self.assertRaisesRegex(ValueError, '校验失败'):
+                filters.ensure_converter(cache, fetch=lambda _url: b'untrusted tool')
+            self.assertFalse((cache / f'converter-{filters.VERSION}' / 'ConverterTool').exists())
+
+    def test_general_updates_use_fixed_sources_and_preserve_good_cache_on_failure(self):
+        from peach import web_watch_filters as filters
+        rule = {'trigger': {'url-filter': '/ads/'}, 'action': {'type': 'block'}}
+        fetch = Mock(return_value=b'! Title: fixture\n/ads/')
+        converter = Mock(return_value=[rule])
+        with tempfile.TemporaryDirectory() as temporary, \
+                patch.object(filters.sys, 'platform', 'darwin'), \
+                patch.object(filters.platform, 'machine', return_value='arm64'), \
+                patch.object(filters, 'ensure_converter', return_value=Path('/fixture/tool')):
+            cache = Path(temporary).resolve()
+            self.assertTrue(filters.refresh_cache(cache, fetch=fetch, converter=converter, now=lambda: 100_000))
+            self.assertEqual([call.args[0] for call in fetch.call_args_list], list(filters.SOURCES))
+            self.assertEqual(filters.load_rules(cache), ([rule], True))
+            self.assertFalse(filters.refresh_cache(cache, fetch=fetch, now=lambda: 100_005))
+            self.assertEqual(fetch.call_count, 2)
+            converter.return_value = []
+            before = (cache / 'rules.json.gz').read_bytes()
+            with self.assertRaises(ValueError):
+                filters.refresh_cache(cache, force=True, fetch=fetch, converter=converter, now=lambda: 200_000)
+            self.assertEqual((cache / 'rules.json.gz').read_bytes(), before)
+            fetch.side_effect = OSError('offline')
+            with self.assertRaises(OSError):
+                filters.refresh_cache(cache, force=True, fetch=fetch, now=lambda: 300_000)
+            self.assertEqual((cache / 'rules.json.gz').read_bytes(), before)
+
     def test_fwip_filter_removes_ad_gates_before_player_boot_and_handles_late_ads(self):
         from peach.settings_file import PROJECT_ROOT
         from peach.web_watch_fwip import user_script
