@@ -38,6 +38,23 @@ const copyPackageFiles = ({ packageName, vendorName, files, note }) => {
     `${hashes.join("\n")}\n\n${note}\n`);
 };
 
+const scriptletPackage = "@adguard/scriptlets";
+const scriptletCatalog = JSON.parse(text("node_modules", scriptletPackage, "dist/scriptlets.corelibs.json"));
+const scriptletNames = ["json-prune", "json-prune-fetch-response", "json-prune-xhr-response", "set-constant"];
+const scriptlets = scriptletCatalog.scriptlets.filter(entry => entry.names.some(name => scriptletNames.includes(name)));
+if (scriptlets.length !== scriptletNames.length) throw new Error("网页观看过滤脚本不完整");
+const scriptletPayload = JSON.stringify({version: versions[scriptletPackage], scriptlets}, null, 2) + "\n";
+const scriptletRoot = `web/vendor/adguard-scriptlets/${versions[scriptletPackage]}`;
+stage(`${scriptletRoot}/scriptlets.json`, scriptletPayload);
+stage(`${scriptletRoot}/LICENSE`, lfText("node_modules", scriptletPackage, "LICENSE"));
+stage(`${scriptletRoot}/ORIGIN.md`, `# AdGuard Scriptlets ${versions[scriptletPackage]}\n\n`
+  + `- npm 包：\`${scriptletPackage}@${versions[scriptletPackage]}\`\n`
+  + `- npm lock integrity：\`${integrity(scriptletPackage)}\`\n`
+  + `- 上游源码：https://github.com/AdguardTeam/Scriptlets/tree/v${versions[scriptletPackage]}\n`
+  + `- 许可证：GPL-3.0，见同目录 LICENSE\n`
+  + `- scriptlets.json SHA-256：\`${sha256(scriptletPayload)}\`\n\n`
+  + "macOS 网页观看宿主只注入上述四种脚本；作用域限 YouTube，运行时不更新。npm 转换工具及其依赖不进入页面或 Python 运行时。\n");
+
 copyPackageFiles({
   packageName: "@fontsource-variable/inter",
   vendorName: "inter",
@@ -356,6 +373,7 @@ if (orphans.length) {
 }
 
 const versionRoots = [
+  ["web/vendor/adguard-scriptlets", versions["@adguard/scriptlets"]],
   ["web/vendor/videojs", versions[videoPackage]],
   ["web/vendor/swiper", versions.swiper],
 ];

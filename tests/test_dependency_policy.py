@@ -158,7 +158,7 @@ class DependencyPolicyTests(unittest.TestCase):
         manifest = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
         self.assertTrue(manifest["private"])
         versions = manifest["devDependencies"]
-        self.assertEqual(set(versions), {"@phosphor-icons/core", "healthicons",
+        self.assertEqual(set(versions), {"@adguard/scriptlets", "@phosphor-icons/core", "healthicons",
                                          "lucide-static", "swiper", "@videojs/cdn", "remixicon", "@fontsource-variable/inter"})
         for version in versions.values():
             self.assertRegex(version, r"^\d+\.\d+\.\d+$")
